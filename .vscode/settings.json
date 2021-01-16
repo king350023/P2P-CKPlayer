@@ -1,0 +1,8 @@
+{
+    "npm.enableRunFromFolder": true,
+    "npm.exclude": "",
+    "npm.scriptExplorerAction": "run",
+    "debug.javascript.terminalOptions": {
+    "autoAttachChildProcesses": true
+    }
+}
