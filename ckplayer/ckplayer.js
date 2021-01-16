@@ -1,4 +1,4 @@
-/*
+��/*
 	软件名称：ckplayer
 	软件版本：X1
 	软件作者：niandeng
@@ -13,7 +13,7 @@
 	1：flashls-http://flashls.org/
 	=====================================================================================================================
 */
-function ckplayerConfig() {
+function ckplayerConfig({
     return {
         flashvars: {},//用来补充flashvars里的对象
         languagePath: '',//语言包文件地址
@@ -123,12 +123,12 @@ function ckplayerConfig() {
         }
     };
 }
-! (function() {
+! (function({
     var javascriptPath = '';
     !function() {
         var scriptList = document.scripts,
             thisPath = scriptList[scriptList.length - 1].src;
-        javascriptPath = thisPath.substring(0, thisPath.lastIndexOf('/') + 1);
+        javascriptPath = thisPath.substring(0, thisPath.lastIndexOf('/'+ 1);
     } ();
     var ckplayer = function(obj) {
         /*
@@ -421,47 +421,47 @@ function ckplayerConfig() {
 			主接口函数：
 			调用播放器需初始化该函数
 		*/
-        embed: function(c) {
+        embed: function(c{
             //c:Object：是调用接口传递的属性对象
-            if (window.location.href.substr(0, 7) == 'file://') {//如果是使用的file协议打网页则弹出提示
+            if (window.location.href.substr(0, 7== 'file://'{//如果是使用的file协议打网页则弹出提示
                 alert('Please use the HTTP protocol to open the page');
                 return;
             }
-            if (c == undefined || !c) {
+            if (c == undefined || !c{
                 this.eject(this.errorList[0]);
                 return;
             }
-            if (typeof(c) != 'object') {
+            if (typeof(c) != 'object'{
                 this.eject(this.errorList[1]);
             }
             this.vars = this.standardization(this.varsConfig, c);
-            if (!this.vars['mobileCkControls'] && this.isMobile()) {
+            if (!this.vars['mobileCkControls'] && this.isMobile(){
                 this.vars['flashplayer'] = false;
                 this.showFace = false;
             }
             var videoString = this.vars['video'];
-            if (!videoString) {
+            if (!videoString{
                 this.eject(this.errorList[2]);
                 return;
             }
-            if (typeof(videoString) == 'string') {
-                if (videoString.substr(0, 3) == 'CK:' || videoString.substr(0, 3) == 'CE:' || videoString.substr(8, 3) == 'CK:' || videoString.substr(8, 3) == 'CE:') {
+            if (typeof(videoString) == 'string'{
+                if (videoString.substr(0, 3== 'CK:' || videoString.substr(0, 3) == 'CE:' || videoString.substr(8, 3== 'CK:' || videoString.substr(8, 3) == 'CE:') {
                     this.vars['flashplayer'] = true;
                 }
             }
-            if (typeof(videoString) == 'object') {
-                if (videoString.length > 1) {
-                    if (videoString[0][0].substr(0, 3) == 'CK:' || videoString[0][0].substr(0, 3) == 'CE:' || videoString[0][0].substr(8, 3) == 'CK:' || videoString[0][0].substr(8, 3) == 'CE:') {
+            if (typeof(videoString== 'object') {
+                if (videoString.length > 1{
+                    if (videoString[0][0].substr(0, 3== 'CK:' || videoString[0][0].substr(0, 3) == 'CE:' || videoString[0][0].substr(8, 3== 'CK:' || videoString[0][0].substr(8, 3) == 'CE:') {
                         this.vars['flashplayer'] = true;
                     }
                 }
             }
-            if (this.vars['config']) {
+            if (this.vars['config']{
                 this.ckplayerConfig = eval(this.vars['config'] + '()');
             } else {
                 this.ckplayerConfig = ckplayerConfig();
             }
-            if ((!this.supportVideo() && this.vars['flashplayer'] != '') || (this.vars['flashplayer'] && this.uploadFlash()) || !this.isMsie()) {
+            if ((!this.supportVideo(&& this.vars['flashplayer'] != '') || (this.vars['flashplayer'] && this.uploadFlash()) || !this.isMsie(){
                 this.html5Video = false;
                 this.getVideo();
             } else if (videoString) {
@@ -476,13 +476,13 @@ function ckplayerConfig() {
 			内部函数
 			根据外部传递过来的video开始分析视频地址
 		*/
-        analysedVideoUrl: function(video) {
+        analysedVideoUrl: function(video{
             var i = 0,
                 y = 0;
             var thisTemp = this;
             this.VA = [];//定义全局变量VA：视频列表（包括视频地址，类型，清晰度说明）
-            if (this.typeString(video) == 'string') { //如果是字符形式的则判断后缀进行填充
-                if (video.substr(0, 8) != 'website:') {
+            if (this.typeString(video) == 'string'{ //如果是字符形式的则判断后缀进行填充
+                if (video.substr(0, 8!= 'website:') {
                     this.VA = [[video, '', '', 0]];
                     var fileExt = this.getFileExt(video);
                     switch (fileExt) {
@@ -500,11 +500,11 @@ function ckplayerConfig() {
                     }
                     this.getVideo();
                 } else {
-                    if (this.html5Video) {
+                    if (this.html5Video{
                         var ajaxObj = {
                             url: video.substr(8),
                             success: function(data) {
-                                if (data) {
+                                if (data{
                                     thisTemp.analysedUrl(data);
                                 } else {
                                     thisTemp.eject(thisTemp.errorList[5]);
@@ -522,7 +522,7 @@ function ckplayerConfig() {
                 }
             }
             else if(this.typeString(video)=='array'){//如果视频地址是数组
-                if (!this.isUndefined(typeof(video[0].length))) { //如果视频地址是二维数组
+                if (!this.isUndefined(typeof(video[0].length)){ //如果视频地址是二维数组
                     this.VA = video;
                 }
                 this.getVideo();
@@ -532,7 +532,7 @@ function ckplayerConfig() {
 					如果video格式是对象形式，则分二种
 					如果video对象里包含type，则直接播放
 				*/
-                if (!this.isUndefined(video['type'])) {
+                if (!this.isUndefined(video['type']){
                     this.VA.push([video['file'], video['type'], '', 0]);
                     this.getVideo();
                 } else {
@@ -546,7 +546,7 @@ function ckplayerConfig() {
         /*
 			对请求到的视频地址进行重新分析
 		*/
-        analysedUrl: function(data) {
+        analysedUrl: function(data{
             this.vars = this.standardization(this.vars, data);
             if (!this.isUndefined(data['video'])) {
                 this.vars['video'] = data['video'];
@@ -557,14 +557,14 @@ function ckplayerConfig() {
 			内部函数
 			检查浏览器支持的视频格式，如果是则将支持的视频格式重新分组给播放列表
 		*/
-        getHtml5Video: function() {
+        getHtml5Video: function({
             var va = this.VA;
             var nva = [];
             var mobile = false;
             var video = document.createElement('video');
-            var codecs = function(type) {
+            var codecs = function(type{
                 var cod = '';
-                switch (type) {
+                switch (type{
                     case 'video/mp4':
                         cod = 'avc1.4D401E, mp4a.40.2';
                         break;
@@ -579,31 +579,31 @@ function ckplayerConfig() {
                 }
                 return cod;
             };
-            var supportType = function(vidType, codType) {
+            var supportType = function(vidType, codType{
                 if (!video.canPlayType) {
                     this.html5Video = false;
                     return;
                 }
                 var isSupp = video.canPlayType(vidType + ';codecs="' + codType + '"');
-                if (isSupp == '') {
+                if (isSupp == ''{
                     return false
                 }
                 return true;
             };
-            if (this.vars['flashplayer'] || !this.isMsie()) {
+            if (this.vars['flashplayer'] || !this.isMsie(){
                 this.html5Video = false;
                 return;
             }
-            if (this.isMobile()) {
+            if (this.isMobile(){
                 mobile = true;
             }
-            for (var i = 0; i < va.length; i++) {
+            for (var i = 0; i < va.length; i++{
                 var v = va[i];
-                if (v) {
-                    if (v[1] != '' && !mobile && supportType(v[1], codecs(v[1])) && v[0].substr(0, 4) != 'rtmp') {
+                if (v{
+                    if (v[1] != '' && !mobile && supportType(v[1], codecs(v[1])&& v[0].substr(0, 4) != 'rtmp'{
                         nva.push(v);
                     }
-                    if ((this.getFileExt(v[0]) == '.m3u8' || this.vars['type'] == 'video/m3u8' || this.vars['type'] == 'm3u8' || v[1] == 'video/m3u8' || v[1] == 'm3u8') && this.vars['html5m3u8'] && !this.isIOS() && !this.isUCBrowser()) {
+                    if ((this.getFileExt(v[0]) == '.m3u8' || this.vars['type'] == 'video/m3u8' || this.vars['type'] == 'm3u8' || v[1] == 'video/m3u8' || v[1] == 'm3u8') && this.vars['html5m3u8'] && !this.isIOS(&& !this.isUCBrowser(){
                         this.isM3u8 = true;
                         nva.push(v);
                     }
@@ -621,7 +621,7 @@ function ckplayerConfig() {
 			内部函数
 			根据视频地址开始构建播放器
 		*/
-        getVideo: function() {
+        getVideo: function({
             var thisTemp = this;
             var v = this.vars;
             //如果存在广告字段则开始分析广告
@@ -638,7 +638,7 @@ function ckplayerConfig() {
             if (this.vars['cktrack']) {
                 this.loadTrack();
             }
-            if (this.supportVideo() && !this.vars['flashplayer']) {
+            if (this.supportVideo(&& !this.vars['flashplayer']{
                 this.getHtml5Video(); //判断浏览器支持的视频格式
             }
             var src = '',
@@ -651,7 +651,7 @@ function ckplayerConfig() {
             var i = 0;
             this.CD = this.getByElement(v['container']);
             volume = v['volume'];
-            if (!this.CD) {
+            if (!this.CD{
                 this.eject(this.errorList[6], v['container']);
                 return false;
             }
@@ -665,13 +665,13 @@ function ckplayerConfig() {
                 }
             }
             var isVideoH5 = null; //isUndefined  thisPd
-            if (v['playerID'] != '') {
+            if (v['playerID'] != ''{
                 isVideoH5 = this.getByElement('#' + v['playerID']);
                 if (this.isUndefined(isVideoH5)) {
                     isVideoH5 = null;
                 }
             }
-            if (thisPd != null && isVideoH5 != null) {
+            if (thisPd != null && isVideoH5 != null{
                 this.PD = thisPd; //PD:定义播放器容器对象全局变量
             } else {
                 var playerID = 'ckplayer' + this.randomString();
@@ -692,21 +692,21 @@ function ckplayerConfig() {
                 height: '100%',
                 fontFamily: this.fontFamily
             });
-            if (this.html5Video) { //如果支持HTML5-VIDEO则默认使用HTML5-VIDEO播放器
+            if (this.html5Video{ //如果支持HTML5-VIDEO则默认使用HTML5-VIDEO播放器
                 //禁止播放器容器上鼠标选择文本
-                this.PD.onselectstart = this.PD.ondrag = function() {
+                this.PD.onselectstart = this.PD.ondrag = function({
                     return false;
                 };
                 //播放器容器构建完成并且设置好样式
                 //构建播放器
-                if (this.VA.length == 1) {
+                if (this.VA.length == 1{
                     this.videoTemp['src'] = decodeURIComponent(this.VA[0][0]);
                     src = ' src="' + this.videoTemp['src'] + '"';
 
                 } else {
                     var videoArr = this.VA.slice(0);
                     videoArr = this.arrSort(videoArr);
-                    for (i = 0; i < videoArr.length; i++) {
+                    for (i = 0; i < videoArr.length; i++{
                         var type = '';
                         var va = videoArr[i];
                         if (va[1]) {
@@ -715,12 +715,12 @@ function ckplayerConfig() {
                                 type = '';
                             }
                         }
-                        source += '<source src="' + decodeURIComponent(va[0]) + '"' + type + '>';
+                        source += '<source src="' + decodeURIComponent(va[0]+ '"' + type + '>';
                     }
                     this.videoTemp['source'] = source;
                 }
                 //分析视频地址结束
-                if (v['autoplay']) {
+                if (v['autoplay']{
                     autoplay = ' autoplay="autoplay"';
                 }
                 if (v['poster']) {
@@ -729,16 +729,16 @@ function ckplayerConfig() {
                 if (v['loop']) {
                     loop = ' loop="loop"';
                 }
-                if (v['seek'] > 0) {
+                if (v['seek'] > 0{
                     this.needSeek = v['seek'];
                 }
-                if (v['track'] != null && v['cktrack'] == null) {
+                if (v['track'] != null && v['cktrack'] == null{
                     var trackArr = v['track'];
                     var trackDefault = '';
                     var defaultHave = false;
                     for (i = 0; i < trackArr.length; i++) {
                         var trackObj = trackArr[i];
-                        if (trackObj['default'] && !defaultHave) {
+                        if (trackObj['default'] && !defaultHave{
                             trackDefault = ' default';
                             defaultHave = true;
                         } else {
@@ -762,7 +762,7 @@ function ckplayerConfig() {
                 if (!mobileAutoFull) {
                     mobileautofull = ' x-webkit-airplay="true" playsinline  webkit-playsinline="true"  x5-video-player-type="h5"';
                 }
-                if (isVideoH5 != null && thisPd != null) {
+                if (isVideoH5 != null && thisPd != null{
                     this.V = isVideoH5;
                     if (v['poster']) {
                         this.V.poster = v['poster'];
@@ -782,19 +782,19 @@ function ckplayerConfig() {
                 }
                 try {
                     this.V.volume = volume; //定义音量
-                    if (this.playbackRateArr && this.vars['playbackrate'] > -1) {
-                        if (this.vars['playbackrate'] < this.playbackRateArr.length) {
+                    if (this.playbackRateArr && this.vars['playbackrate'] > -1{
+                        if (this.vars['playbackrate'] < this.playbackRateArr.length{
                             this.playbackRateDefault = this.vars['playbackrate'];
                         }
                         this.V.playbackRate = this.playbackRateArr[this.playbackRateDefault][0]; //定义倍速
                     }
-                } catch(error) {}
+                } catch(error{}
                 this.css(this.V, {
                     width: '100%',
                     height: '100%'
                 });
-                if (this.isM3u8) {
-                    var loadJsHandler = function() {
+                if (this.isM3u8{
+                    var loadJsHandler = function({
                         thisTemp.embedHls(thisTemp.VA[0][0], v['autoplay'], v['hlsjsConfig']);
                     };
                     // this.loadJs(javascriptPath + 'hls/hls.min.js', loadJsHandler);
@@ -802,7 +802,7 @@ function ckplayerConfig() {
                 }
                 this.css(this.V, 'backgroundColor', '#000000');
                 //创建一个画布容器
-                if (this.config['videoDrawImage']) {
+                if (this.config['videoDrawImage']{
                     var canvasID = 'vcanvas' + this.randomString();
                     var canvasDiv = document.createElement('div');
                     canvasDiv.className = canvasID;
@@ -831,7 +831,7 @@ function ckplayerConfig() {
                 //根据清晰度的值构建清晰度切换按钮
                 if (this.showFace) {
                     this.definition();
-                    if (!this.vars['live'] && this.playbackRateArr && this.vars['playbackrate'] > -1) {
+                    if (!this.vars['live'] && this.playbackRateArr && this.vars['playbackrate'] > -1{
                         this.playbackRate();
                     }
                     if (v['autoplay']) {
@@ -847,27 +847,27 @@ function ckplayerConfig() {
         /*
 			分析广告数据
 		*/
-        adAnalysis: function() {
+        adAnalysis: function({
             var thisTemp = this;
             var v = this.vars;
             var isAdvShow = [];
             var i = 0;
-            if (v['advertisements'] != '' && v['advertisements'].substr(0, 8) == 'website:') {
+            if (v['advertisements'] != '' && v['advertisements'].substr(0, 8== 'website:') {
                 var ajaxObj = {
                     url: v['advertisements'].substr(8),
-                    success: function(data) {
+                    success: function(data{
                         if (data) {
                             var newData = {};
                             var val = null;
                             //对广告进行分析
                             try {
-                                if (!thisTemp.isUndefined(data['front'])) {
+                                if (!thisTemp.isUndefined(data['front']){
                                     val = thisTemp.arrayDel(data['front']);
-                                    if (!thisTemp.isUndefined(val)) {
+                                    if (!thisTemp.isUndefined(val){
                                         newData['front'] = val;
                                     }
                                     val = thisTemp.arrayDel(data['pause']);
-                                    if (!thisTemp.isUndefined(val)) {
+                                    if (!thisTemp.isUndefined(val){
                                         newData['pause'] = val;
                                     }
                                     val = thisTemp.arrayDel(data['insert']);
@@ -876,7 +876,7 @@ function ckplayerConfig() {
                                         if (!thisTemp.isUndefined(data['inserttime'])) {
                                             newData['inserttime'] = thisTemp.arrayInt(data['inserttime']);
                                             isAdvShow = [];
-                                            for (i = 0; i < newData['inserttime'].length; i++) {
+                                            for (i = 0; i < newData['inserttime'].length; i++{
                                                 isAdvShow.push(false);
                                             }
                                             newData['insertPlay'] = isAdvShow;
@@ -891,7 +891,7 @@ function ckplayerConfig() {
                                         newData['other'] = val;
                                         isAdvShow = [];
                                         var arrTemp = [];
-                                        for (i = 0; i < val.length; i++) {
+                                        for (i = 0; i < val.length; i++{
                                             isAdvShow.push(false);
                                             arrTemp.push(parseInt('0' + val[i]['startTime']));
                                         }
@@ -916,14 +916,14 @@ function ckplayerConfig() {
                 this.adAnalysisOne('insert', 'adinsert', 'adinserttime', 'adinsertlink', 'adinserttype');
                 this.adAnalysisOne('end', 'adend', 'adendtime', 'adendlink', 'adendtype');
                 if (!this.isUndefined(this.advertisements['insert'])) {
-                    if (!this.isUndefined(v['inserttime'])) {
+                    if (!this.isUndefined(v['inserttime']){
                         thisTemp.advertisements['inserttime'] = v['inserttime'];
                     }
                 }
                 if (!this.isUndefined(thisTemp.advertisements['inserttime'])) {
                     thisTemp.advertisements['inserttime'] = thisTemp.arrayInt(thisTemp.advertisements['inserttime']);
                     isInsert = [];
-                    for (i = 0; i < thisTemp.advertisements['inserttime'].length; i++) {
+                    for (i = 0; i < thisTemp.advertisements['inserttime'].length; i++{
                         isInsert.push(false);
                     }
                     thisTemp.advertisements['insertPlay'] = isInsert;
@@ -939,43 +939,43 @@ function ckplayerConfig() {
                 return null;
             }
             var newArr = [];
-            for (var i = 0; i < arr.length; i++) {
+            for (var i = 0; i < arr.length; i++{
                 var type = arr[i]['type'];
-                if (type == 'mp4' || type == 'mov' || this.isStrImage(type)) {
+                if (type == 'mp4' || type == 'mov' || this.isStrImage(type){
                     newArr.push(arr[i]);
                 }
             }
-            if (newArr.length > 0) {
+            if (newArr.length > 0{
                 return newArr;
             }
             return null;
         },
         /*分析单个类型的广告*/
-        adAnalysisOne: function(adType, adName, adTime, adLink, adStype) {
+        adAnalysisOne: function(adType, adName, adTime, adLink, adStype{
             var v = this.vars;
-            if (this.isUndefined(v[adName])) {
+            if (this.isUndefined(v[adName]){
                 v[adName] = '';
             }
-            if (this.isUndefined(v[adTime])) {
+            if (this.isUndefined(v[adTime]){
                 v[adTime] = '';
             }
-            if (this.isUndefined(v[adLink])) {
+            if (this.isUndefined(v[adLink]){
                 v[adLink] = '';
             }
             if (this.isUndefined(v[adStype])) {
                 v[adStype] = '';
             }
-            if (v[adName] != '') {
+            if (v[adName] != ''{
                 var adList = [];
                 var ad = v[adName].split(',');
                 var adtime = v[adTime].split(',');
                 var adlink = v[adLink].split(',');
                 var adstype = v[adStype].split(',');
                 var i = 0;
-                if (ad.length > 0) {
+                if (ad.length > 0{
                     var adLinkLen = adlink.length,
                         adTimeLen = adtime.length;
-                    if (v[adLink] == '') {
+                    if (v[adLink] == ''{
                         adLinkLen = 0;
                         adlink = [];
                     }
@@ -983,13 +983,13 @@ function ckplayerConfig() {
                         adTimeLen = 0;
                         adtime = [];
                     }
-                    if (adLinkLen < ad.length) {
+                    if (adLinkLen < ad.length{
                         for (i = adLinkLen; i < ad.length; i++) {
                             adlink.push('');
                         }
                     }
                     if (adTimeLen < ad.length) {
-                        for (i = adTimeLen; i < ad.length; i++) {
+                        for (i = adTimeLen; i < ad.length; i++{
                             adtime.push('');
                         }
                     }
@@ -1003,9 +1003,9 @@ function ckplayerConfig() {
                             adstype.push(this.getFileExt(ad[i]).replace('.', ''));
                         }
                     }
-                    for (i = 0; i < ad.length; i++) {
+                    for (i = 0; i < ad.length; i++{
                         var type = adstype[i];
-                        if (type == 'mp4' || type == 'mov' || this.isStrImage(type)) {
+                        if (type == 'mp4' || type == 'mov' || this.isStrImage(type){
                             var obj = {
                                 file: ad[i],
                                 type: type,
@@ -1016,10 +1016,10 @@ function ckplayerConfig() {
                         }
 
                     }
-                    if (this.isUndefined(this.advertisements)) {
+                    if (this.isUndefined(this.advertisements){
                         this.advertisements = {};
                     }
-                    if (adList.length > 0) {
+                    if (adList.length > 0{
                         this.advertisements[adType] = adList;
                     }
                 }
@@ -1029,7 +1029,7 @@ function ckplayerConfig() {
 			内部函数
 			发送播放器加载成功的消息
 		*/
-        playerLoad: function() {
+        playerLoad: function({
             var thisTemp = this;
             if (this.isFirst) {
                 this.isFirst = false;
@@ -1045,7 +1045,7 @@ function ckplayerConfig() {
         addVEvent: function() {
             var thisTemp = this;
             //监听视频单击事件
-            var eventVideoClick = function(event) {
+            var eventVideoClick = function(event{
                 thisTemp.videoClickXy={x:event.clientX,y:event.clientY};
                 thisTemp.videoClick();
             };
@@ -1056,10 +1056,10 @@ function ckplayerConfig() {
             //监听视频加载到元数据事件
             var eventJudgeIsLive = function(event) {
                 thisTemp.sendJS('loadedmetadata');
-                if (typeof(thisTemp.V.duration) == 'number' && thisTemp.V.duration > 1) {
+                if (typeof(thisTemp.V.duration== 'number' && thisTemp.V.duration > 1{
                     thisTemp.sendJS('duration', thisTemp.V.duration);
                     thisTemp.formatInserttime(thisTemp.V.duration);
-                    if (thisTemp.adPlayerPlay) {
+                    if (thisTemp.adPlayerPlay{
                         thisTemp.advertisementsTime(thisTemp.V.duration + 1);
                     }
                     thisTemp.durationSendJS = true;
@@ -1068,11 +1068,11 @@ function ckplayerConfig() {
             };
             this.addListenerInside('loadedmetadata', eventJudgeIsLive);
             //监听视频播放事件
-            var eventPlaying = function(event) {
+            var eventPlaying = function(event{
                 thisTemp.playingHandler();
                 thisTemp.sendJS('play');
                 thisTemp.sendJS('paused', false);
-                if (!thisTemp.durationSendJS && typeof(thisTemp.V.duration) == 'number' && thisTemp.V.duration > 0) {
+                if (!thisTemp.durationSendJS && typeof(thisTemp.V.duration== 'number' && thisTemp.V.duration > 0{
                     thisTemp.durationSendJS = true;
                     thisTemp.sendJS('duration', thisTemp.V.duration);
                     thisTemp.formatInserttime(thisTemp.V.duration);
@@ -1080,7 +1080,7 @@ function ckplayerConfig() {
             };
             this.addListenerInside('playing', eventPlaying);
             //监听视频暂停事件
-            var eventPause = function(event) {
+            var eventPause = function(event{
                 thisTemp.pauseHandler();
                 thisTemp.sendJS('pause');
                 thisTemp.sendJS('paused', true);
@@ -1092,11 +1092,11 @@ function ckplayerConfig() {
             };
             this.addListenerInside('ended', eventEnded);
             //监听视频播放时间事件
-            var eventTimeupdate = function(event) {
-                if (thisTemp.timerLoading != null) {
+            var eventTimeupdate = function(event{
+                if (thisTemp.timerLoading != null{
                     thisTemp.loadingStart(false);
                 }
-                if (thisTemp.time) {
+                if (thisTemp.time{
                     if (!thisTemp.adPlayerPlay) {
                         thisTemp.sendJS('time', thisTemp.time);
                         //监听中间插入广告是否需要播放
@@ -1104,10 +1104,10 @@ function ckplayerConfig() {
                             thisTemp.checkAdInsert(thisTemp.time);
                         }
                         //监听其它广告
-                        if (!thisTemp.isUndefined(thisTemp.advertisements['other'])) {
+                        if (!thisTemp.isUndefined(thisTemp.advertisements['other']){
                             thisTemp.checkAdOther(thisTemp.time);
                         }
-                        if (thisTemp.time < 3 && thisTemp.adReset) {
+                        if (thisTemp.time < 3 && thisTemp.adReset{
                             thisTemp.adReset = false;
                             thisTemp.endedAdReset();
                         }
@@ -1119,17 +1119,17 @@ function ckplayerConfig() {
             };
             this.addListenerInside('timeupdate', eventTimeupdate);
             //监听视频缓冲事件
-            var eventWaiting = function(event) {
+            var eventWaiting = function(event{
                 thisTemp.loadingStart(true);
             };
             this.addListenerInside('waiting', eventWaiting);
             //监听视频seek开始事件
-            var eventSeeking = function(event) {
+            var eventSeeking = function(event{
                 thisTemp.sendJS('seek', 'start');
             };
             this.addListenerInside('seeking', eventSeeking);
             //监听视频seek结束事件
-            var eventSeeked = function(event) {
+            var eventSeeked = function(event{
                 thisTemp.seekedHandler();
                 thisTemp.sendJS('seek', 'ended');
             };
@@ -1151,7 +1151,7 @@ function ckplayerConfig() {
             this.addListenerInside('webkitfullscreenchange', eventFullChange);
             this.addListenerInside('mozfullscreenchange', eventFullChange);
             //建立界面
-            if (this.showFace) {
+            if (this.showFace{
                 this.interFace();
             }
         },
@@ -1161,7 +1161,7 @@ function ckplayerConfig() {
 		*/
         resetPlayer: function() {
             this.timeTextHandler();
-            if (this.showFace) {
+            if (this.showFace{
                 this.timeProgress(0, 1); //改变时间进度条宽
                 this.changeLoad(0);
                 this.initPlayPause(); //判断显示播放或暂停按钮
@@ -1179,7 +1179,7 @@ function ckplayerConfig() {
 			内部函数
 			构建界面元素
 		 */
-        interFace: function() {
+        interFace: function({
             this.showFace = true;
             var thisTemp = this;
             var html = ''; //控制栏内容
@@ -1311,7 +1311,7 @@ function ckplayerConfig() {
             /*
 				构建控制栏的内容
 			*/
-            html += '<div class="' + playID + '" data-title="' + thisTemp.language['play'] + '">' + this.newCanvas(playID, bWidth, bHeight) + '</div>'; //播放按钮
+            html += '<div class="' + playID + '" data-title="' + thisTemp.language['play'] + '">' + this.newCanvas(playID, bWidth, bHeight+ '</div>'; //播放按钮
             html += '<div class="' + pauseID + '" data-title="' + thisTemp.language['pause'] + '">' + this.newCanvas(pauseID, bWidth, bHeight) + '</div>'; //暂停按钮
             html += '<div class="' + dlineID + '-la"></div>'; //分隔线
             html += '<div class="' + frontID + '" data-title="' + thisTemp.language['front'] + '">' + this.newCanvas(frontID, bWidth, bHeight) + '</div>'; //前一集按钮
@@ -1320,7 +1320,7 @@ function ckplayerConfig() {
             html += '<div class="' + dlineID + '-lc"></div>'; //分隔线
             html += '<div class="' + timeTextID + '">' + timeInto + '</div>'; //时间文本
             html += '<div class="' + fullID + '" data-title="' + thisTemp.language['full'] + '">' + this.newCanvas(fullID, bWidth, bHeight) + '</div>'; //全屏按钮
-            html += '<div class="' + escFullID + '" data-title="' + thisTemp.language['escFull'] + '">' + this.newCanvas(escFullID, bWidth, bHeight) + '</div>'; //退出全屏按钮
+            html += '<div class="' + escFullID + '" data-title="' + thisTemp.language['escFull'] + '">' + this.newCanvas(escFullID, bWidth, bHeight+ '</div>'; //退出全屏按钮
             html += '<div class="' + dlineID + '-ra"></div>'; //分隔线
             html += '<div class="' + definitionID + '" data-title="' + thisTemp.language['definition'] + '"></div>'; //清晰度容器
             html += '<div class="' + dlineID + '-rb"></div>'; //分隔线
@@ -1330,7 +1330,7 @@ function ckplayerConfig() {
             html += '<div class="' + dlineID + '-rd"></div>'; //分隔线
             html += '<div class="' + volumeID + '"><div class="' + volumeDbgID + '"><div class="' + volumeBgID + '"><div class="' + volumeUpID + '"></div></div><div class="' + volumeBOID + '"><div class="' + volumeBWID + '"></div></div></div></div>'; //音量调节框,音量调节按钮
             html += '<div class="' + muteID + '" data-title="' + thisTemp.language['mute'] + '">' + this.newCanvas(muteID, bWidth, bHeight) + '</div>'; //静音按钮
-            html += '<div class="' + escMuteID + '" data-title="' + thisTemp.language['escMute'] + '">' + this.newCanvas(escMuteID, bWidth, bHeight) + '</div>'; //退出静音按钮
+            html += '<div class="' + escMuteID + '" data-title="' + thisTemp.language['escMute'] + '">' + this.newCanvas(escMuteID, bWidth, bHeight+ '</div>'; //退出静音按钮
             html += '<div class="' + dlineID + '-re"></div>'; //分隔线
             this.getByElement(controlBarID).innerHTML = html;
             //构建进度条内容
@@ -1341,17 +1341,17 @@ function ckplayerConfig() {
             this.getByElement(loadingID).innerHTML = this.newCanvas(loadingID, 60, 60); //构建中间缓冲时显示的图标
             this.getByElement(errorTextID).innerHTML = this.language['error']; //构建错误时显示的文本框
             //构建广告相关
-            html = '<div class="' + adTimeID + '">' + this.language['adTime'].replace('{$second}', 0) + '</div>';
+            html = '<div class="' + adTimeID + '">' + this.language['adTime'].replace('{$second}', 0+ '</div>';
             html += '<div class="' + adMuteID + '">' + this.newCanvas(adMuteID, 30, 30) + '</div>';
-            html += '<div class="' + adEscMuteID + '">' + this.newCanvas(adEscMuteID, 30, 30) + '</div>';
+            html += '<div class="' + adEscMuteID + '">' + this.newCanvas(adEscMuteID, 30, 30+ '</div>';
             html += '<div class="' + adSkipID + '"></div>';
             this.getByElement(adBarID).innerHTML = html;
             this.getByElement(adLinkID).innerHTML = this.language['adLink'];
             this.getByElement(adPauseCloseID).innerHTML = this.newCanvas(adPauseCloseID, 20, 20);
             if (this.ckplayerConfig['style']['logo']) {
-                if (this.ckplayerConfig['style']['logo']['file']) {
+                if (this.ckplayerConfig['style']['logo']['file']{
                     var logoFile = this.ckplayerConfig['style']['logo']['file'];
-                    if (logoFile.substr(0, 15) == 'data:image/png;' || logoFile.substr(0, 15) == 'data:image/jpg;' || logoFile.substr(0, 16) == 'data:image/jpeg;') {
+                    if (logoFile.substr(0, 15== 'data:image/png;' || logoFile.substr(0, 15) == 'data:image/jpg;' || logoFile.substr(0, 16== 'data:image/jpeg;') {
                         this.getByElement(logoID).innerHTML = '<img src="' + logoFile + '" border="0">'; //构建logo
                     }
                 }
@@ -1617,7 +1617,7 @@ function ckplayerConfig() {
             } else {
                 this.css(muteID, 'display', 'none');
             }
-            if (!this.ckplayerConfig['config']['mobileVolumeBarShow'] && this.isMobile()) {
+            if (!this.ckplayerConfig['config']['mobileVolumeBarShow'] && this.isMobile(){
                 this.css([muteID, escMuteID, volumeID, volumeDbgID, dlineID + '-re'], {
                     display: 'none'
                 });
@@ -1680,7 +1680,7 @@ function ckplayerConfig() {
                 cursor: 'pointer'
             });
             this.css(definitionPID, {
-                lineHeight: (bHeight - 8) + 'px',
+                lineHeight: (bHeight - 8+ 'px',
                 color: '#FFFFFF',
                 overflow: 'hidden',
                 position: 'absolute',
@@ -1726,7 +1726,7 @@ function ckplayerConfig() {
                 cursor: 'pointer'
             });
             this.css(subtitlesPID, {
-                lineHeight: (bHeight - 8) + 'px',
+                lineHeight: (bHeight - 8+ 'px',
                 color: '#FFFFFF',
                 overflow: 'hidden',
                 position: 'absolute',
@@ -1778,7 +1778,7 @@ function ckplayerConfig() {
                 color: '#FF0000',
                 paddingLeft: '10px',
                 paddingRight: '10px',
-                lineHeight: (bHeight - 8) + 'px',
+                lineHeight: (bHeight - 8+ 'px',
                 marginLeft: '5px',
                 float: 'right',
                 cursor: 'pointer'
@@ -1804,7 +1804,7 @@ function ckplayerConfig() {
             });
             this.css(adLinkID, {
                 backgroundColor: '#ea5503',
-                lineHeight: (bHeight - 8) + 'px',
+                lineHeight: (bHeight - 8+ 'px',
                 color: '#FFFFFF',
                 paddingLeft: '10px',
                 paddingRight: '10px',
@@ -1832,7 +1832,7 @@ function ckplayerConfig() {
             //构建各按钮的形状
             //播放按钮
             var cPlay = this.getByElement(playID + '-canvas').getContext('2d');
-            var cPlayFillRect = function() {
+            var cPlayFillRect = function({
                 thisTemp.canvasFill(cPlay, [[12, 10], [29, 19], [12, 28]]);
             };
             cPlay.fillStyle = bBgColor;
@@ -1857,12 +1857,12 @@ function ckplayerConfig() {
             };
             cPause.fillStyle = bBgColor;
             cPauseFillRect();
-            var cPauseOver = function(event) {
+            var cPauseOver = function(event{
                 cPause.clearRect(0, 0, bWidth, bHeight);
                 cPause.fillStyle = bOverColor;
                 cPauseFillRect();
             };
-            var cPauseOut = function(event) {
+            var cPauseOut = function(event{
                 cPause.clearRect(0, 0, bWidth, bHeight);
                 cPause.fillStyle = bBgColor;
                 cPauseFillRect();
@@ -1871,7 +1871,7 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cPauseOut, this.getByElement(pauseID + '-canvas'));
             //前一集按钮
             var cFront = this.getByElement(frontID + '-canvas').getContext('2d');
-            var cFrontFillRect = function() {
+            var cFrontFillRect = function({
                 thisTemp.canvasFill(cFront, [[16, 19], [30, 10], [30, 28]]);
                 thisTemp.canvasFillRect(cFront, [[8, 10, 5, 18]]);
             };
@@ -1892,7 +1892,7 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cFrontOut, this.getByElement(frontID + '-canvas'));
             //下一集按钮
             var cNext = this.getByElement(nextID + '-canvas').getContext('2d');
-            var cNextFillRect = function() {
+            var cNextFillRect = function({
                 thisTemp.canvasFill(cNext, [[8, 10], [22, 19], [8, 28]]);
                 thisTemp.canvasFillRect(cNext, [[25, 10, 5, 18]]);
             };
@@ -1912,12 +1912,12 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cNextOut, this.getByElement(nextID + '-canvas'));
             //全屏按钮
             var cFull = this.getByElement(fullID + '-canvas').getContext('2d');
-            var cFullFillRect = function() {
+            var cFullFillRect = function({
                 thisTemp.canvasFillRect(cFull, [[19, 10, 9, 3], [25, 13, 3, 6], [10, 19, 3, 9], [13, 25, 6, 3]]);
             };
             cFull.fillStyle = bBgColor;
             cFullFillRect();
-            var cFullOver = function() {
+            var cFullOver = function({
                 cFull.clearRect(0, 0, bWidth, bHeight);
                 cFull.fillStyle = bOverColor;
                 cFullFillRect();
@@ -1941,7 +1941,7 @@ function ckplayerConfig() {
                 cEscFull.fillStyle = bOverColor;
                 cEscFullFillRect();
             };
-            var cEscFullOut = function() {
+            var cEscFullOut = function({
                 cEscFull.clearRect(0, 0, bWidth, bHeight);
                 cEscFull.fillStyle = bBgColor;
                 cEscFullFillRect();
@@ -1961,7 +1961,7 @@ function ckplayerConfig() {
                 cMute.fillStyle = bOverColor;
                 cMuteFillRect();
             };
-            var cMuteOut = function() {
+            var cMuteOut = function({
                 cMute.clearRect(0, 0, bWidth, bHeight);
                 cMute.fillStyle = bBgColor;
                 cMuteFillRect();
@@ -1970,14 +1970,14 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cMuteOut, this.getByElement(muteID + '-canvas'));
             //定义取消广告静音按钮样式
             var cEscMute = this.getByElement(escMuteID + '-canvas').getContext('2d');
-            var cEscMuteFillRect = function() {
+            var cEscMuteFillRect = function({
                 thisTemp.canvasFill(cEscMute, [[10, 15], [15, 15], [21, 10], [21, 28], [15, 23], [10, 23]]);
                 thisTemp.canvasFill(cEscMute, [[23, 13], [24, 13], [33, 25], [32, 25]]);
                 thisTemp.canvasFill(cEscMute, [[32, 13], [33, 13], [24, 25], [23, 25]]);
             };
             cEscMute.fillStyle = bBgColor;
             cEscMuteFillRect();
-            var cEscMuteOver = function() {
+            var cEscMuteOver = function({
                 cEscMute.clearRect(0, 0, bWidth, bHeight);
                 cEscMute.fillStyle = bOverColor;
                 cEscMuteFillRect();
@@ -1991,13 +1991,13 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cEscMuteOut, this.getByElement(escMuteID + '-canvas'));
             //定义广告静音按钮的样式
             var cAdMute = this.getByElement(adMuteID + '-canvas').getContext('2d');
-            var cAdMuteFillRect = function() {
+            var cAdMuteFillRect = function({
                 thisTemp.canvasFill(cAdMute, [[8, 12], [12, 12], [16, 8], [16, 21], [12, 18], [8, 18]]);
                 thisTemp.canvasFillRect(cAdMute, [[18, 12, 2, 6], [21, 8, 2, 14]]);
             };
             cAdMute.fillStyle = bBgColor;
             cAdMuteFillRect();
-            var cAdMuteOver = function() {
+            var cAdMuteOver = function({
                 cAdMute.clearRect(0, 0, bWidth, bHeight);
                 cAdMute.fillStyle = bOverColor;
                 cAdMuteFillRect();
@@ -2018,7 +2018,7 @@ function ckplayerConfig() {
             };
             cAdEscMute.fillStyle = bBgColor;
             cAdEscMuteFillRect();
-            var cAdEscMuteOver = function() {
+            var cAdEscMuteOver = function({
                 cAdEscMute.clearRect(0, 0, bWidth, bHeight);
                 cAdEscMute.fillStyle = bOverColor;
                 cAdEscMuteFillRect();
@@ -2038,7 +2038,7 @@ function ckplayerConfig() {
             };
             adPauseClose.fillStyle = '#404856';
             adPauseCloseFillRect();
-            var adPauseCloseOver = function() {
+            var adPauseCloseOver = function({
                 adPauseClose.clearRect(0, 0, bWidth, bHeight);
                 adPauseClose.fillStyle = bOverColor;
                 adPauseCloseFillRect();
@@ -2052,7 +2052,7 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', adPauseCloseOut, this.getByElement(adPauseCloseID + '-canvas'));
             //定义loading样式
             var cLoading = this.getByElement(loadingID + '-canvas').getContext('2d');
-            var cLoadingFillRect = function() {
+            var cLoadingFillRect = function({
                 cLoading.save();
                 var grad = cLoading.createLinearGradient(0, 0, 60, 60);
                 grad.addColorStop(0, bBgColor);
@@ -2087,7 +2087,7 @@ function ckplayerConfig() {
             cLoadingFillRect();
             //定义中间暂停按钮的样式
             var cPauseCenter = this.getByElement(pauseCenterID + '-canvas').getContext('2d');
-            var cPauseCenterFillRect = function() {
+            var cPauseCenterFillRect = function({
                 thisTemp.canvasFill(cPauseCenter, [[28, 22], [59, 38], [28, 58]]);
                 /* 指定几个颜色 */
                 cPauseCenter.save();
@@ -2101,13 +2101,13 @@ function ckplayerConfig() {
             cPauseCenter.fillStyle = bBgColor;
             cPauseCenter.strokeStyle = bBgColor;
             cPauseCenterFillRect();
-            var cPauseCenterOver = function() {
+            var cPauseCenterOver = function({
                 cPauseCenter.clearRect(0, 0, 80, 80);
                 cPauseCenter.fillStyle = bOverColor;
                 cPauseCenter.strokeStyle = bOverColor;
                 cPauseCenterFillRect();
             };
-            var cPauseCenterOut = function() {
+            var cPauseCenterOut = function({
                 cPauseCenter.clearRect(0, 0, 80, 80);
                 cPauseCenter.fillStyle = bBgColor;
                 cPauseCenter.strokeStyle = bBgColor;
@@ -2117,22 +2117,22 @@ function ckplayerConfig() {
             this.addListenerInside('mouseout', cPauseCenterOut, this.getByElement(pauseCenterID + '-canvas'));
 
             //鼠标经过/离开音量调节按钮
-            var volumeBOOver = function() {
+            var volumeBOOver = function({
                 thisTemp.css(volumeBOID, 'backgroundColor', bOverColor);
                 thisTemp.css(volumeBWID, 'backgroundColor', bBgColor);
             };
-            var volumeBOOut = function() {
+            var volumeBOOut = function({
                 thisTemp.css(volumeBOID, 'backgroundColor', bBgColor);
                 thisTemp.css(volumeBWID, 'backgroundColor', bOverColor);
             };
             this.addListenerInside('mouseover', volumeBOOver, this.getByElement(volumeBOID));
             this.addListenerInside('mouseout', volumeBOOut, this.getByElement(volumeBOID));
             //鼠标经过/离开进度按钮
-            var timeBOOver = function() {
+            var timeBOOver = function({
                 thisTemp.css(timeBOID, 'backgroundColor', bOverColor);
                 thisTemp.css(timeBWID, 'backgroundColor', bBgColor);
             };
-            var timeBOOut = function() {
+            var timeBOOut = function({
                 thisTemp.css(timeBOID, 'backgroundColor', bBgColor);
                 thisTemp.css(timeBWID, 'backgroundColor', bOverColor);
             };
@@ -2152,7 +2152,7 @@ function ckplayerConfig() {
                 },
                 100);
             this.checkBarWidth();
-            var resize = function() {
+            var resize = function({
                 thisTemp.elementCoordinate();
                 thisTemp.timeUpdateHandler();
                 thisTemp.changeLoad();
@@ -2168,7 +2168,7 @@ function ckplayerConfig() {
 			内部函数
 			创建按钮，使用canvas画布
 		*/
-        newCanvas: function(id, width, height) {
+        newCanvas: function(id, width, height{
             return '<canvas class="' + id + '-canvas" width="' + width + '" height="' + height + '"></canvas>';
         },
         /*
@@ -2184,20 +2184,20 @@ function ckplayerConfig() {
             };
             this.addListenerInside('click', playClick, this.CB['play']);
             this.addListenerInside('click', playClick, this.CB['pauseCenter']);
-            var pauseClick = function(event) {
+            var pauseClick = function(event{
                 thisTemp.videoPause();
                 thisTemp.sendJS('clickEvent', 'actionScript->videoPause');
             };
             this.addListenerInside('click', pauseClick, this.CB['pause']);
-            var frontClick = function(event) {
+            var frontClick = function(event{
                 if (thisTemp.vars['front']) {
                     eval(thisTemp.vars['front'] + '()');
                     thisTemp.sendJS('clickEvent', 'actionScript->' + thisTemp.vars['front']);
                 }
             };
             this.addListenerInside('click', frontClick, this.CB['front']);
-            var nextClick = function(event) {
-                if (thisTemp.vars['next']) {
+            var nextClick = function(event{
+                if (thisTemp.vars['next']{
                     eval(thisTemp.vars['next'] + '()');
                     thisTemp.sendJS('clickEvent', 'actionScript->' + thisTemp.vars['next']);
                 }
@@ -2213,18 +2213,18 @@ function ckplayerConfig() {
                 thisTemp.sendJS('clickEvent', 'actionScript->videoEscMute');
             };
             this.addListenerInside('click', escMuteClick, this.CB['escMute']);
-            var fullClick = function(event) {
+            var fullClick = function(event{
                 thisTemp.fullScreen();
                 thisTemp.sendJS('clickEvent', 'actionScript->fullScreen');
             };
             this.addListenerInside('click', fullClick, this.CB['full']);
-            var escFullClick = function(event) {
+            var escFullClick = function(event{
                 thisTemp.quitFullScreen();
                 thisTemp.sendJS('clickEvent', 'actionScript->quitFullScreen');
             };
             this.addListenerInside('click', escFullClick, this.CB['escFull']);
             var adSkipClick = function(event) {
-                if (thisTemp.CB['adSkip'].innerHTML == thisTemp.language['skipAd']) {
+                if (thisTemp.CB['adSkip'].innerHTML == thisTemp.language['skipAd']{
                     thisTemp.runFunction(thisTemp.config['adSkipClick']);
                 }
             };
@@ -2245,7 +2245,7 @@ function ckplayerConfig() {
             var promptHide = function(event) {
                 thisTemp.promptShow(false);
             };
-            var playOver = function(event) {
+            var playOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['play']);
             };
             this.addListenerInside('mouseover', playOver, this.CB['play']);
@@ -2255,17 +2255,17 @@ function ckplayerConfig() {
             };
             this.addListenerInside('mouseover', pauseOver, this.CB['pause']);
             this.addListenerInside('mouseout', promptHide, this.CB['pause']);
-            var frontOver = function(event) {
+            var frontOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['front']);
             };
             this.addListenerInside('mouseover', frontOver, this.CB['front']);
             this.addListenerInside('mouseout', promptHide, this.CB['front']);
-            var nextOver = function(event) {
+            var nextOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['next']);
             };
             this.addListenerInside('mouseover', nextOver, this.CB['next']);
             this.addListenerInside('mouseout', promptHide, this.CB['next']);
-            var muteOver = function(event) {
+            var muteOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['mute']);
             };
             this.addListenerInside('mouseover', muteOver, this.CB['mute']);
@@ -2280,17 +2280,17 @@ function ckplayerConfig() {
             };
             this.addListenerInside('mouseover', fullOver, this.CB['full']);
             this.addListenerInside('mouseout', promptHide, this.CB['full']);
-            var escFullOver = function(event) {
+            var escFullOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['escFull']);
             };
             this.addListenerInside('mouseover', escFullOver, this.CB['escFull']);
             this.addListenerInside('mouseout', promptHide, this.CB['escFull']);
-            var definitionOver = function(event) {
+            var definitionOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['definition']);
             };
             this.addListenerInside('mouseover', definitionOver, this.CB['definition']);
             this.addListenerInside('mouseout', promptHide, this.CB['definition']);
-            var playbackrateOver = function(event) {
+            var playbackrateOver = function(event{
                 thisTemp.promptShow(thisTemp.CB['playbackrate']);
             };
             this.addListenerInside('mouseover', playbackrateOver, this.CB['playbackrate']);
@@ -2316,13 +2316,13 @@ function ckplayerConfig() {
                 refer: this.CB['volumeBg'],
                 grossValue: 'volume',
                 pd: true,
-                startFun: function(vol) {},
+                startFun: function(vol{},
                 monitorFun: function(vol) {
                     thisTemp.changeVolume(vol * 0.01, false, false);
                     volumePrompt(vol);
                 },
-                endFun: function(vol) {},
-                overFun: function(vol) {
+                endFun: function(vol{},
+                overFun: function(vol{
                     volumePrompt(vol);
                 }
             };
@@ -2330,14 +2330,14 @@ function ckplayerConfig() {
             var volumeClickObj = {
                 refer: this.CB['volumeBg'],
                 grossValue: 'volume',
-                fun: function(vol) {
+                fun: function(vol{
                     thisTemp.changeVolume(vol * 0.01, true, true);
                 }
             };
             this.progressClick(volumeClickObj);
             this.timeButtonMouseDown(); //用单击的函数来判断是否需要建立控制栏监听
             //鼠标经过/离开音量调节框时的
-            var volumeBgMove = function(event) {
+            var volumeBgMove = function(event{
                 var volumeBgXY = thisTemp.getCoor(thisTemp.CB['volumeBg']);
                 var eventX = thisTemp.client(event)['x'];
                 var eventVolume = parseInt((eventX - volumeBgXY['x']) * 100 / thisTemp.CB['volumeBg'].offsetWidth);
@@ -2366,36 +2366,36 @@ function ckplayerConfig() {
             var thisTemp = this;
             var clearTimerClick = function() {
                 if (thisTemp.timerClick != null) {
-                    if (thisTemp.timerClick.runing) {
+                    if (thisTemp.timerClick.runing{
                         thisTemp.timerClick.stop();
                     }
                     thisTemp.timerClick = null;
                 }
             };
-            var timerClickFun = function() {
+            var timerClickFun = function({
                 clearTimerClick();
                 thisTemp.isClick = false;
                 thisTemp.sendJS('videoClick',thisTemp.videoClickXy);
                 if (thisTemp.adPlayerPlay) {
                     var ad = thisTemp.getNowAdvertisements();
                     try {
-                        if (ad['link'] != '') {
+                        if (ad['link'] != ''{
                             window.open(ad['link']);
                         }
                         thisTemp.ajaxSuccessNull(ad['clickMonitor']);
-                    } catch(event) {}
+                    } catch(event{}
                 } else {
-                    if (thisTemp.ckplayerConfig['config']['click']) {
+                    if (thisTemp.ckplayerConfig['config']['click']{
                         thisTemp.playOrPause();
                     }
                 }
 
             };
             clearTimerClick();
-            if (this.isClick) {
+            if (this.isClick{
                 this.isClick = false;
                 thisTemp.sendJS('videoDoubleClick',thisTemp.videoClickXy);
-                if (thisTemp.ckplayerConfig['config']['doubleClick']) {
+                if (thisTemp.ckplayerConfig['config']['doubleClick']{
                     if (!this.full) {
                         thisTemp.fullScreen();
                     } else {
@@ -2416,8 +2416,8 @@ function ckplayerConfig() {
 		*/
         timeButtonMouseDown: function() {
             var thisTemp = this;
-            var timePrompt = function(time) {
-                if (isNaN(time)) {
+            var timePrompt = function(time{
+                if (isNaN(time){
                     time = 0;
                 }
                 var timeButtonXY = thisTemp.getCoor(thisTemp.CB['timeButton']);
@@ -2439,14 +2439,14 @@ function ckplayerConfig() {
                 },
                 monitorFun: function(time) {},
                 endFun: function(time) {
-                    if (thisTemp.V) {
-                        if (thisTemp.V.duration > 0) {
+                    if (thisTemp.V{
+                        if (thisTemp.V.duration > 0{
                             thisTemp.needSeek = 0;
                             thisTemp.videoSeek(parseInt(time));
                         }
                     }
                 },
-                overFun: function(time) {
+                overFun: function(time{
                     timePrompt(time);
                 }
             };
@@ -2454,8 +2454,8 @@ function ckplayerConfig() {
                 refer: this.CB['timeBoBg'],
                 grossValue: 'time',
                 fun: function(time) {
-                    if (thisTemp.V) {
-                        if (thisTemp.V.duration > 0) {
+                    if (thisTemp.V{
+                        if (thisTemp.V.duration > 0{
                             thisTemp.needSeek = 0;
                             thisTemp.videoSeek(parseInt(time));
                         }
@@ -2465,7 +2465,7 @@ function ckplayerConfig() {
             var timeBoBgmousemove = function(event) {
                 var timeBoBgXY = thisTemp.getCoor(thisTemp.CB['timeBoBg']);
                 var eventX = thisTemp.client(event)['x'];
-                var eventTime = parseInt((eventX - timeBoBgXY['x']) * thisTemp.V.duration / thisTemp.CB['timeBoBg'].offsetWidth);
+                var eventTime = parseInt((eventX - timeBoBgXY['x']* thisTemp.V.duration / thisTemp.CB['timeBoBg'].offsetWidth);
                 var buttonPromptObj = {
                     title: thisTemp.formatTime(eventTime),
                     x: eventX,
@@ -2474,7 +2474,7 @@ function ckplayerConfig() {
                 thisTemp.promptShow(false, buttonPromptObj);
                 var def = false;
                 if (!thisTemp.isUndefined(thisTemp.CB['definitionP'])) {
-                    if (thisTemp.css(thisTemp.CB['definitionP'], 'display') != 'block') {
+                    if (thisTemp.css(thisTemp.CB['definitionP'], 'display'!= 'block'{
                         def = true;
                     }
                 }
@@ -2483,7 +2483,7 @@ function ckplayerConfig() {
                     thisTemp.preview(buttonPromptObj);
                 }
             };
-            var promptHide = function(event) {
+            var promptHide = function(event{
                 thisTemp.promptShow(false);
                 if (thisTemp.previewDiv != null) {
                     thisTemp.css([thisTemp.previewDiv, thisTemp.previewTop], 'display', 'none');
@@ -2516,33 +2516,33 @@ function ckplayerConfig() {
 			*/
             //建立参考元素的mouseClick事件，用来做为鼠标在其上按下时触发的状态
             var thisTemp = this;
-            var referMouseClick = function(event) {
+            var referMouseClick = function(event{
                 var referX = thisTemp.client(event)['x'] - thisTemp.getCoor(obj['refer'])['x'];
                 var rWidth = obj['refer'].offsetWidth;
                 var grossValue = 0;
-                if (obj['grossValue'] == 'volume') {
+                if (obj['grossValue'] == 'volume'{
                     grossValue = 100;
                 } else {
-                    if (thisTemp.V) {
+                    if (thisTemp.V{
                         grossValue = thisTemp.V.duration;
                     }
                 }
                 var nowZ = parseInt(referX * grossValue / rWidth);
-                if (obj['fun']) {
+                if (obj['fun']{
                     if (obj['grossValue'] === 'time') {
                         var sliderXY = thisTemp.getCoor(thisTemp.CB['timeButton']);
                         sliderLeft = sliderXY['x'];
-                        if (!thisTemp.checkSlideLeft(referX, sliderLeft, rWidth)) {
+                        if (!thisTemp.checkSlideLeft(referX, sliderLeft, rWidth){
                             return;
                         }
                         var bimeButtonWB = thisTemp.CB['timeButton'].offsetWidth * 0.5;
-                        thisTemp.css(thisTemp.CB['timeButton'], 'left', (referX - bimeButtonWB) + 'px');
-                        thisTemp.css(thisTemp.CB['timeProgress'], 'width', (referX) + 'px');
+                        thisTemp.css(thisTemp.CB['timeButton'], 'left', (referX - bimeButtonWB+ 'px');
+                        thisTemp.css(thisTemp.CB['timeProgress'], 'width', (referX+ 'px');
                     }
                     obj['fun'](nowZ);
                 }
             };
-            if (this.isUndefined(obj['removeListenerInside'])) {
+            if (this.isUndefined(obj['removeListenerInside']){
                 this.addListenerInside('click', referMouseClick, obj['refer']);
             } else {
                 this.removeListenerInside('click', referMouseClick, obj['refer']);
@@ -2554,7 +2554,7 @@ function ckplayerConfig() {
 			内部函数
 			共用的注册滑块事件
 		*/
-        slider: function(obj) {
+        slider: function(obj{
             /*
 				obj={
 					slider:滑块元素
@@ -2578,13 +2578,13 @@ function ckplayerConfig() {
                 var sLeft = parseInt(thisTemp.css(obj['slider'], 'left'));
                 var rWidth = obj['refer'].offsetWidth - obj['slider'].offsetWidth;
                 var grossValue = 0;
-                if (thisTemp.isUndefined(sLeft) || isNaN(sLeft)) {
+                if (thisTemp.isUndefined(sLeft|| isNaN(sLeft)) {
                     sLeft = 0;
                 }
-                if (obj['grossValue'] == 'volume') {
+                if (obj['grossValue'] == 'volume'{
                     grossValue = 100;
                 } else {
-                    if (thisTemp.V) {
+                    if (thisTemp.V{
                         grossValue = thisTemp.V.duration;
                     }
                 }
@@ -2603,7 +2603,7 @@ function ckplayerConfig() {
                     obj['startFun'](calculation());
                 }
             };
-            var mMove = function(event) {
+            var mMove = function(event{
                 clientX = thisTemp.client(event)['x'];
                 var newX = clientX - criterionWidth - referLeft;
                 if (newX < 0) {
@@ -2612,27 +2612,27 @@ function ckplayerConfig() {
                 if (newX > obj['refer'].offsetWidth - obj['slider'].offsetWidth) {
                     newX = obj['refer'].offsetWidth - obj['slider'].offsetWidth;
                 }
-                if (obj['slider'] === thisTemp.CB['timeButton']) {
+                if (obj['slider'] === thisTemp.CB['timeButton']{
                     if (!thisTemp.checkSlideLeft(newX, sliderLeft, obj['refer'].offsetWidth)) {
                         return;
                     }
                 }
                 thisTemp.css(obj['slider'], 'left', newX + 'px');
-                thisTemp.css(obj['follow'], 'width', (newX + obj['slider'].offsetWidth * 0.5) + 'px');
+                thisTemp.css(obj['follow'], 'width', (newX + obj['slider'].offsetWidth * 0.5+ 'px');
                 var nowZ = calculation();
-                if (obj['monitorFun']) {
+                if (obj['monitorFun']{
                     obj['monitorFun'](nowZ);
                 }
             };
-            var mUp = function(event) {
+            var mUp = function(event{
                 thisTemp.removeListenerInside('mousemove', mMove, document);
                 thisTemp.removeListenerInside('mouseup', mUp, document);
-                if (obj['endFun']) {
+                if (obj['endFun']{
                     obj['endFun'](calculation());
                 }
             };
             var mOver = function(event) {
-                if (obj['overFun']) {
+                if (obj['overFun']{
                     obj['overFun'](calculation());
                 }
 
@@ -2655,7 +2655,7 @@ function ckplayerConfig() {
                 case 0:
                     return false;
                 case 2:
-                    if (newX < sliderLeft) {
+                    if (newX < sliderLeft{
                         return false;
                     }
                     break;
@@ -2668,16 +2668,16 @@ function ckplayerConfig() {
                     if (!this.timeSliderLeftTemp) {
                         this.timeSliderLeftTemp = sliderLeft / refer;
                     }
-                    if (newX < this.timeSliderLeftTemp * refer) {
+                    if (newX < this.timeSliderLeftTemp * refer{
                         return false;
                     }
                     break;
                 case 5:
-                    if (!this.timeSliderLeftTemp) {
+                    if (!this.timeSliderLeftTemp{
                         this.timeSliderLeftTemp = sliderLeft / refer;
                     } else {
                         var timeSliderMax = sliderLeft / refer;
-                        if (timeSliderMax > this.timeSliderLeftTemp) {
+                        if (timeSliderMax > this.timeSliderLeftTemp{
                             this.timeSliderLeftTemp = timeSliderMax;
                         }
                     }
@@ -2694,29 +2694,29 @@ function ckplayerConfig() {
 			内部函数
 			显示loading
 		*/
-        loadingStart: function(rot) {
+        loadingStart: function(rot{
             var thisTemp = this;
-            if (this.isUndefined(rot)) {
+            if (this.isUndefined(rot){
                 rot = true;
             }
-            if (this.showFace) {
+            if (this.showFace{
                 this.css(thisTemp.CB['loading'], 'display', 'none');
             }
             if (this.timerLoading != null) {
-                if (this.timerLoading.runing) {
+                if (this.timerLoading.runing{
                     this.timerLoading.stop();
                 }
                 this.timerLoading = null;
             }
             var buffer = 0;
-            var loadingFun = function() {
+            var loadingFun = function({
                 var nowRotate = '0';
                 try {
-                    nowRotate = thisTemp.css(thisTemp.CB['loadingCanvas'], 'transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-ms-transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-moz-transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-webkit-transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-o-transform') || '0';
-                } catch(event) {}
+                    nowRotate = thisTemp.css(thisTemp.CB['loadingCanvas'], 'transform'|| thisTemp.css(thisTemp.CB['loadingCanvas'], '-ms-transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-moz-transform') || thisTemp.css(thisTemp.CB['loadingCanvas'], '-webkit-transform'|| thisTemp.css(thisTemp.CB['loadingCanvas'], '-o-transform'|| '0';
+                } catch(event{}
                 nowRotate = parseInt(nowRotate.replace('rotate(', '').replace('deg);', ''));
                 nowRotate += 4;
-                if (nowRotate > 360) {
+                if (nowRotate > 360{
                     nowRotate = 0;
                 }
                 if (thisTemp.showFace) {
@@ -2729,7 +2729,7 @@ function ckplayerConfig() {
                     });
                 }
                 buffer++;
-                if (buffer >= 99) {
+                if (buffer >= 99{
                     buffer = 99;
                 }
                 thisTemp.sendJS('buffer', buffer);
@@ -2737,7 +2737,7 @@ function ckplayerConfig() {
             if (rot) {
                 this.timerLoading = new this.timer(10, loadingFun);
                 //this.timerLoading.start();
-                if (this.showFace) {
+                if (this.showFace{
                     this.css(thisTemp.CB['loading'], 'display', 'block');
                 }
             } else {
@@ -2748,16 +2748,16 @@ function ckplayerConfig() {
 			内部函数
 			判断是否需要显示上一集和下一集
 		*/
-        showFrontNext: function() {
+        showFrontNext: function({
             if (!this.showFace) {
                 return;
             }
-            if (this.vars['front']) {
+            if (this.vars['front']{
                 this.css([this.CB['front'], this.CB['frontLine']], 'display', 'block');
             } else {
                 this.css([this.CB['front'], this.CB['frontLine']], 'display', 'none');
             }
-            if (this.vars['next']) {
+            if (this.vars['next']{
                 this.css([this.CB['next'], this.CB['nextLine']], 'display', 'block');
             } else {
                 this.css([this.CB['next'], this.CB['nextLine']], 'display', 'none');
@@ -2767,13 +2767,13 @@ function ckplayerConfig() {
 			内部函数
 			显示提示语
 		*/
-        promptShow: function(ele, data) {
+        promptShow: function(ele, data{
             if (!this.showFace) {
                 return;
             }
             var obj = {};
-            if (ele || data) {
-                if (!this.isUndefined(data)) {
+            if (ele || data{
+                if (!this.isUndefined(data){
                     obj = data;
                 } else {
                     var offsetCoor = this.getCoor(ele);
@@ -2791,10 +2791,10 @@ function ckplayerConfig() {
                 promoptWidth += 10;
                 var x = obj['x'] - (promoptWidth * 0.5);
                 var y = this.PD.offsetHeight - obj['y'] + 8;
-                if (x < 0) {
+                if (x < 0{
                     x = 0;
                 }
-                if (x > this.PD.offsetWidth - promoptWidth) {
+                if (x > this.PD.offsetWidth - promoptWidth{
                     x = this.PD.offsetWidth - promoptWidth;
                 }
                 this.css([this.CB['promptBg'], this.CB['prompt']], {
@@ -2815,8 +2815,8 @@ function ckplayerConfig() {
         timerErrorFun: function() {
             var thisTemp = this;
             this.errorSend = false;
-            var clearIntervalError = function(event) {
-                if (thisTemp.timerError != null) {
+            var clearIntervalError = function(event{
+                if (thisTemp.timerError != null{
                     if (thisTemp.timerError.runing) {
                         thisTemp.timerError.stop();
                     }
@@ -2842,7 +2842,7 @@ function ckplayerConfig() {
                 thisTemp.resetPlayer();
             };
             var errorListenerFun = function(event) {
-                setTimeout(function() {
+                setTimeout(function({
                         if (isNaN(thisTemp.V.duration)) {
                             errorFun(event);
                         }
@@ -2850,13 +2850,13 @@ function ckplayerConfig() {
                     500);
 
             };
-            if (!this.errorAdd) {
+            if (!this.errorAdd{
                 this.errorAdd = true;
                 this.addListenerInside('error', errorListenerFun, this.V);
             }
             clearIntervalError();
             var timerErrorFun = function() {
-                if (thisTemp.V && parseInt(thisTemp.V.networkState) == 3) {
+                if (thisTemp.V && parseInt(thisTemp.V.networkState== 3{
                     errorFun();
                 }
             };
@@ -2869,13 +2869,13 @@ function ckplayerConfig() {
 		*/
         judgeFullScreen: function() {
             var thisTemp = this;
-            if (this.timerFull != null) {
-                if (this.timerFull.runing) {
+            if (this.timerFull != null{
+                if (this.timerFull.runing{
                     this.timerFull.stop();
                 }
                 this.timerFull = null;
             }
-            var fullFun = function() {
+            var fullFun = function({
                 thisTemp.isFullScreen();
             };
             this.timerFull = new this.timer(20, fullFun);
@@ -2884,12 +2884,12 @@ function ckplayerConfig() {
 			内部函数
 			判断是否是全屏
 		*/
-        isFullScreen: function() {
+        isFullScreen: function({
             if (!this.showFace) {
                 return;
             }
             var fullState = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen || document.msFullscreenElement;
-            if (fullState && !this.full) {
+            if (fullState && !this.full{
                 this.full = true;
                 this.sendJS('full', true);
                 this.elementCoordinate();
@@ -2906,8 +2906,8 @@ function ckplayerConfig() {
                 this.elementCoordinate();
                 this.css(this.CB['full'], 'display', 'block');
                 this.css(this.CB['escFull'], 'display', 'none');
-                if (this.timerFull != null) {
-                    if (this.timerFull.runing) {
+                if (this.timerFull != null{
+                    if (this.timerFull.runing{
                         this.timerFull.stop();
                     }
                     this.timerFull = null;
@@ -2938,8 +2938,8 @@ function ckplayerConfig() {
             });
             var mArr = this.contextMenu;
             var cMenu = this.ckplayerConfig['menu'];
-            if (cMenu['name']) {
-                if (cMenu['link']) {
+            if (cMenu['name']{
+                if (cMenu['link']{
                     mArr[0] = [cMenu['name'], 'link', cMenu['link']];
                 } else {
                     mArr[0] = [cMenu['name'], 'default'];
@@ -2948,8 +2948,8 @@ function ckplayerConfig() {
             if (cMenu['version']) {
                 mArr[1] = [cMenu['version'], 'default', 'line'];
             }
-            if (cMenu['more']) {
-                if (typeof(cMenu['more']) == 'object') {
+            if (cMenu['more']{
+                if (typeof(cMenu['more']) == 'object'{
                     if (cMenu['more'].length > 0) {
                         var moreArr = cMenu['more'];
                         for (i = 0; i < moreArr.length; i++) {
@@ -2961,10 +2961,10 @@ function ckplayerConfig() {
                             if (mTemp['clickEvent'] && mTemp['clickEvent'] != 'none') {
                                 var eveObj = this.clickEvent(mTemp['clickEvent']);
                                 arrTemp.push(eveObj['type']);
-                                if (eveObj['fun']) {
+                                if (eveObj['fun']{
                                     arrTemp.push(eveObj['fun']);
                                 }
-                                if (eveObj['link']) {
+                                if (eveObj['link']{
                                     arrTemp.push(eveObj['link']);
                                 }
                                 if (eveObj['target']) {
@@ -2982,12 +2982,12 @@ function ckplayerConfig() {
             var html = '';
             for (i = 0; i < mArr.length; i++) {
                 var me = mArr[i];
-                switch (me[1]) {
+                switch (me[1]{
                     case 'default':
                         html += '<p>' + me[0] + '</p>';
                         break;
                     case 'link':
-                        if (me[3]) {
+                        if (me[3]{
                             me[3] = 'target="' + me[3] + '"';
                         }
                         html += '<p><a href="' + me[2] + '"' + me[3] + '>' + me[0] + '</a></p>';
@@ -3004,7 +3004,7 @@ function ckplayerConfig() {
             }
             this.CB['menu'].innerHTML = html;
             var pArr = this.CB['menu'].childNodes;
-            for (i = 0; i < pArr.length; i++) {
+            for (i = 0; i < pArr.length; i++{
                 this.css(pArr[i], {
                     height: '30px',
                     lineHeight: '30px',
@@ -3018,7 +3018,7 @@ function ckplayerConfig() {
                     this.css(pArr[i], 'borderBottom', '1px solid #e9e9e9');
                 }
                 var aArr = pArr[i].childNodes;
-                for (var n = 0; n < aArr.length; n++) {
+                for (var n = 0; n < aArr.length; n++{
                     if (aArr[n].localName == 'a') {
                         this.css(aArr[n], {
                             color: '#000000',
@@ -3027,10 +3027,10 @@ function ckplayerConfig() {
                     }
                 }
             }
-            this.PD.oncontextmenu = function(event) {
+            this.PD.oncontextmenu = function(event{
                 var eve = event || window.event;
                 var client = thisTemp.client(event);
-                if (eve.button == 2) {
+                if (eve.button == 2{
                     eve.returnvalue = false;
                     var x = client['x'] + thisTemp.pdCoor['x'] - 2;
                     var y = client['y'] + thisTemp.pdCoor['y'] - 2;
@@ -3043,14 +3043,14 @@ function ckplayerConfig() {
                 }
                 return true;
             };
-            var setTimeOutPClose = function() {
-                if (setTimeOutP) {
+            var setTimeOutPClose = function({
+                if (setTimeOutP{
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
             };
             var setTimeOutP = null;
-            var mouseOut = function(event) {
+            var mouseOut = function(event{
                 setTimeOutPClose();
                 setTimeOutP = setTimeout(function(event) {
                         thisTemp.css(thisTemp.CB['menu'], 'display', 'none');
@@ -3058,7 +3058,7 @@ function ckplayerConfig() {
                     500);
             };
             this.addListenerInside('mouseout', mouseOut, thisTemp.CB['menu']);
-            var mouseOver = function(event) {
+            var mouseOver = function(event{
                 setTimeOutPClose();
             };
             this.addListenerInside('mouseover', mouseOver, thisTemp.CB['menu']);
@@ -3068,7 +3068,7 @@ function ckplayerConfig() {
 			内部函数
 			构建控制栏隐藏事件
 		*/
-        controlBarHide: function(hide) {
+        controlBarHide: function(hide{
             var thisTemp = this;
             var client = {
                     x: 0,
@@ -3081,8 +3081,8 @@ function ckplayerConfig() {
             var cShow = true,
                 force = false;
             var oldCoor = [0, 0];
-            var controlBarShow = function(show) {
-                if (show && !cShow && thisTemp.controlBarIsShow) {
+            var controlBarShow = function(show{
+                if (show && !cShow && thisTemp.controlBarIsShow{
                     cShow = true;
                     thisTemp.sendJS('controlBar', true);
                     thisTemp.css(thisTemp.CB['controlBarBg'], 'display', 'block');
@@ -3091,17 +3091,17 @@ function ckplayerConfig() {
                     thisTemp.css(thisTemp.CB['timeBoBg'], 'display', 'block');
                     thisTemp.changeVolume(thisTemp.volume);
                     thisTemp.changeLoad();
-                    if (!thisTemp.timerBuffer) {
+                    if (!thisTemp.timerBuffer{
                         thisTemp.bufferEdHandler();
                     }
                 } else {
-                    if (cShow) {
+                    if (cShow{
                         cShow = false;
                         var paused = thisTemp.getMetaDate()['paused'];
-                        if (force) {
+                        if (force{
                             paused = false;
                         }
-                        if (!paused) {
+                        if (!paused{
                             thisTemp.sendJS('controlBar', false);
                             thisTemp.css(thisTemp.CB['controlBarBg'], 'display', 'none');
                             thisTemp.css(thisTemp.CB['controlBar'], 'display', 'none');
@@ -3113,14 +3113,14 @@ function ckplayerConfig() {
                     }
                 }
             };
-            var cbarFun = function(event) {
+            var cbarFun = function(event{
                 if (client['x'] == oldClient['x'] && client['y'] == oldClient['y']) {
                     var cdH = parseInt(thisTemp.CD.offsetHeight);
-                    if ((client['y'] < cdH - 50 || client['y'] > cdH - 2) && cShow && !thisTemp.getMetaDate()['paused']) {
+                    if ((client['y'] < cdH - 50 || client['y'] > cdH - 2) && cShow && !thisTemp.getMetaDate()['paused']{
                         controlBarShow(false);
                     }
                 } else {
-                    if (!cShow) {
+                    if (!cShow{
                         controlBarShow(true);
                     }
                 }
@@ -3157,14 +3157,14 @@ function ckplayerConfig() {
 			内部函数
 			注册键盘按键事件
 		*/
-        keypress: function() {
+        keypress: function({
             var thisTemp = this;
             var keyDown = function(eve) {
                 var keycode = eve.keyCode || eve.which;
-                if (thisTemp.adPlayerPlay) {
+                if (thisTemp.adPlayerPlay{
                     return;
                 }
-                switch (keycode) {
+                switch (keycode{
                     case 32:
                         thisTemp.playOrPause();
                         break;
@@ -3193,7 +3193,7 @@ function ckplayerConfig() {
 			注册倍速相关
 		*/
         playbackRate: function() {
-            if (!this.showFace || !this.ckplayerConfig['config']['playbackRate']) {
+            if (!this.showFace || !this.ckplayerConfig['config']['playbackRate']{
                 return;
             }
             var thisTemp = this;
@@ -3201,19 +3201,19 @@ function ckplayerConfig() {
             var html = '';
             var nowD = ''; //当前的倍速
             var i = 0;
-            if (!nowD) {
+            if (!nowD{
                 nowD = vArr[this.playbackRateDefault][1];
             }
-            if (vArr.length > 1) {
+            if (vArr.length > 1{
                 var zlen = 0;
-                for (i = 0; i < vArr.length; i++) {
+                for (i = 0; i < vArr.length; i++{
                     html = '<p>' + vArr[i][1] + '</p>' + html;
                     var dlen = this.getStringLen(vArr[i][1]);
                     if (dlen > zlen) {
                         zlen = dlen;
                     }
                 }
-                if (html) {
+                if (html{
                     html += '<p>' + nowD + '</p>';
                 }
                 this.CB['playbackrate'].innerHTML = nowD;
@@ -3231,11 +3231,11 @@ function ckplayerConfig() {
                         padding: '0px',
                         fontSize: '14px'
                     });
-                    if (i < pArr.length - 1) {
+                    if (i < pArr.length - 1{
                         this.css(pArr[i], 'borderBottom', '1px solid #282828')
                     }
                     var defClick = function(event) {
-                        if (nowD != this.innerHTML) {
+                        if (nowD != this.innerHTML{
                             thisTemp.css(thisTemp.CB['playbackrateP'], 'display', 'none');
                             thisTemp.newPlaybackrate(this.innerHTML);
                             thisTemp.sendJS('clickEvent', 'actionScript->newPlaybackrate');
@@ -3262,7 +3262,7 @@ function ckplayerConfig() {
 			内部函数
 			注册切换倍速播放相关事件
 		*/
-        addPlaybackrate: function() {
+        addPlaybackrate: function({
             var thisTemp = this;
             var setTimeOutP = null;
             var defClick = function(event) {
@@ -3272,8 +3272,8 @@ function ckplayerConfig() {
                 });
             };
             this.addListenerInside('click', defClick, this.CB['playbackrate']);
-            var defMouseOut = function(event) {
-                if (setTimeOutP) {
+            var defMouseOut = function(event{
+                if (setTimeOutP{
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
@@ -3283,8 +3283,8 @@ function ckplayerConfig() {
                     500);
             };
             this.addListenerInside('mouseout', defMouseOut, thisTemp.CB['playbackrateP']);
-            var defMouseOver = function(event) {
-                if (setTimeOutP) {
+            var defMouseOver = function(event{
+                if (setTimeOutP{
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
@@ -3317,7 +3317,7 @@ function ckplayerConfig() {
 			内部函数
 			注册多字幕切换相关
 		*/
-        subtitleSwitch: function() {
+        subtitleSwitch: function({
             if (!this.showFace || !this.ckplayerConfig['config']['subtitle']) {
                 return;
             }
@@ -3350,7 +3350,7 @@ function ckplayerConfig() {
                 for (i = 0; i < vArr.length; i++) {
                     html += '<p>' + vArr[i][1] + '</p>';
                     var dlen = this.getStringLen(vArr[i][1]);
-                    if (dlen > zlen) {
+                    if (dlen > zlen{
                         zlen = dlen;
                     }
                 }
@@ -3373,11 +3373,11 @@ function ckplayerConfig() {
                         padding: '0px',
                         fontSize: '14px'
                     });
-                    if (i < pArr.length - 1) {
+                    if (i < pArr.length - 1{
                         this.css(pArr[i], 'borderBottom', '1px solid #282828')
                     }
                     var defClick = function(event) {
-                        if (nowD != this.innerHTML) {
+                        if (nowD != this.innerHTML{
                             thisTemp.css(thisTemp.CB['subtitlesP'], 'display', 'none');
                             thisTemp.newSubtitles(this.innerHTML);
                             thisTemp.sendJS('clickEvent', 'actionScript->newPlaybackrate');
@@ -3419,7 +3419,7 @@ function ckplayerConfig() {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
-                setTimeOutP = setTimeout(function(event) {
+                setTimeOutP = setTimeout(function(event{
                         thisTemp.css(thisTemp.CB['subtitlesP'], 'display', 'none');
                     },
                     500);
@@ -3451,7 +3451,7 @@ function ckplayerConfig() {
             }
             if (vArr.length > n) {
                 var arr = vArr[n];
-                if (arr.length > 2) {
+                if (arr.length > 2{
                     var title = arr[1];
                     if (title) {
                         this.newSubtitles(title);
@@ -3464,7 +3464,7 @@ function ckplayerConfig() {
 			提供给外部api
 		*/
         changeSubtitlesSize:function(n){
-            if (!this.loaded || n < 0) {
+            if (!this.loaded || n < 0{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -3480,9 +3480,9 @@ function ckplayerConfig() {
         newSubtitles:function(title){
             var vArr = this.vars['cktrack'];//字幕数组
             var i = 0;
-            for (i = 0; i < vArr.length; i++) {
+            for (i = 0; i < vArr.length; i++{
                 var v = vArr[i];
-                if (v[1] == title) {
+                if (v[1] == title{
                     this.subtitlesTemp=i;
                     if (this.showFace) {
                         this.CB['subtitles'].innerHTML = v[1];
@@ -3498,7 +3498,7 @@ function ckplayerConfig() {
 			构建清晰度按钮及切换事件(Click事件)
 		*/
         definition: function() {
-            if (!this.showFace || !this.ckplayerConfig['config']['definition']) {
+            if (!this.showFace || !this.ckplayerConfig['config']['definition']{
                 return;
             }
             var thisTemp = this;
@@ -3509,7 +3509,7 @@ function ckplayerConfig() {
             var i = 0;
             for (i = 0; i < vArr.length; i++) {
                 var d = vArr[i][2];
-                if (dArr.indexOf(d) == -1) {
+                if (dArr.indexOf(d) == -1{
                     dArr.push(d);
                 }
                 if (this.V) {
@@ -3523,14 +3523,14 @@ function ckplayerConfig() {
             }
             if (dArr.length > 1) {
                 var zlen = 0;
-                for (i = dArr.length - 1; i > -1; i--) {
+                for (i = dArr.length - 1; i > -1; i--{
                     html = '<p>' + dArr[i] + '</p>' + html;
                     var dlen = this.getStringLen(dArr[i]);
                     if (dlen > zlen) {
                         zlen = dlen;
                     }
                 }
-                if (html) {
+                if (html{
                     html += '<p>' + nowD + '</p>';
                 }
                 this.CB['definition'].innerHTML = nowD;
@@ -3548,10 +3548,10 @@ function ckplayerConfig() {
                         padding: '0px',
                         fontSize: '14px'
                     });
-                    if (i < pArr.length - 1) {
+                    if (i < pArr.length - 1{
                         this.css(pArr[i], 'borderBottom', '1px solid #282828')
                     }
-                    var defClick = function() {
+                    var defClick = function({
                         if (nowD != this.innerHTML) {
                             thisTemp.css(thisTemp.CB['definitionP'], 'display', 'none');
                             thisTemp.newDefinition(this.innerHTML);
@@ -3578,7 +3578,7 @@ function ckplayerConfig() {
 			内部函数
 			注册清晰度相关事件
 		*/
-        addDefListener: function() {
+        addDefListener: function({
             var thisTemp = this;
             var setTimeOutP = null;
             var defClick = function(event) {
@@ -3588,8 +3588,8 @@ function ckplayerConfig() {
                 });
             };
             this.addListenerInside('click', defClick, this.CB['definition']);
-            var defMouseOut = function(event) {
-                if (setTimeOutP) {
+            var defMouseOut = function(event{
+                if (setTimeOutP{
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
@@ -3599,8 +3599,8 @@ function ckplayerConfig() {
                     500);
             };
             this.addListenerInside('mouseout', defMouseOut, thisTemp.CB['definitionP']);
-            var defMouseOver = function(event) {
-                if (setTimeOutP) {
+            var defMouseOver = function(event{
+                if (setTimeOutP{
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
@@ -3611,8 +3611,8 @@ function ckplayerConfig() {
 			接口函数
 			提供给外部api
 		*/
-        changeDefinition: function(n) {
-            if (!this.loaded || n < 0) {
+        changeDefinition: function(n{
+            if (!this.loaded || n < 0{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -3623,7 +3623,7 @@ function ckplayerConfig() {
                 var arr = this.VA[n];
                 if (arr.length > 3) {
                     var title = arr[2];
-                    if (title) {
+                    if (title{
                         this.newDefinition(title);
                     }
                 }
@@ -3633,7 +3633,7 @@ function ckplayerConfig() {
 			内部函数
 			切换清晰度后发生的动作
 		*/
-        newDefinition: function(title) {
+        newDefinition: function(title{
             var vArr = this.VA;
             var nVArr = [];
             var i = 0;
@@ -3644,7 +3644,7 @@ function ckplayerConfig() {
                     this.sendJS('definitionChange', i + '');
                 }
             }
-            if (nVArr.length < 1) {
+            if (nVArr.length < 1{
                 return;
             }
             if (this.V != null && this.needSeek == 0) {
@@ -3661,10 +3661,10 @@ function ckplayerConfig() {
                 } else {
                     var source = '';
                     nVArr = this.arrSort(nVArr);
-                    for (i = 0; i < nVArr.length; i++) {
+                    for (i = 0; i < nVArr.length; i++{
                         var type = '';
                         var va = nVArr[i];
-                        if (va[1]) {
+                        if (va[1]{
                             type = ' type="' + va[1] + '"';
                         }
                         source += '<source src="' + va[0] + '"' + type + '>';
@@ -3687,17 +3687,17 @@ function ckplayerConfig() {
 			内置函数
 			播放hls
 		*/
-        embedHls: function(url, autoplay, config) {
+        embedHls: function(url, autoplay, config{
             var thisTemp = this;
             var hlsjsConfig = config || {};
-            if (!hlsjsConfig.p2pConfig) hlsjsConfig.p2pConfig = {};
+            if (!hlsjsConfig.p2pConfighlsjsConfig.p2pConfig = {};
             if (!hlsjsConfig.p2pConfig.tag) hlsjsConfig.p2pConfig.tag = 'p2p-ckplayer';
             if (Hls.isSupported()) {
                 var hls = new Hls(hlsjsConfig);
                 hls.loadSource(url);
                 hls.attachMedia(this.V);
                 hls.on(Hls.Events.MANIFEST_PARSED,
-                    function() {
+                    function({
                         thisTemp.playerLoad();
                         if (autoplay) {
                             thisTemp.videoPlay();
@@ -3709,16 +3709,16 @@ function ckplayerConfig() {
 			内部函数
 			构建提示点
 		*/
-        prompt: function() {
+        prompt: function({
             if (!this.showFace) {
                 return;
             }
             var thisTemp = this;
             var prompt = this.vars['promptSpot'];
-            if (prompt == null || this.promptArr.length > 0) {
+            if (prompt == null || this.promptArr.length > 0{
                 return;
             }
-            var showPrompt = function(event) {
+            var showPrompt = function(event{
                 if (thisTemp.promptElement == null) {
                     var random2 = 'prompte' + thisTemp.randomString(5);
                     var ele2 = document.createElement('div');
@@ -3738,25 +3738,25 @@ function ckplayerConfig() {
                 var pcon = thisTemp.getPromptTest();
                 var pW = pcon['pW'],
                     pT = pcon['pT'],
-                    pL = parseInt(thisTemp.css(this, 'left')) - parseInt(pW * 0.5);
-                if (pcon['pL'] > 10) {
+                    pL = parseInt(thisTemp.css(this, 'left')- parseInt(pW * 0.5);
+                if (pcon['pL'] > 10{
                     pL = pcon['pL'];
                 }
-                if (pL < 0) {
+                if (pL < 0{
                     pL = 0;
                 }
                 thisTemp.css(thisTemp.promptElement, {
                     width: pW + 'px',
-                    left: ( - pW - 10) + 'px',
+                    left: - pW - 10) + 'px',
                     display: 'block'
                 });
                 thisTemp.promptElement.innerHTML = thisTemp.getDataset(this, 'words');
                 thisTemp.css(thisTemp.promptElement, {
                     left: pL + 'px',
-                    top: (pT - thisTemp.promptElement.offsetHeight - 10) + 'px'
+                    top: (pT - thisTemp.promptElement.offsetHeight - 10+ 'px'
                 });
             };
-            var hidePrompt = function(event) {
+            var hidePrompt = function(event{
                 if (thisTemp.promptElement != null) {
                     thisTemp.css(thisTemp.promptElement, {
                         display: 'none'
@@ -3797,21 +3797,21 @@ function ckplayerConfig() {
 			内部函数
 			计算提示文本的位置
 		*/
-        getPromptTest: function() {
+        getPromptTest: function({
             var pW = this.previewWidth,
                 pT = this.getCoor(this.CB['timeButton'])['y'],
                 pL = 0;
-            if (this.previewTop != null) {
+            if (this.previewTop != null{
                 pT -= parseInt(this.css(this.previewTop, 'height'));
                 pL = parseInt(this.css(this.previewTop, 'left'));
             } else {
                 pT -= 35;
             }
             pL += 2;
-            if (pL < 0) {
+            if (pL < 0{
                 pL = 0;
             }
-            if (pL > this.PD.offsetWidth - pW) {
+            if (pL > this.PD.offsetWidth - pW{
                 pL = this.PD.offsetWidth - pW;
             }
             return {
@@ -3824,10 +3824,10 @@ function ckplayerConfig() {
 			内部函数
 			删除提示点
 		*/
-        deletePrompt: function() {
+        deletePrompt: function({
             var arr = this.promptArr;
-            if (arr.length > 0) {
-                for (var i = 0; i < arr.length; i++) {
+            if (arr.length > 0{
+                for (var i = 0; i < arr.length; i++{
                     if (arr[i]) {
                         this.deleteChild(arr[i]);
                     }
@@ -3839,7 +3839,7 @@ function ckplayerConfig() {
 			内部函数
 			计算提示点坐标
 		*/
-        changePrompt: function() {
+        changePrompt: function({
             if (this.promptArr.length == 0) {
                 return;
             }
@@ -3849,7 +3849,7 @@ function ckplayerConfig() {
             for (var i = 0; i < arr.length; i++) {
                 var time = parseInt(this.getDataset(arr[i], 'time'));
                 var left = parseInt(time * bw / duration) - parseInt(arr[i].offsetWidth * 0.5);
-                if (left < 0) {
+                if (left < 0{
                     left = 0;
                 }
                 if (left > bw - parseInt(arr[i].offsetWidth * 0.5)) {
@@ -3872,11 +3872,11 @@ function ckplayerConfig() {
                 scale: 0
             };
             preview = this.standardization(preview, this.vars['preview']);
-            if (preview['file'] == null || preview['scale'] <= 0) {
+            if (preview['file'] == null || preview['scale'] <= 0{
                 return;
             }
             var srcArr = preview['file'];
-            if (this.previewStart == 0) { //如果还没有构建，则先进行构建
+            if (this.previewStart == 0{ //如果还没有构建，则先进行构建
                 this.previewStart = 1;
                 if (srcArr.length > 0) {
                     var i = 0;
@@ -3890,9 +3890,9 @@ function ckplayerConfig() {
                         var img = new Image();
                         img.src = srcArr[i];
                         img.className = random + i;
-                        img.onload = function(event) {
+                        img.onload = function(event{
                             loadNum++;
-                            if (thisTemp.previewDiv == null) { //如果没有建立DIV，则建
+                            if (thisTemp.previewDiv == null{ //如果没有建立DIV，则建
                                 imgW = img.width;
                                 imgH = img.height;
                                 thisTemp.previewWidth = parseInt(imgW * 0.1);
@@ -3900,7 +3900,7 @@ function ckplayerConfig() {
                                 ele.className = random;
                                 thisTemp.PD.appendChild(ele);
                                 thisTemp.previewDiv = thisTemp.getByElement(random);
-                                var eleTop = (obj['y'] - parseInt(imgH * 0.1) + 2);
+                                var eleTop = (obj['y'] - parseInt(imgH * 0.1+ 2);
                                 thisTemp.css(thisTemp.previewDiv, {
                                     width: srcArr.length * imgW * 10 + 'px',
                                     height: parseInt(imgH * 0.1) + 'px',
@@ -3918,12 +3918,12 @@ function ckplayerConfig() {
                                 thisTemp.PD.appendChild(ele2);
                                 thisTemp.previewTop = thisTemp.getByElement(ele2.className);
                                 thisTemp.css(thisTemp.previewTop, {
-                                    width: parseInt(imgW * 0.1) + 'px',
-                                    height: parseInt(imgH * 0.1) + 'px',
+                                    width: parseInt(imgW * 0.1+ 'px',
+                                    height: parseInt(imgH * 0.1+ 'px',
                                     position: 'absolute',
                                     border: '5px solid ' + thisTemp.css(thisTemp.CB['timeProgress'], 'backgroundColor'),
                                     left: '0px',
-                                    top: (obj['y'] - parseInt(imgH * 0.1) + 2) + 'px',
+                                    top: (obj['y'] - parseInt(imgH * 0.1+ 2) + 'px',
                                     display: 'none',
                                     zIndex: '81'
                                 });
@@ -3941,7 +3941,7 @@ function ckplayerConfig() {
                                 sy = 0,
                                 x = 0,
                                 h = parseInt(imgH * 0.1);
-                            for (n = 0; n < 100; n++) {
+                            for (n = 0; n < 100; n++{
                                 x = parseInt(n * imgW * 0.1);
                                 context.drawImage(cimg, sx, sy, parseInt(imgW * 0.1), h, x, 0, parseInt(imgW * 0.1), h);
                                 sx += parseInt(imgW * 0.1);
@@ -3963,16 +3963,16 @@ function ckplayerConfig() {
                 loadImg(i);
                 return;
             }
-            if (this.previewStart == 2) {
+            if (this.previewStart == 2{
                 var isTween = true;
                 var nowNum = parseInt(obj['time'] / this.vars['preview']['scale']);
                 var numTotal = parseInt(thisTemp.getMetaDate()['duration'] / this.vars['preview']['scale']);
-                if (thisTemp.css(thisTemp.previewDiv, 'display') == 'none') {
+                if (thisTemp.css(thisTemp.previewDiv, 'display'== 'none') {
                     isTween = false;
                 }
                 thisTemp.css(thisTemp.previewDiv, 'display', 'block');
                 var imgWidth = thisTemp.previewDiv.offsetWidth * 0.01 / srcArr.length;
-                var left = (imgWidth * nowNum) - obj['x'] + parseInt(imgWidth * 0.5),
+                var left = (imgWidth * nowNum- obj['x'] + parseInt(imgWidth * 0.5),
                     top = obj['y'] - thisTemp.previewDiv.offsetHeight;
                 thisTemp.css(thisTemp.previewDiv, 'top', top + 2 + 'px');
                 var topLeft = obj['x'] - parseInt(imgWidth * 0.5);
@@ -3981,11 +3981,11 @@ function ckplayerConfig() {
                     topLeft = 0;
                     timepieces = obj['x'] - topLeft - imgWidth * 0.5;
                 }
-                if (topLeft > thisTemp.PD.offsetWidth - imgWidth) {
+                if (topLeft > thisTemp.PD.offsetWidth - imgWidth{
                     topLeft = thisTemp.PD.offsetWidth - imgWidth;
                     timepieces = obj['x'] - topLeft - imgWidth * 0.5;
                 }
-                if (left < 0) {
+                if (left < 0{
                     left = 0;
                 }
                 if (left > numTotal * imgWidth - thisTemp.PD.offsetWidth) {
@@ -3996,12 +3996,12 @@ function ckplayerConfig() {
                     top: top + 2 + 'px',
                     display: 'block'
                 });
-                if (thisTemp.previewTop.offsetHeight > thisTemp.previewDiv.offsetHeight) {
+                if (thisTemp.previewTop.offsetHeight > thisTemp.previewDiv.offsetHeight{
                     thisTemp.css(thisTemp.previewTop, {
                         height: thisTemp.previewDiv.offsetHeight - (thisTemp.previewTop.offsetHeight - thisTemp.previewDiv.offsetHeight) + 'px'
                     });
                 }
-                if (this.previewTween != null) {
+                if (this.previewTween != null{
                     this.animatePause(this.previewTween);
                     this.previewTween = null
                 }
@@ -4039,7 +4039,7 @@ function ckplayerConfig() {
 			修改视频地址，属性
 		*/
         changeVideo: function() {
-            if (!this.html5Video) {
+            if (!this.html5Video{
                 this.getVarsObject();
                 this.V.newVideo(this.vars);
                 return;
@@ -4050,15 +4050,15 @@ function ckplayerConfig() {
             if (vArr.length < 1) {
                 return;
             }
-            if (this.V != null && this.needSeek == 0) {
+            if (this.V != null && this.needSeek == 0{
                 this.needSeek = this.V.currentTime;
             }
-            if (v['poster']) {
+            if (v['poster']{
                 this.V.poster = v['poster'];
             } else {
                 this.V.removeAttribute('poster');
             }
-            if (v['loop']) {
+            if (v['loop']{
                 this.V.loop = 'loop';
             } else {
                 this.V.removeAttribute('loop');
@@ -4072,7 +4072,7 @@ function ckplayerConfig() {
                 this.isM3u8 = false;
             }
             if (!this.isM3u8) {
-                if (vArr.length == 1) {
+                if (vArr.length == 1{
                     this.V.innerHTML = '';
                     this.V.src = vArr[0][0];
                 } else {
@@ -4081,7 +4081,7 @@ function ckplayerConfig() {
                     for (i = 0; i < vArr.length; i++) {
                         var type = '';
                         var va = vArr[i];
-                        if (va[1]) {
+                        if (va[1]{
                             type = ' type="' + va[1] + '"';
                         }
                         source += '<source src="' + va[0] + '"' + type + '>';
@@ -4105,7 +4105,7 @@ function ckplayerConfig() {
             this.resetPlayer(); //重置界面元素
             this.timerErrorFun();
             //如果存在字幕则加载
-            if (this.vars['cktrack']) {
+            if (this.vars['cktrack']{
                 this.loadTrack();
             }
         },
@@ -4113,26 +4113,26 @@ function ckplayerConfig() {
 			内部函数
 			调整中间暂停按钮,缓冲loading，错误提示文本框的位置
 		*/
-        elementCoordinate: function() {
+        elementCoordinate: function({
             this.pdCoor = this.getXY(this.PD);
             try {
                 this.css(this.CB['pauseCenter'], {
-                    left: parseInt((this.PD.offsetWidth - 80) * 0.5) + 'px',
-                    top: parseInt((this.PD.offsetHeight - 80) * 0.5) + 'px'
+                    left: parseInt((this.PD.offsetWidth - 80* 0.5) + 'px',
+                    top: parseInt((this.PD.offsetHeight - 80* 0.5) + 'px'
                 });
             } catch(event) {}
             try {
                 this.css(this.CB['loading'], {
-                    left: parseInt((this.PD.offsetWidth - 60) * 0.5) + 'px',
-                    top: parseInt((this.PD.offsetHeight - 60) * 0.5) + 'px'
+                    left: parseInt((this.PD.offsetWidth - 60* 0.5) + 'px',
+                    top: parseInt((this.PD.offsetHeight - 60* 0.5) + 'px'
                 });
             } catch(event) {}
             try {
                 this.css(this.CB['errorText'], {
-                    left: parseInt((this.PD.offsetWidth - 120) * 0.5) + 'px',
-                    top: parseInt((this.PD.offsetHeight - 30) * 0.5) + 'px'
+                    left: parseInt((this.PD.offsetWidth - 120) * 0.5+ 'px',
+                    top: parseInt((this.PD.offsetHeight - 30) * 0.5+ 'px'
                 });
-            } catch(event) {}
+            } catch(event{}
             try {
                 this.css(this.CB['logo'], {
                     left: parseInt(this.PD.offsetWidth - this.CB['logo'].offsetWidth - 20) + 'px',
@@ -4146,7 +4146,7 @@ function ckplayerConfig() {
 			当播放器尺寸变化时，显示和隐藏相关节点
 		*/
         checkBarWidth: function() {
-            if (!this.showFace) {
+            if (!this.showFace{
                 return;
             }
             var controlBarW = this.CB['controlBar'].offsetWidth;
@@ -4155,13 +4155,13 @@ function ckplayerConfig() {
             if (this.vars['front'] != '') {
                 ele.push([[this.CB['front'], this.CB['frontLine']], this.buttonWidth['front'] + 2]);
             }
-            if (this.vars['next'] != '') {
+            if (this.vars['next'] != ''{
                 ele.push([[this.CB['next'], this.CB['nextLine']], this.buttonWidth['next'] + 2]);
             }
-            if (this.CB['definition'].innerHTML != '') {
+            if (this.CB['definition'].innerHTML != ''{
                 ele.push([[this.CB['definition'], this.CB['definitionLine']], this.buttonWidth['definition'] + 2]);
             }
-            if ((this.ckplayerConfig['config']['mobileVolumeBarShow'] || !this.isMobile()) && this.css(this.CB['volume'], 'display') != 'none') {
+            if ((this.ckplayerConfig['config']['mobileVolumeBarShow'] || !this.isMobile()&& this.css(this.CB['volume'], 'display'!= 'none') {
                 ele.push([[this.CB['volume']], this.buttonWidth['volume']]);
                 ele.push([[this.CB['mute'], this.CB['escMute'], this.CB['muteLine']], this.buttonWidth['mute'] + 2, 'mute']);
             }
@@ -4186,8 +4186,8 @@ function ckplayerConfig() {
             }
             len = this.buttonLen;
             ele = this.buttonArr;
-            for (var i = 0; i < ele.length; i++) {
-                if (len > controlBarW) {
+            for (var i = 0; i < ele.length; i++{
+                if (len > controlBarW{
                     len -= ele[i][1];
                     this.css(ele[i][0], 'display', 'none');
                 } else {
@@ -4196,7 +4196,7 @@ function ckplayerConfig() {
                         var name = ele[i][2];
                         switch (name) {
                             case 'mute':
-                                if (this.volume == 0) {
+                                if (this.volume == 0{
                                     this.css(this.CB['mute'], 'display', 'none');
                                 } else {
                                     this.css(this.CB['escMute'], 'display', 'none');
@@ -4221,7 +4221,7 @@ function ckplayerConfig() {
 			内部函数
 			初始化暂停或播放按钮
 		*/
-        initPlayPause: function() {
+        initPlayPause: function({
             if (!this.showFace) {
                 return;
             }
@@ -4230,7 +4230,7 @@ function ckplayerConfig() {
                 this.css(this.CB['pause'], 'display', 'block');
             } else {
                 this.css(this.CB['play'], 'display', 'block');
-                if (this.css(this.CB['errorText'], 'display') == 'none') {
+                if (this.css(this.CB['errorText'], 'display'== 'none') {
                     this.css(this.CB['pauseCenter'], 'display', 'block');
                 }
                 this.css(this.CB['pause'], 'display', 'none');
@@ -4244,10 +4244,10 @@ function ckplayerConfig() {
 		*/
         loadedHandler: function() {
             this.loaded = true;
-            if (this.vars['loaded'] != '') {
+            if (this.vars['loaded'] != ''{
                 try {
                     eval(this.vars['loaded'] + '()');
-                } catch(event) {
+                } catch(event{
                     this.log(event);
                 }
             }
@@ -4256,10 +4256,10 @@ function ckplayerConfig() {
 			内部函数
 			监听播放
 		*/
-        playingHandler: function() {
+        playingHandler: function({
             this.playShow(true);
             //如果是第一次播放
-            if (this.isFirstTimePlay && !this.isUndefined(this.advertisements['front'])) {
+            if (this.isFirstTimePlay && !this.isUndefined(this.advertisements['front']){
                 this.isFirstTimePlay = false;
                 //调用播放前置广告组件
                 this.adI = 0;
@@ -4279,7 +4279,7 @@ function ckplayerConfig() {
                 return;
             }
             //判断第一次播放结束
-            if (this.needSeek > 0) {
+            if (this.needSeek > 0{
                 this.videoSeek(this.needSeek);
                 this.needSeek = 0;
             }
@@ -4289,12 +4289,12 @@ function ckplayerConfig() {
             if (this.playerType == 'html5video' && this.V != null && this.config['videoDrawImage']) {
                 this.sendVCanvas();
             }
-            if (!this.isUndefined(this.advertisements['pause']) && !this.adPlayStart) { //如果存在暂停广告
+            if (!this.isUndefined(this.advertisements['pause']&& !this.adPlayStart{ //如果存在暂停广告
                 this.adPauseCloseFunction();
             }
         },
         /*暂停时播放暂停广告*/
-        adPausePlayer: function() {
+        adPausePlayer: function({
             this.adI = 0;
             this.adType = 'pause';
             this.adPauseShow = true;
@@ -4306,7 +4306,7 @@ function ckplayerConfig() {
             var thisTemp = this;
             var width = this.PD.offsetWidth,
                 height = this.PD.offsetHeight;
-            if (this.isStrImage(type) && this.adPauseShow) {
+            if (this.isStrImage(type) && this.adPauseShow{
                 this.css(this.CB['adElement'], 'display', 'block');
                 var imgClass = 'adimg' + this.randomString(10);
                 var imgHtml = '<img src="' + ad['file'] + '" class="' + imgClass + '">';
@@ -4315,7 +4315,7 @@ function ckplayerConfig() {
                 }
                 this.CB['adElement'].innerHTML = imgHtml;
                 this.addListenerInside('load',
-                    function() {
+                    function({
                         var imgObj = new Image();
                         imgObj.src = this.src;
                         var imgWH = thisTemp.adjustmentWH(imgObj.width, imgObj.height);
@@ -4324,7 +4324,7 @@ function ckplayerConfig() {
                             height: imgWH['height'] + 'px',
                             border: '0px'
                         });
-                        if (thisTemp.ckplayerConfig['style']['advertisement']['closeButtonShow'] && thisTemp.adPauseShow) {
+                        if (thisTemp.ckplayerConfig['style']['advertisement']['closeButtonShow'] && thisTemp.adPauseShow{
                             thisTemp.css(thisTemp.CB['adPauseClose'], {
                                 display: 'block'
                             });
@@ -4334,19 +4334,19 @@ function ckplayerConfig() {
                     },
                     this.getByElement(imgClass));
                 this.addListenerInside('click',
-                    function() {
+                    function({
                         thisTemp.ajaxSuccessNull(ad['clickMonitor']);
                     },
                     this.CB['adElement']);
                 var newI = this.adI;
-                if (this.adI < this.advertisements['pause'].length - 1) {
+                if (this.adI < this.advertisements['pause'].length - 1{
                     newI++;
                 } else {
                     newI = 0;
                 }
-                if (ad['time'] > 0) {
+                if (ad['time'] > 0{
                     setTimeout(function() {
-                            if (thisTemp.adPauseShow) {
+                            if (thisTemp.adPauseShow{
                                 thisTemp.adI = newI;
                                 thisTemp.loadAdPause();
                             }
@@ -4357,7 +4357,7 @@ function ckplayerConfig() {
         },
         /*调整暂停广告的位置*/
         adPauseCoor: function() {
-            if (this.css(this.CB['adElement'], 'display') == 'block') {
+            if (this.css(this.CB['adElement'], 'display'== 'block'{
                 var w = this.CB['adElement'].offsetWidth,
                     h = this.CB['adElement'].offsetHeight;
                 var pw = this.PD.offsetWidth,
@@ -4369,7 +4369,7 @@ function ckplayerConfig() {
                 if (this.css(this.CB['adPauseClose'], 'display') == 'block') {
                     this.css(this.CB['adPauseClose'], {
                         top: (ph - h) * 0.5 - 10 + 'px',
-                        left: (pw - w) * 0.5 + w - 10 + 'px'
+                        left: (pw - w* 0.5 + w - 10 + 'px'
                     });
                 }
             }
@@ -4377,22 +4377,22 @@ function ckplayerConfig() {
         /*
 			关闭暂停广告
 		*/
-        adPauseCloseFunction: function() {
+        adPauseCloseFunction: function({
             this.CB['adElement'].innerHTML = '';
             this.css([this.CB['adElement'], this.CB['adPauseClose']], 'display', 'none');
             this.adPauseShow = false;
         },
         /*计算广告时间*/
-        advertisementsTime: function(nt) {
+        advertisementsTime: function(nt{
             if (this.isUndefined(nt)) {
                 nt = 0;
             }
             var ad = this.advertisements[this.adType];
-            if (nt > 0) {
+            if (nt > 0{
                 ad[this.adI]['time'] = Math.ceil(nt);
             }
             this.adTimeAllTotal = 0;
-            for (var i = this.adI; i < ad.length; i++) {
+            for (var i = this.adI; i < ad.length; i++{
                 if (!this.isUndefined(ad[i]['time'])) {
                     this.adTimeAllTotal += Math.ceil(ad[i]['time']);
                 }
@@ -4400,19 +4400,19 @@ function ckplayerConfig() {
             if (this.adTimeAllTotal > 0) {
                 this.CB['adTime'].innerHTML = this.language['adTime'].replace('{$second}', this.adTimeAllTotal > 9 ? this.adTimeAllTotal: '0' + this.adTimeAllTotal);
             }
-            if (this.adPauseShow) {
+            if (this.adPauseShow{
                 this.adPauseCloseFunction();
             }
             this.adOtherCloseAll();
             this.adTimeTotal = -1;
         },
         /*判断是否需要显示跳过广告按钮*/
-        adSkipButtonShow: function() {
+        adSkipButtonShow: function({
             var thisTemp = this;
             var skipConfig = this.ckplayerConfig['style']['advertisement'];
             var delayTimeTemp = skipConfig[this.adType + 'SkipButtonDelay'];
             var timeFun = function() {
-                if (delayTimeTemp >= 0) {
+                if (delayTimeTemp >= 0{
                     thisTemp.CB['adSkip'].innerHTML = thisTemp.language['skipAdTime'].replace('{$second}', delayTimeTemp > 9 ? delayTimeTemp: '0' + delayTimeTemp);
                     setTimeout(timeFun, 1000);
                 } else {
@@ -4422,7 +4422,7 @@ function ckplayerConfig() {
             };
             if (skipConfig['skipButtonShow']) {
                 this.css(thisTemp.CB['adSkip'], 'display', 'block');
-                if (skipConfig[this.adType + 'SkipButtonDelay'] > 0 && this.isUndefined(this.adSkipButtonTime)) {
+                if (skipConfig[this.adType + 'SkipButtonDelay'] > 0 && this.isUndefined(this.adSkipButtonTime){
                     timeFun();
                 } else {
                     thisTemp.css(thisTemp.CB['adSkip'], 'display', 'block');
@@ -4431,7 +4431,7 @@ function ckplayerConfig() {
             }
         },
         /*播放广告*/
-        advertisementsPlay: function() {
+        advertisementsPlay: function({
             this.css([this.CB['adBackground'], this.CB['adElement'], this.CB['adBar'], this.CB['adLink']], 'display', 'none');
             this.adPlayerPlay = false;
             var ad = this.advertisements[this.adType];
@@ -4439,8 +4439,8 @@ function ckplayerConfig() {
                 this.sendJS('process', this.adType + ' ad play')
             }
             this.trackHide();
-            if (this.adI < ad.length) {
-                if (!this.isUndefined(ad[this.adI]['time'])) {
+            if (this.adI < ad.length{
+                if (!this.isUndefined(ad[this.adI]['time']){
                     this.adTimeTotal = parseInt(ad[this.adI]['time']);
                 }
                 this.loadAdvertisements();
@@ -4449,8 +4449,8 @@ function ckplayerConfig() {
             }
         },
         /*清除当前所有广告*/
-        eliminateAd: function() {
-            if (this.adType) {
+        eliminateAd: function({
+            if (this.adType{
                 var ad = this.advertisements[this.adType];
                 this.adI = ad.length;
                 this.advertisementsPlay();
@@ -4470,10 +4470,10 @@ function ckplayerConfig() {
                         this.V.removeAttribute('src');
                     }
                 }
-                if (this.videoTemp['source'] != '') {
+                if (this.videoTemp['source'] != ''{
                     this.V.innerHTML = this.videoTemp['source'];
                 }
-                if (this.videoTemp['currentSrc'] != '') {
+                if (this.videoTemp['currentSrc'] != ''{
                     this.V.src = this.videoTemp['currentSrc'];
                     this.V.currentSrc = this.videoTemp['currentSrc'];
                 }
@@ -4494,7 +4494,7 @@ function ckplayerConfig() {
             this.changeControlBarShow(true);
         },
         /*加载广告*/
-        loadAdvertisements: function() {
+        loadAdvertisements: function({
             //this.videoTemp
             var ad = this.getNowAdvertisements();
             var type = ad['type'];
@@ -4508,7 +4508,7 @@ function ckplayerConfig() {
                 this.css([this.CB['adMute'], this.CB['adEscMute']], 'display', 'none');
                 var imgClass = 'adimg' + this.randomString(10);
                 var imgHtml = '<img src="' + ad['file'] + '" class="' + imgClass + '">';
-                if (ad['link']) {
+                if (ad['link']{
                     imgHtml = '<a href="' + ad['link'] + '" target="_blank">' + imgHtml + '</a>';
                 }
                 this.CB['adElement'].innerHTML = imgHtml;
@@ -4536,13 +4536,13 @@ function ckplayerConfig() {
                         thisTemp.ajaxSuccessNull(ad['clickMonitor']);
                     },
                     this.CB['adElement']);
-                if (!this.isUndefined(ad['time'])) {
+                if (!this.isUndefined(ad['time']){
                     this.adCountDown();
                 }
             } else {
                 this.css(this.CB['adBar'], 'display', 'block');
                 //判断是否静音
-                if (this.adVideoMute) {
+                if (this.adVideoMute{
                     this.css(this.CB['adEscMute'], 'display', 'block');
                     this.css(this.CB['adMute'], 'display', 'none');
                 } else {
@@ -4550,7 +4550,7 @@ function ckplayerConfig() {
                     this.css(this.CB['adMute'], 'display', 'block');
                 }
                 this.CB['adElement'].innerHTML = '';
-                if (this.videoTemp['currentSrc'] == '') {
+                if (this.videoTemp['currentSrc'] == ''{
                     this.videoTemp['currentSrc'] = this.getCurrentSrc();
                 }
                 if (this.V.loop) {
@@ -4592,8 +4592,8 @@ function ckplayerConfig() {
         /*普通广告倒计时*/
         adCountDown: function() {
             var thisTemp = this;
-            if (this.adTimeTotal > 0) {
-                if (!this.adIsPause) {
+            if (this.adTimeTotal > 0{
+                if (!this.adIsPause{
                     this.adTimeTotal--;
                     this.showAdTime();
                     this.adCountDownObj = null;
@@ -4611,7 +4611,7 @@ function ckplayerConfig() {
         adPlayerTimeHandler: function(time) {
             var ad = this.getNowAdvertisements();
             var type = ad['type'];
-            if (this.isStrImage(type)) {
+            if (this.isStrImage(type){
                 return;
             }
             if (this.adTimeTotal != parseInt(time)) {
@@ -4620,10 +4620,10 @@ function ckplayerConfig() {
             }
         },
         /*格式化广告倒计时显示*/
-        showAdTime: function() {
+        showAdTime: function({
             this.adTimeAllTotal--;
             var n = this.adTimeAllTotal;
-            if (n < 0) {
+            if (n < 0{
                 n = 0;
             }
             this.CB['adTime'].innerHTML = this.language['adTime'].replace('{$second}', n < 10 ? '0' + n: n);
@@ -4637,7 +4637,7 @@ function ckplayerConfig() {
             }
             var adTime = this.advertisements['othertime'];
             var adPlay = this.advertisements['otherPlay'];
-            for (var i = 0; i < adTime.length; i++) {
+            for (var i = 0; i < adTime.length; i++{
                 if (t >= adTime[i] && !adPlay[i]) { //如果播放时间大于广告时间而该广告还没有播放，则开始播放
                     adPlay[i] = true;
                     this.newAdOther(i);
@@ -4667,7 +4667,7 @@ function ckplayerConfig() {
                 left: '30px',
                 cursor: 'pointer'
             });
-            if (this.ckplayerConfig['style']['advertisement']['closeOtherButtonShow']) {
+            if (this.ckplayerConfig['style']['advertisement']['closeOtherButtonShow']{
                 var closeAdDivID = 'adotherclose' + randomS; //广告容器
                 var closeAdDiv = document.createElement('div');
                 closeAdDiv.className = closeAdDivID;
@@ -4689,7 +4689,7 @@ function ckplayerConfig() {
                     cursor: 'pointer'
                 });
                 var adOtherClose = this.getByElement(closeAdDivID + '-canvas').getContext('2d');
-                var adOtherCloseFillRect = function() {
+                var adOtherCloseFillRect = function({
                     thisTemp.canvasFill(adOtherClose, [[4, 6], [6, 6], [16, 15], [14, 15]]);
                     thisTemp.canvasFill(adOtherClose, [[14, 6], [16, 6], [6, 15], [4, 15]]);
                 };
@@ -4700,7 +4700,7 @@ function ckplayerConfig() {
                     adOtherClose.fillStyle = '#0782F5';
                     adOtherCloseFillRect();
                 };
-                var adOtherCloseOut = function() {
+                var adOtherCloseOut = function({
                     adOtherClose.clearRect(0, 0, 20, 20);
                     adOtherClose.fillStyle = '#404856';
                     adOtherCloseFillRect();
@@ -4709,7 +4709,7 @@ function ckplayerConfig() {
                 this.addListenerInside('mouseout', adOtherCloseOut, this.getByElement(closeAdDivID + '-canvas'));
             }
             this.addListenerInside('load',
-                function() {
+                function({
                     var imgObj = new Image();
                     imgObj.src = this.src;
                     var imgWH = thisTemp.adjustmentWH(imgObj.width, imgObj.height);
@@ -4729,12 +4729,12 @@ function ckplayerConfig() {
                 },
                 this.getByElement(closeAdDivID));
             this.addListenerInside('click',
-                function() {
+                function({
                     thisTemp.ajaxSuccessNull(ad['clickMonitor']);
                 },
                 this.getByElement(imgClassName));
             if (ad['time'] > 0) {
-                setTimeout(function() {
+                setTimeout(function({
                         thisTemp.adOtherClose(i);
                     },
                     ad['time'] * 1000);
@@ -4743,9 +4743,9 @@ function ckplayerConfig() {
         /*
 		关闭其它广告
 		*/
-        adOtherClose: function(i) {
+        adOtherClose: function(i{
             var ad = this.advertisements['other'][i];
-            if (!this.isUndefined(ad['close'])) {
+            if (!this.isUndefined(ad['close']){
                 if (!ad['close']) {
                     ad['close'] = true;
                     this.PD.removeChild(this.getByElement(ad['div']));
@@ -4753,8 +4753,8 @@ function ckplayerConfig() {
                 }
             }
         },
-        adOtherCloseAll: function() {
-            if (!this.isUndefined(this.advertisements['other'])) {
+        adOtherCloseAll: function({
+            if (!this.isUndefined(this.advertisements['other']){
                 var ad = this.advertisements['other'];
                 for (var i = 0; i < ad.length; i++) {
                     this.adOtherClose(i);
@@ -4767,10 +4767,10 @@ function ckplayerConfig() {
         adOtherCoor: function() {
             if (!this.isUndefined(this.advertisements['other'])) {
                 var arr = this.advertisements['other'];
-                for (var i = 0; i < arr.length; i++) {
+                for (var i = 0; i < arr.length; i++{
                     var ad = arr[i];
                     if (!this.isUndefined(ad['close'])) {
-                        if (!ad['close']) {
+                        if (!ad['close']{
                             var coor = this.getPosition(ad);
                             var x = coor['x'],
                                 y = coor['y'],
@@ -4780,7 +4780,7 @@ function ckplayerConfig() {
                                 left: x + 'px',
                                 top: y + 'px'
                             });
-                            if (!this.isUndefined(ad['closeDiv'])) {
+                            if (!this.isUndefined(ad['closeDiv']){
                                 this.css(this.getByElement(ad['closeDiv']), {
                                     left: cx + 'px',
                                     top: cy + 'px'
@@ -4794,15 +4794,15 @@ function ckplayerConfig() {
         /*
 			单独监听中间插入广告
 		*/
-        checkAdInsert: function(t) {
-            if (this.adPlayerPlay) {
+        checkAdInsert: function(t{
+            if (this.adPlayerPlay{
                 return;
             }
             var adTime = this.advertisements['inserttime'];
             var adPlay = this.advertisements['insertPlay'];
             var duration = this.getMetaDate()['duration'];
-            for (var i = adTime.length - 1; i > -1; i--) {
-                if (t >= adTime[i] && t < duration - 2 && t > 1 && !adPlay[i]) { //如果播放时间大于广告时间而该广告还没有播放，则开始播放
+            for (var i = adTime.length - 1; i > -1; i--{
+                if (t >= adTime[i] && t < duration - 2 && t > 1 && !adPlay[i]{ //如果播放时间大于广告时间而该广告还没有播放，则开始播放
                     this.adI = 0;
                     this.adType = 'insert';
                     this.adMuteInto();
@@ -4823,12 +4823,12 @@ function ckplayerConfig() {
         },
         /*格式化中间插入广告的播放时间*/
         formatInserttime: function(duration) {
-            if (!this.isUndefined(this.advertisements['inserttime'])) {
+            if (!this.isUndefined(this.advertisements['inserttime']){
                 var arr = this.advertisements['inserttime'];
                 var newArr = [];
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i].toString().substr( - 1) == '%') {
-                        newArr.push(parseInt(duration * parseInt(arr[i]) * 0.01));
+                for (var i = 0; i < arr.length; i++{
+                    if (arr[i].toString().substr( - 1== '%'{
+                        newArr.push(parseInt(duration * parseInt(arr[i]* 0.01));
                     } else {
                         newArr.push(parseInt(arr[i]));
                     }
@@ -4838,7 +4838,7 @@ function ckplayerConfig() {
         },
         /*获取当前的广告*/
         getNowAdvertisements: function() {
-            if (this.adI == -1) {
+            if (this.adI == -1{
                 return {
                     file: '',
                     time: 0,
@@ -4848,12 +4848,12 @@ function ckplayerConfig() {
             return this.advertisements[this.adType][this.adI];
         },
         /*根据元件尺寸和播放器尺寸调整大小*/
-        adjustmentWH: function(w, h) {
+        adjustmentWH: function(w, h{
             var width = this.PD.offsetWidth,
                 height = this.PD.offsetHeight;
             var nw = 0,
                 nh = 0;
-            if (w >= width || h >= height) {
+            if (w >= width || h >= height{
                 if (width / w > height / h) {
                     nh = height - 20;
                     nw = w * nh / h;
@@ -4872,7 +4872,7 @@ function ckplayerConfig() {
         },
         /*单独请求一次地址，但不处理返回的数据*/
         ajaxSuccessNull: function(url) {
-            if (!this.isUndefined(url)) {
+            if (!this.isUndefined(url){
                 var ajaxObj = {
                     url: url,
                     success: function(data) {}
@@ -4884,10 +4884,10 @@ function ckplayerConfig() {
 			内部函数
 			运行指定函数
 		*/
-        runFunction: function(s) {
+        runFunction: function(s{
             try {
                 var arr = s.split('->');
-                switch (arr[0]) {
+                switch (arr[0]{
                     case 'javaScript':
                         eval(arr[1] + '()');
                         break;
@@ -4907,7 +4907,7 @@ function ckplayerConfig() {
                 this.css(this.MD, 'display', 'block');
                 var thisTemp = this;
                 var videoCanvas = function() {
-                    if (thisTemp.MDCX.width != thisTemp.PD.offsetWidth) {
+                    if (thisTemp.MDCX.width != thisTemp.PD.offsetWidth{
                         thisTemp.MDC.width = thisTemp.PD.offsetWidth;
                     }
                     if (thisTemp.MDCX.height != thisTemp.PD.offsetHeight) {
@@ -4924,17 +4924,17 @@ function ckplayerConfig() {
 			内部函数
 			监听暂停
 		*/
-        pauseHandler: function() {
+        pauseHandler: function({
             var thisTemp = this;
             this.playShow(false);
             if (this.animatePauseArray.length > 0) {
                 this.animatePause('pause');
             }
-            if (this.playerType == 'html5video' && this.V != null && this.config['videoDrawImage']) {
+            if (this.playerType == 'html5video' && this.V != null && this.config['videoDrawImage']{
                 this.stopVCanvas();
             }
-            if (!this.isUndefined(this.advertisements['pause']) && !this.adPlayStart && !this.adPauseShow) { //如果存在暂停广告
-                setTimeout(function() {
+            if (!this.isUndefined(this.advertisements['pause']) && !this.adPlayStart && !this.adPauseShow{ //如果存在暂停广告
+                setTimeout(function({
                         if (!thisTemp.isUndefined(thisTemp.advertisements['pause']) && !thisTemp.adPlayStart && !thisTemp.adPauseShow && thisTemp.time > 1) { //如果存在暂停广告
                             thisTemp.adPausePlayer();
                         }
@@ -4950,7 +4950,7 @@ function ckplayerConfig() {
             if (this.timerVCanvas != null) {
                 this.css(this.V, 'display', 'block');
                 this.css(this.MD, 'display', 'none');
-                if (this.timerVCanvas.runing) {
+                if (this.timerVCanvas.runing{
                     this.timerVCanvas.stop();
                 }
                 this.timerVCanvas = null;
@@ -4961,16 +4961,16 @@ function ckplayerConfig() {
 			根据当前播放还是暂停确认图标显示
 		*/
         playShow: function(b) {
-            if (!this.showFace) {
+            if (!this.showFace{
                 return;
             }
-            if (b) {
+            if (b{
                 this.css(this.CB['play'], 'display', 'none');
                 this.css(this.CB['pauseCenter'], 'display', 'none');
                 this.css(this.CB['pause'], 'display', 'block');
             } else {
                 this.css(this.CB['play'], 'display', 'block');
-                if (this.css(this.CB['errorText'], 'display') == 'none') {
+                if (this.css(this.CB['errorText'], 'display') == 'none'{
                     if (!this.adPlayerPlay) {
                         this.css(this.CB['pauseCenter'], 'display', 'block');
                     }
@@ -4985,7 +4985,7 @@ function ckplayerConfig() {
 			内部函数
 			监听seek结束
 		*/
-        seekedHandler: function() {
+        seekedHandler: function({
             this.resetTrack();
             this.isTimeButtonMove = true;
             if (this.V.paused) {
@@ -5035,7 +5035,7 @@ function ckplayerConfig() {
                     this.advertisements['insertPlay'][i] = false;
                 }
             }
-            if (!this.isUndefined(this.advertisements['otherPlay'])) {
+            if (!this.isUndefined(this.advertisements['otherPlay']){
                 arr = this.advertisements['otherPlay'];
                 for (i = 0; i < arr.length; i++) {
                     this.advertisements['otherPlay'][i] = false;
@@ -5048,10 +5048,10 @@ function ckplayerConfig() {
 			监听音量改变
 		*/
         volumechangeHandler: function() {
-            if (!this.showFace) {
+            if (!this.showFace{
                 return;
             }
-            if ((this.ckplayerConfig['config']['mobileVolumeBarShow'] || !this.isMobile()) && this.css(this.CB['volume'], 'display') != 'none') {
+            if ((this.ckplayerConfig['config']['mobileVolumeBarShow'] || !this.isMobile()&& this.css(this.CB['volume'], 'display'!= 'none') {
                 try {
                     var volume=this.volume || this.V.volume;
                     if (volume > 0) {
@@ -5061,25 +5061,25 @@ function ckplayerConfig() {
                         this.css(this.CB['mute'], 'display', 'none');
                         this.css(this.CB['escMute'], 'display', 'block');
                     }
-                } catch(event) {}
+                } catch(event{}
             }
         },
         /*
 			内部函数
 			监听播放时间调节进度条
 		*/
-        timeUpdateHandler: function() {
+        timeUpdateHandler: function({
             var duration = 0;
             if (this.playerType == 'html5video') {
                 try {
                     duration = this.V.duration;
                 } catch(event) {}
             }
-            if (duration > 0) {
+            if (duration > 0{
                 this.time = this.V.currentTime;
                 this.timeTextHandler();
                 this.trackShowHandler();
-                if (this.isTimeButtonMove) {
+                if (this.isTimeButtonMove{
                     this.timeProgress(this.time, duration);
                 }
             }
@@ -5089,19 +5089,19 @@ function ckplayerConfig() {
 			按时间改变进度条
 		*/
         timeProgress: function(time, duration) {
-            if (!this.showFace) {
+            if (!this.showFace{
                 return;
             }
             var timeProgressBgW = this.CB['timeProgressBg'].offsetWidth;
-            var timeBOW = parseInt((time * timeProgressBgW / duration) - (this.CB['timeButton'].offsetWidth * 0.5));
-            if (timeBOW > timeProgressBgW - this.CB['timeButton'].offsetWidth) {
+            var timeBOW = parseInt((time * timeProgressBgW / duration- (this.CB['timeButton'].offsetWidth * 0.5));
+            if (timeBOW > timeProgressBgW - this.CB['timeButton'].offsetWidth{
                 timeBOW = timeProgressBgW - this.CB['timeButton'].offsetWidth;
             }
             if (timeBOW < 0) {
                 timeBOW = 0;
             }
             this.css(this.CB['timeProgress'], 'width', timeBOW + 'px');
-            this.css(this.CB['timeButton'], 'left', parseInt(timeBOW) + 'px');
+            this.css(this.CB['timeButton'], 'left', parseInt(timeBOW+ 'px');
         },
         /*
 			内部函数
@@ -5113,11 +5113,11 @@ function ckplayerConfig() {
             }
             var duration = this.V.duration;
             var time = this.V.currentTime;
-            if (isNaN(duration) || parseInt(duration) < 0.2) {
+            if (isNaN(duration) || parseInt(duration) < 0.2{
                 duration = this.vars['duration'];
             }
             this.CB['timeText'].innerHTML = this.formatTime(time) + ' / ' + this.formatTime(duration);
-            if (this.CB['timeText'].offsetWidth > 0) {
+            if (this.CB['timeText'].offsetWidth > 0{
                 this.buttonWidth['timeText'] = this.CB['timeText'].offsetWidth;
             }
         },
@@ -5125,12 +5125,12 @@ function ckplayerConfig() {
 			内部函数
 			监听是否是缓冲状态
 		*/
-        bufferEdHandler: function() {
+        bufferEdHandler: function({
             if (!this.showFace || this.playerType == 'flashplayer') {
                 return;
             }
             var thisTemp = this;
-            var clearTimerBuffer = function() {
+            var clearTimerBuffer = function({
                 if (thisTemp.timerBuffer != null) {
                     if (thisTemp.timerBuffer.runing) {
                         thisTemp.sendJS('buffer', 100);
@@ -5141,7 +5141,7 @@ function ckplayerConfig() {
             };
             clearTimerBuffer();
             var bufferFun = function() {
-                if (!thisTemp.isUndefined(thisTemp.V) && thisTemp.V.buffered.length > 0) {
+                if (!thisTemp.isUndefined(thisTemp.V&& thisTemp.V.buffered.length > 0) {
                     var duration = thisTemp.V.duration;
                     var len = thisTemp.V.buffered.length;
                     var bufferStart = thisTemp.V.buffered.start(len - 1);
@@ -5149,7 +5149,7 @@ function ckplayerConfig() {
                     var loadTime = bufferStart + bufferEnd;
                     var loadProgressBgW = thisTemp.CB['timeProgressBg'].offsetWidth;
                     var timeButtonW = thisTemp.CB['timeButton'].offsetWidth;
-                    var loadW = parseInt((loadTime * loadProgressBgW / duration) + timeButtonW);
+                    var loadW = parseInt((loadTime * loadProgressBgW / duration+ timeButtonW);
                     if (loadW >= loadProgressBgW) {
                         loadW = loadProgressBgW;
                         clearTimerBuffer();
@@ -5163,17 +5163,17 @@ function ckplayerConfig() {
 			内部函数
 			单独计算加载进度
 		*/
-        changeLoad: function(loadTime) {
+        changeLoad: function(loadTime{
             if (this.V == null) {
                 return;
             }
-            if (!this.showFace) {
+            if (!this.showFace{
                 return;
             }
             var loadProgressBgW = this.CB['timeProgressBg'].offsetWidth;
             var timeButtonW = this.CB['timeButton'].offsetWidth;
             var duration = this.V.duration;
-            if (this.isUndefined(loadTime)) {
+            if (this.isUndefined(loadTime){
                 loadTime = this.loadTime;
             } else {
                 this.loadTime = loadTime;
@@ -5187,16 +5187,16 @@ function ckplayerConfig() {
 			内部函数
 			判断是否是直播
 		*/
-        judgeIsLive: function() {
+        judgeIsLive: function({
             var thisTemp = this;
-            if (this.timerError != null) {
+            if (this.timerError != null{
                 if (this.timerError.runing) {
                     this.timerError.stop();
                 }
                 this.timerError = null;
             }
             this.error = false;
-            if (this.showFace) {
+            if (this.showFace{
                 this.css(this.CB['errorText'], 'display', 'none');
             }
             var timeupdate = function(event) {
@@ -5207,25 +5207,25 @@ function ckplayerConfig() {
                     this.addListenerInside('timeupdate', timeupdate);
                     thisTemp.timeTextHandler();
                     thisTemp.prompt(); //添加提示点
-                    setTimeout(function() {
+                    setTimeout(function({
                             thisTemp.bufferEdHandler();
                         },
                         200);
                 }
             } else {
                 this.removeListenerInside('timeupdate', timeupdate);
-                if (this.timerTime != null) {
+                if (this.timerTime != null{
                     window.clearInterval(this.timerTime);
                     timerTime = null;
                 }
-                if (this.timerTime != null) {
-                    if (this.timerTime.runing) {
+                if (this.timerTime != null{
+                    if (this.timerTime.runing{
                         this.timerTime.stop();
                     }
                     this.timerTime = null;
                 }
-                var timeFun = function() {
-                    if (thisTemp.V != null && !thisTemp.V.paused && thisTemp.showFace) {
+                var timeFun = function({
+                    if (thisTemp.V != null && !thisTemp.V.paused && thisTemp.showFace{
                         thisTemp.CB['timeText'].innerHTML = thisTemp.getNowDate();
                     }
                 };
@@ -5239,7 +5239,7 @@ function ckplayerConfig() {
 			加载字幕
 		*/
         loadTrack: function(def) {
-            if (this.playerType == 'flashplayer' || this.vars['flashplayer'] == true) {
+            if (this.playerType == 'flashplayer' || this.vars['flashplayer'] == true{
                 return;
             }
             if(this.isUndefined(def)){
@@ -5274,7 +5274,7 @@ function ckplayerConfig() {
                 dataType: 'text',
                 url: loadTrackUrl,
                 charset: 'utf-8',
-                success: function(data) {
+                success: function(data{
                     thisTemp.track = thisTemp.parseSrtSubtitles(data);
                     thisTemp.trackIndex = 0;
                     thisTemp.nowTrackShow = {
@@ -5288,7 +5288,7 @@ function ckplayerConfig() {
 			内部函数
 			重置字幕
 		*/
-        resetTrack: function() {
+        resetTrack: function({
             this.trackIndex = 0;
             this.nowTrackShow = {
                 sn: ''
@@ -5305,7 +5305,7 @@ function ckplayerConfig() {
             if (this.track.length < 1) {
                 return;
             }
-            if (this.trackIndex >= this.track.length) {
+            if (this.trackIndex >= this.track.length{
                 this.trackIndex = 0;
             }
             var nowTrack = this.track[this.trackIndex]; //当前编号对应的字幕内容
@@ -5318,7 +5318,7 @@ function ckplayerConfig() {
 				 	如果当前显示的内容不等于当前需要显示的内容时，则需要显示正确的内容
 				*/
                 var nowShow = this.nowTrackShow;
-                if (nowShow['sn'] != nowTrack['sn']) {
+                if (nowShow['sn'] != nowTrack['sn']{
                     this.trackHide();
                     this.trackShow(nowTrack);
                     this.nowTrackTemp=nowTrack;
@@ -5339,7 +5339,7 @@ function ckplayerConfig() {
 			内部函数
 			显示字幕内容
 		*/
-        trackShow: function(track) {
+        trackShow: function(track{
             this.nowTrackShow = track;
             var arr = track['content'];
             for (var i = 0; i < arr.length; i++) {
@@ -5362,8 +5362,8 @@ function ckplayerConfig() {
 			内部函数
 			隐藏字字幕内容
 		*/
-        trackHide: function() {
-            for (var i = 0; i < this.trackElement.length; i++) {
+        trackHide: function({
+            for (var i = 0; i < this.trackElement.length; i++{
                 this.deleteElement(this.trackElement[i]);
             }
             this.trackElement = [];
@@ -5372,12 +5372,12 @@ function ckplayerConfig() {
 			内部函数
 			重新计算字幕的编号
 		*/
-        checkTrack: function() {
+        checkTrack: function({
             var num = this.trackIndex;
             var arr = this.track;
             var i = 0;
             for (i = num; i < arr.length; i++) {
-                if (this.time >= arr[i]['startTime'] && this.time <= arr[i]['endTime']) {
+                if (this.time >= arr[i]['startTime'] && this.time <= arr[i]['endTime']{
                     this.trackIndex = i;
                     break;
                 }
@@ -5388,18 +5388,18 @@ function ckplayerConfig() {
 			接口函数
 			在播放和暂停之间切换
 		*/
-        playOrPause: function() {
+        playOrPause: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.V == null) {
+            if (this.V == null{
                 return;
             }
             if (this.playerType == 'flashplayer') {
                 this.V.playOrPause();
                 return;
             }
-            if (this.V.paused) {
+            if (this.V.paused{
                 this.videoPlay();
             } else {
                 this.videoPause();
@@ -5410,14 +5410,14 @@ function ckplayerConfig() {
 			播放动作
 		*/
         videoPlay: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
                 this.V.videoPlay();
                 return;
             }
-            if (this.adPlayerPlay) {
+            if (this.adPlayerPlay{
                 this.eliminateAd(); //清除广告
                 return;
             }
@@ -5425,14 +5425,14 @@ function ckplayerConfig() {
                 if (this.V.currentSrc) {
                     this.V.play();
                 }
-            } catch(event) {}
+            } catch(event{}
         },
         /*
 			接口函数
 			暂停动作
 		*/
         videoPause: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5448,7 +5448,7 @@ function ckplayerConfig() {
 			跳转时间动作
 		*/
         videoSeek: function(time) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5456,7 +5456,7 @@ function ckplayerConfig() {
                 return;
             }
             var duration = this.getMetaDate()['duration'];
-            if (duration > 0 && time > duration) {
+            if (duration > 0 && time > duration{
                 time = duration;
             }
             if (time >= 0) {
@@ -5468,8 +5468,8 @@ function ckplayerConfig() {
 			接口函数
 			调节音量/获取音量
 		*/
-        changeVolume: function(vol, bg, button) {
-            if (this.loaded) {
+        changeVolume: function(vol, bg, button{
+            if (this.loaded{
                 if (this.playerType == 'flashplayer') {
                     this.V.changeVolume(vol);
                     return;
@@ -5486,19 +5486,19 @@ function ckplayerConfig() {
                 return;
             }
             try {
-                if (this.isUndefined(bg)) {
+                if (this.isUndefined(bg){
                     bg = true;
                 }
             } catch(e) {}
             try {
-                if (this.isUndefined(button)) {
+                if (this.isUndefined(button){
                     button = true;
                 }
             } catch(e) {}
             if (!vol) {
                 vol = 0;
             }
-            if (vol < 0) {
+            if (vol < 0{
                 vol = 0;
             }
             if (vol > 1) {
@@ -5508,9 +5508,9 @@ function ckplayerConfig() {
                 this.V.volume = vol;
             } catch(error) {}
             this.volume = vol;
-            if (bg && this.showFace) {
+            if (bg && this.showFace{
                 var bgW = vol * this.CB['volumeBg'].offsetWidth;
-                if (bgW < 0) {
+                if (bgW < 0{
                     bgW = 0;
                 }
                 if (bgW > this.CB['volumeBg'].offsetWidth) {
@@ -5519,12 +5519,12 @@ function ckplayerConfig() {
                 this.css(this.CB['volumeUp'], 'width', bgW + 'px');
             }
 
-            if (button && this.showFace) {
+            if (button && this.showFace{
                 var buLeft = parseInt(this.CB['volumeUp'].offsetWidth - (this.CB['volumeBO'].offsetWidth * 0.5));
-                if (buLeft > this.CB['volumeBg'].offsetWidth - this.CB['volumeBO'].offsetWidth) {
+                if (buLeft > this.CB['volumeBg'].offsetWidth - this.CB['volumeBO'].offsetWidth{
                     buLeft = this.CB['volumeBg'].offsetWidth - this.CB['volumeBO'].offsetWidth
                 }
-                if (buLeft < 0) {
+                if (buLeft < 0{
                     buLeft = 0;
                 }
                 this.css(this.CB['volumeBO'], 'left', buLeft + 'px');
@@ -5535,7 +5535,7 @@ function ckplayerConfig() {
 			静音
 		*/
         videoMute: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5550,7 +5550,7 @@ function ckplayerConfig() {
 			取消静音
 		*/
         videoEscMute: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5564,7 +5564,7 @@ function ckplayerConfig() {
 			视频广告静音
 		*/
         adMuteFunction: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             this.changeVolume(0);
@@ -5576,7 +5576,7 @@ function ckplayerConfig() {
 			接口函数
 			视频广告取消静音
 		*/
-        adEscMuteFunction: function() {
+        adEscMuteFunction: function({
             if (!this.loaded) {
                 return;
             }
@@ -5596,16 +5596,16 @@ function ckplayerConfig() {
 			接口函数
 			快退
 		*/
-        fastBack: function() {
+        fastBack: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.fastBack();
                 return;
             }
             var time = this.time - this.ckplayerConfig['config']['timeJump'];
-            if (time < 0) {
+            if (time < 0{
                 time = 0;
             }
             this.videoSeek(time);
@@ -5615,7 +5615,7 @@ function ckplayerConfig() {
 			快进
 		*/
         fastNext: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5632,11 +5632,11 @@ function ckplayerConfig() {
 			接口函数
 			获取当前播放的地址
 		*/
-        getCurrentSrc: function() {
+        getCurrentSrc: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 return this.V.getCurrentSrc();
             }
             return this.V.currentSrc;
@@ -5656,7 +5656,7 @@ function ckplayerConfig() {
 			内置函数
 			全屏动作，该动作只能是用户操作才可以触发，比如用户点击按钮触发该事件
 		*/
-        fullScreen: function() {
+        fullScreen: function({
             if (this.html5Video && this.playerType == 'html5video') {
                 var element = this.PD;
                 if (element.requestFullscreen) {
@@ -5665,9 +5665,9 @@ function ckplayerConfig() {
                     element.mozRequestFullScreen();
                 } else if (element.webkitRequestFullscreen) {
                     element.webkitRequestFullscreen();
-                } else if (element.msRequestFullscreen) {
+                } else if (element.msRequestFullscreen{
                     element.msRequestFullscreen();
-                } else if (element.oRequestFullscreen) {
+                } else if (element.oRequestFullscreen{
                     element.oRequestFullscreen();
                 }
                 this.judgeFullScreen();
@@ -5679,15 +5679,15 @@ function ckplayerConfig() {
 			接口函数
 			退出全屏动作
 		*/
-        quitFullScreen: function() {
+        quitFullScreen: function({
             if (this.html5Video && this.playerType == 'html5video') {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
-                } else if (document.msExitFullscreen) {
+                } else if (document.msExitFullscreen{
                     document.msExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
+                } else if (document.mozCancelFullScreen{
                     document.mozCancelFullScreen();
-                } else if (document.oRequestFullscreen) {
+                } else if (document.oRequestFullscreen{
                     document.oCancelFullScreen();
                 } else if (document.requestFullscreen) {
                     document.requestFullscreen();
@@ -5704,24 +5704,24 @@ function ckplayerConfig() {
         /*
 		 下面列出只有flashplayer里支持的
 		 */
-        videoRotation: function(n) {
+        videoRotation: function(n{
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.videoRotation(n);
                 return;
             }
-            if (this.isUndefined(n)) {
+            if (this.isUndefined(n){
                 n = 0;
             }
             var tf = this.css(this.V, 'transform');
-            if (this.isUndefined(tf) && !tf) {
+            if (this.isUndefined(tf&& !tf{
                 tf = 'rotate(0deg)';
             }
             var reg = tf.match(/rotate\([^)]+\)/);
-            reg = reg ? reg[0].replace('rotate(', '').replace('deg)', '') : '';
-            if (reg == '') {
+            reg = reg ? reg[0].replace('rotate(', '').replace('deg)', '': '';
+            if (reg == ''{
                 reg = 0;
             } else {
                 reg = parseInt(reg);
@@ -5742,16 +5742,16 @@ function ckplayerConfig() {
                 y180 = n % 180,
                 y270 = n % 270;
             var ys = false;
-            if (y90 == 0 && y180 == 90 && y270 == 90) {
+            if (y90 == 0 && y180 == 90 && y270 == 90{
                 ys = true;
             }
             if (y90 == 0 && y180 == 90 && y270 == 0) {
                 ys = true;
             }
-            if (y90 == -0 && y180 == -90 && y270 == -90) {
+            if (y90 == -0 && y180 == -90 && y270 == -90{
                 ys = true;
             }
-            if (y90 == -0 && y180 == -90 && y270 == -0) {
+            if (y90 == -0 && y180 == -90 && y270 == -0{
                 ys = true;
             }
             tf = tf.replace(/rotate\([^)]+\)/, '').replace(/scale\([^)]+\)/, '') + ' rotate(' + n + 'deg)';
@@ -5760,8 +5760,8 @@ function ckplayerConfig() {
                 vW = this.V.videoWidth,
                 vH = this.V.videoHeight;
             if (vW > 0 && vH > 0) {
-                if (ys) {
-                    if (cdW / cdH > vH / vW) {
+                if (ys{
+                    if (cdW / cdH > vH / vW{
                         nH = cdH;
                         nW = vH * nH / vW;
                     } else {
@@ -5779,7 +5779,7 @@ function ckplayerConfig() {
             return;
         },
         videoBrightness: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5788,7 +5788,7 @@ function ckplayerConfig() {
             }
         },
         videoContrast: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5797,7 +5797,7 @@ function ckplayerConfig() {
             }
         },
         videoSaturation: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5805,17 +5805,17 @@ function ckplayerConfig() {
                 return;
             }
         },
-        videoHue: function(n) {
+        videoHue: function(n{
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.videoHue(n);
                 return;
             }
         },
         videoZoom: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5825,20 +5825,20 @@ function ckplayerConfig() {
             if (this.isUndefined(n)) {
                 n = 1;
             }
-            if (n < 0) {
+            if (n < 0{
                 n = 0;
             }
             if (n > 2) {
                 n = 2;
             }
             var tf = this.css(this.V, 'transform');
-            tf = tf.replace(/scale\([^)]+\)/, '') + ' scale(' + n + ')';
+            tf = tf.replace(/scale\([^)]+\)/, ''+ ' scale(' + n + ')';
             this.videoScale = n;
             this.css(this.V, 'transform', tf);
             return;
         },
         videoProportion: function(w, h) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5846,20 +5846,20 @@ function ckplayerConfig() {
                 return;
             }
         },
-        adPlay: function() {
+        adPlay: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.adPlay();
                 return;
             }
-            if (this.adPlayerPlay) {
+            if (this.adPlayerPlay{
                 this.adIsPause = false;
                 if (this.adPlayerPlay) {
                     var ad = this.getNowAdvertisements();
                     var type = ad['type'];
-                    if (this.isStrImage(type)) {
+                    if (this.isStrImage(type){
                         this.adCountDown();
                     } else {
                         this.V.play();
@@ -5868,24 +5868,24 @@ function ckplayerConfig() {
             }
         },
         adPause: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
                 this.V.adPause();
                 return;
             }
-            if (this.adPlayerPlay) {
+            if (this.adPlayerPlay{
                 this.adIsPause = true;
                 var ad = this.getNowAdvertisements();
                 var type = ad['type'];
-                if (type != 'jpg' && type != 'jpeg' && type != 'png' && type != 'svg' && type != 'gif') {
+                if (type != 'jpg' && type != 'jpeg' && type != 'png' && type != 'svg' && type != 'gif'{
                     this.videoPause();
                 }
             }
         },
         videoError: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -5893,11 +5893,11 @@ function ckplayerConfig() {
                 return;
             }
         },
-        changeConfig: function() {
+        changeConfig: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 var args = Array.prototype.slice.call(arguments);
                 switch(args.length){
                     case 1:
@@ -5932,7 +5932,7 @@ function ckplayerConfig() {
             }
             var obj = this.ckplayerConfig;
             var arg = arguments;
-            for (var i = 0; i < arg.length - 1; i++) {
+            for (var i = 0; i < arg.length - 1; i++{
                 if (obj.hasOwnProperty(arg[i])) {
                     obj = obj[arg[i]];
                 } else {
@@ -5973,16 +5973,16 @@ function ckplayerConfig() {
             }
             this.sendJS('configChange', this.ckplayerConfig);
         },
-        custom: function() {
+        custom: function({
             if (!this.loaded) {
                 return;
             }
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.custom(arguments);
                 return;
             }
         },
-        getConfig: function() {
+        getConfig: function({
             if (!this.loaded) {
                 return null;
             }
@@ -5991,7 +5991,7 @@ function ckplayerConfig() {
             }
         },
         openUrl: function(n) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -6004,7 +6004,7 @@ function ckplayerConfig() {
 			清除视频
 		*/
         videoClear: function() {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -6016,7 +6016,7 @@ function ckplayerConfig() {
 			接口函数
 			向播放器传递新的视频地址
 		*/
-        newVideo: function(c) {
+        newVideo: function(c{
             if (this.playerType == 'flashplayer') {
                 this.V.newVideo(c);
                 return;
@@ -6029,7 +6029,7 @@ function ckplayerConfig() {
 			截图
 		*/
         screenshot: function(obj, save, name) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
@@ -6053,7 +6053,7 @@ function ckplayerConfig() {
                         name: name,
                         base64: base64
                     });
-                } catch(error) {
+                } catch(error{
                     this.log(error);
                 }
             }
@@ -6066,7 +6066,7 @@ function ckplayerConfig() {
             if (this.isUndefined(w)) {
                 w = 0;
             }
-            if (this.isUndefined(h)) {
+            if (this.isUndefined(h){
                 h = 0;
             }
             if (w > 0) {
@@ -6075,7 +6075,7 @@ function ckplayerConfig() {
             if (h > 0) {
                 this.css(this.CD, 'height', h + 'px');
             }
-            if (this.html5Video) {
+            if (this.html5Video{
                 this.elementCoordinate();
             }
         },
@@ -6097,14 +6097,14 @@ function ckplayerConfig() {
 			注册控制控制栏显示与隐藏函数
 		*/
         changeControlBarShow: function(show) {
-            if (!this.loaded) {
+            if (!this.loaded{
                 return;
             }
             if (this.playerType == 'flashplayer') {
                 this.V.changeControlBarShow(show);
                 return;
             }
-            if (show) {
+            if (show{
                 this.controlBarIsShow = true;
                 this.controlBarHide(false);
             } else {
@@ -6146,7 +6146,7 @@ function ckplayerConfig() {
             if(window.ActiveXObject) {
                 try {
                     var s = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-                    if(s) {
+                    if(s{
                         return true;
                     }
                 } catch(e) {}
@@ -6156,7 +6156,7 @@ function ckplayerConfig() {
                     if(s) {
                         return true;
                     }
-                } catch(e) {}
+                } catch(e{}
             }
             return false;
         },
@@ -6169,8 +6169,8 @@ function ckplayerConfig() {
             var v = this.vars;
             var z = '';
             for (k in v) {
-                if (k != 'flashplayer' && k != 'container' && v[k] != '') {
-                    if (z != '') {
+                if (k != 'flashplayer' && k != 'container' && v[k] != ''{
+                    if (z != ''{
                         z += '&';
                     }
                     var vk = v[k];
@@ -6184,7 +6184,7 @@ function ckplayerConfig() {
                 }
 
             }
-            if (!v.hasOwnProperty('volume') || !v['volume']) {
+            if (!v.hasOwnProperty('volume'|| !v['volume']) {
                 if (z != '') {
                     z += '&';
                 }
@@ -6193,8 +6193,8 @@ function ckplayerConfig() {
             return z;
         },
         /*判断字符串是否是图片*/
-        isStrImage: function(s) {
-            if (s == 'jpg' || s == 'jpeg' || s == 'png' || s == 'svg' || s == 'gif') {
+        isStrImage: function(s{
+            if (s == 'jpg' || s == 'jpeg' || s == 'png' || s == 'svg' || s == 'gif'{
                 return true;
             }
             return false;
@@ -6203,7 +6203,7 @@ function ckplayerConfig() {
 			内置函数
 			将vars格式化成flash能接受的对象。再由getFlashVars函数转化成字符串或由newVideo直接使用
 		*/
-        getVarsObject: function() {
+        getVarsObject: function({
             var v = this.vars;
             var f = '',
                 d = '',
@@ -6212,10 +6212,10 @@ function ckplayerConfig() {
             var prompt = v['promptSpot'];
             var i = 0;
             var video = this.vars['video'];
-            if (typeof(video) == 'object') { //对象或数组
-                if (!this.isUndefined(typeof(video.length))) { //说明是数组
+            if (typeof(video) == 'object'{ //对象或数组
+                if (!this.isUndefined(typeof(video.length)){ //说明是数组
                     var arr = video;
-                    for (i = 0; i < arr.length; i++) {
+                    for (i = 0; i < arr.length; i++{
                         var arr2 = arr[i];
                         if (arr2) {
                             if (f != '') {
@@ -6249,8 +6249,8 @@ function ckplayerConfig() {
             if (prompt != null) {
                 v['promptspot'] = '';
                 v['promptspottime'] = '';
-                for (i = 0; i < prompt.length; i++) {
-                    if (v['promptspot'] != '') {
+                for (i = 0; i < prompt.length; i++{
+                    if (v['promptspot'] != ''{
                         v['promptspot'] += ',';
                         v['promptspottime'] += ',';
                     }
@@ -6259,7 +6259,7 @@ function ckplayerConfig() {
                 }
 
             }
-            if (f != '') {
+            if (f != ''{
                 v['video'] = f;
                 v['definition'] = d;
                 v['weight'] = w;
@@ -6269,7 +6269,7 @@ function ckplayerConfig() {
             }
             var newV = {};
 
-            for (var k in v) {
+            for (var k in v{
                 if (v[k] != null) {
                     newV[k] = v[k];
                 }
@@ -6312,14 +6312,14 @@ function ckplayerConfig() {
 			获取元数据部分
 		*/
         getMetaDate: function() {
-            if (!this.loaded || this.V == null) {
+            if (!this.loaded || this.V == null{
                 return false;
             }
-            if (this.playerType == 'html5video') {
+            if (this.playerType == 'html5video'{
                 var duration = 0;
                 try {
-                    duration = !isNaN(this.V.duration) ? this.V.duration: 0;
-                } catch(event) {
+                    duration = !isNaN(this.V.duration? this.V.duration: 0;
+                } catch(event{
                     this.log(event);
                 }
                 var data = {
@@ -6350,7 +6350,7 @@ function ckplayerConfig() {
 			取当前提供给播放器播放的视频列表
 		*/
         getVideoUrl: function() {
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 return this.V.getVideoUrl();
             }
             var arr = [];
@@ -6358,7 +6358,7 @@ function ckplayerConfig() {
                 arr.push(this.V.src);
             } else {
                 var uArr = this.V.childNodes;
-                for (var i = 0; i < uArr.length; i++) {
+                for (var i = 0; i < uArr.length; i++{
                     arr.push(uArr[i].src);
                 }
             }
@@ -6368,7 +6368,7 @@ function ckplayerConfig() {
 			内置函数
 			格式化函数
 		*/
-        clickEvent: function(call) {
+        clickEvent: function(call{
             if (call == 'none' || call == '' || call == null) {
                 return {
                     type: 'none'
@@ -6379,7 +6379,7 @@ function ckplayerConfig() {
                 fun = '',
                 link = '',
                 target = '';
-            if (callArr.length == 2) {
+            if (callArr.length == 2{
                 var callM = callArr[0];
                 var callE = callArr[1];
                 if (!callE) {
@@ -6390,15 +6390,15 @@ function ckplayerConfig() {
                 var val = '';
                 var eArr = [];
                 type = callM;
-                switch (callM) {
+                switch (callM{
                     case 'actionScript':
                         //trace(THIS.hasOwnProperty(callE));
-                        if (callE.indexOf('(') > -1) {
+                        if (callE.indexOf('('> -1{
                             eArr = callE.split('(');
                             callE = eArr[0];
                             val = eArr[1].replace(')', '');
                         }
-                        if (val == '') {
+                        if (val == ''{
                             fun = 'thisTemp.' + callE + '()';
                         } else {
                             fun = 'thisTemp.' + callE + '(' + val + ')';
@@ -6407,7 +6407,7 @@ function ckplayerConfig() {
                     case 'javaScript':
                         if (callE.substr(0, 11) == '[flashvars]') {
                             callE = callE.substr(11);
-                            if (this.vars.hasOwnProperty(callE)) {
+                            if (this.vars.hasOwnProperty(callE){
                                 callE = this.vars[callE];
                             } else {
                                 break;
@@ -6427,7 +6427,7 @@ function ckplayerConfig() {
                         break;
                     case "link":
                         var callLink = (callE + ',').split(',');
-                        if (callLink[0].substr(0, 11) == '[flashvars]') {
+                        if (callLink[0].substr(0, 11== '[flashvars]'{
                             var fl = callLink[0].replace('[flashvars]', '');
                             if (this.vars.hasOwnProperty(fl)) {
                                 callLink[0] = this.vars[fl];
@@ -6435,7 +6435,7 @@ function ckplayerConfig() {
                                 break;
                             }
                         }
-                        if (!callLink[1]) {
+                        if (!callLink[1]{
                             callLink[1] = '_blank';
                         }
                         link = callLink[0];
@@ -6467,7 +6467,7 @@ function ckplayerConfig() {
                 ph = this.PD.offsetHeight;
             var x = 0,
                 y = 0;
-            switch (obj['align']) {
+            switch (obj['align']{
                 case 'left':
                     x = obj['offsetX'];
                     break;
@@ -6498,7 +6498,7 @@ function ckplayerConfig() {
 			内置函数
 			向播放器界面添加一个文本
 		*/
-        addElement: function(attribute) {
+        addElement: function(attribute{
             var thisTemp = this;
             if (this.playerType == 'flashplayer') {
                 return this.V.addElement(attribute);
@@ -6526,10 +6526,10 @@ function ckplayerConfig() {
             if (obj['x']) {
                 ele.setAttribute('data-x', obj['x']);
             }
-            if (obj['y']) {
+            if (obj['y']{
                 ele.setAttribute('data-y', obj['y']);
             }
-            if (obj['position'] != null) {
+            if (obj['position'] != null{
                 ele.setAttribute('data-position', obj['position'].join(','));
             }
 
@@ -6586,7 +6586,7 @@ function ckplayerConfig() {
                             list[i] = this.standardization(textObj, list[i]);
                             clickEvent = this.clickEvent(list[i]['clickEvent']);
                             clickArr.push(clickEvent);
-                            if (clickEvent['type'] == 'link') {
+                            if (clickEvent['type'] == 'link'{
                                 html += '<div class="' + newEleid + '" data-i="' + i + '"><a href="' + clickEvent['link'] + '" target="' + clickEvent['target'] + '"><img class="' + newEleid + '_image" src="' + list[i]['file'] + '" style="border:0;"></a></div>';
                             } else {
                                 html += '<div class="' + newEleid + '" data-i="' + i + '"><img class="' + newEleid + '_image" src="' + list[i]['file'] + '" style="border:0;"></div>';
@@ -6640,8 +6640,8 @@ function ckplayerConfig() {
 				html = '<a href="'+objClickEvent['link']+'" target="'+objClickEvent['target']+'">' + html + '</a>';
 			}*/
             eid.innerHTML = '<div class="' + bgid + '"></div><div class="' + bgid + '_c">' + html + '</div>';
-            if (objClickEvent['type'] == 'javaScript' || objClickEvent['type'] == 'actionScript') {
-                var objClickHandler = function() {
+            if (objClickEvent['type'] == 'javaScript' || objClickEvent['type'] == 'actionScript'{
+                var objClickHandler = function({
                     eval(objClickEvent['fun']);
                     thisTemp.sendJS('clickEvent', clk['type'] + '->' + clk['fun'].replace('thisTemp.', '').replace('()', ''));
                 };
@@ -6651,18 +6651,18 @@ function ckplayerConfig() {
                 position: 'absolute',
                 zIndex: '2'
             });
-            for (i = 0; i < idArr.length; i++) {
+            for (i = 0; i < idArr.length; i++{
                 var clk = clickArr[i];
 
                 if (clk['type'] == 'javaScript' || clk['type'] == 'actionScript') {
-                    var clickHandler = function() {
+                    var clickHandler = function({
                         clk = clickArr[this.getAttribute('data-i')];
                         eval(clk['fun']);
                         thisTemp.sendJS('clickEvent', clk['type'] + '->' + clk['fun'].replace('thisTemp.', '').replace('()', ''));
                     };
                     this.addListenerInside('click', clickHandler, this.getByElement(idArr[i]))
                 }
-                switch (list[i]['type']) {
+                switch (list[i]['type']{
                     case 'image':
                     case 'png':
                     case 'jpg':
@@ -6756,12 +6756,12 @@ function ckplayerConfig() {
 			内置函数
 			获取元件的属性，包括x,y,width,height,alpha
 		*/
-        getElement: function(element) {
+        getElement: function(element{
             if (this.playerType == 'flashplayer') {
                 return this.V.getElement(element);
             }
             var ele = element;
-            if (typeof(element) == 'string') {
+            if (typeof(element) == 'string'{
                 ele = this.getByElement(element);
             }
             var coor = this.getCoor(ele);
@@ -6770,7 +6770,7 @@ function ckplayerConfig() {
                 y: coor['y'],
                 width: ele.offsetWidth,
                 height: ele.offsetHeight,
-                alpha: !this.isUndefined(this.css(ele, 'opacity')) ? parseFloat(this.css(ele, 'opacity')) : 1,
+                alpha: !this.isUndefined(this.css(ele, 'opacity')) ? parseFloat(this.css(ele, 'opacity'): 1,
                 show: this.css(ele, 'display') == 'none' ? false: true
             };
         },
@@ -6778,17 +6778,17 @@ function ckplayerConfig() {
 			内置函数
 			控制元件显示和隐藏
 		*/
-        elementShow: function(element, show) {
+        elementShow: function(element, show{
             if (this.playerType == 'flashplayer') {
                 this.V.elementShow(element, show);
                 return;
             }
-            if (typeof(element) == 'string') {
+            if (typeof(element== 'string') {
                 if (element) {
                     this.css(ele, 'display', show == true ? 'block': 'none');
                 } else {
                     var arr = this.elementTempArr;
-                    for (var i = 0; i < arr.length; i++) {
+                    for (var i = 0; i < arr.length; i++{
                         this.css(arr[i], 'display', show == true ? 'block': 'none');
                     }
                 }
@@ -6800,10 +6800,10 @@ function ckplayerConfig() {
 			根据节点的x,y计算在播放器里的坐标
 		*/
         calculationCoor: function(ele) {
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 return this.V.calculationCoor(ele);
             }
-            if (ele == []) {
+            if (ele == []{
                 return;
             }
             var x, y, position = [];
@@ -6817,7 +6817,7 @@ function ckplayerConfig() {
             if (!this.isUndefined(this.getDataset(ele, 'y'))) {
                 y = this.getDataset(ele, 'y');
             }
-            if (!this.isUndefined(this.getDataset(ele, 'position'))) {
+            if (!this.isUndefined(this.getDataset(ele, 'position')){
                 try {
                     position = this.getDataset(ele, 'position').toString().split(',');
                 } catch(event) {}
@@ -6825,7 +6825,7 @@ function ckplayerConfig() {
             if (position.length > 0) {
                 position.push(null, null, null, null);
                 var i = 0;
-                for (i = 0; i < position.length; i++) {
+                for (i = 0; i < position.length; i++{
                     if (this.isUndefined(position[i]) || position[i] == null || position[i] == 'null' || position[i] == '') {
                         position[i] = null;
                     } else {
@@ -6833,8 +6833,8 @@ function ckplayerConfig() {
                     }
                 }
 
-                if (position[2] == null) {
-                    switch (position[0]) {
+                if (position[2] == null{
+                    switch (position[0]{
                         case 0:
                             x = 0;
                             break;
@@ -6851,7 +6851,7 @@ function ckplayerConfig() {
                             x = position[2];
                             break;
                         case 1:
-                            x = parseInt(w * 0.5) + position[2];
+                            x = parseInt(w * 0.5+ position[2];
                             break;
                         default:
                             x = w + position[2];
@@ -6864,14 +6864,14 @@ function ckplayerConfig() {
                             y = 0;
                             break;
                         case 1:
-                            y = parseInt((h - eh) * 0.5);
+                            y = parseInt((h - eh* 0.5);
                             break;
                         default:
                             y = h - eh;
                             break;
                     }
                 } else {
-                    switch (position[1]) {
+                    switch (position[1]{
                         case 0:
                             y = position[3];
                             break;
@@ -6885,10 +6885,10 @@ function ckplayerConfig() {
                 }
             } else {
                 if (x.substring(x.length - 1, x.length) == '%') {
-                    x = Math.floor(parseInt(x.substring(0, x.length - 1)) * w * 0.01);
+                    x = Math.floor(parseInt(x.substring(0, x.length - 1)* w * 0.01);
                 }
                 if (y.substring(y.length - 1, y.length) == '%') {
-                    y = Math.floor(parseInt(y.substring(0, y.length - 1)) * h * 0.01);
+                    y = Math.floor(parseInt(y.substring(0, y.length - 1)* h * 0.01);
                 }
             }
             return {
@@ -6903,9 +6903,9 @@ function ckplayerConfig() {
 		*/
         changeElementCoor: function() {
             for (var i = 0; i < this.elementArr.length; i++) {
-                if (this.getByElement(this.elementArr[i]) != []) {
+                if (this.getByElement(this.elementArr[i]!= []) {
                     var c = this.calculationCoor(this.getByElement(this.elementArr[i]));
-                    if (c['x'] && c['y']) {
+                    if (c['x'] && c['y']{
                         this.css(this.elementArr[i], {
                             top: c['y'] + 'px',
                             left: c['x'] + 'px'
@@ -6918,7 +6918,7 @@ function ckplayerConfig() {
 			内置函数
 			缓动效果集
 		*/
-        tween: function() {
+        tween: function({
             var Tween = {
                 None: { //均速运动
                     easeIn: function(t, b, c, d) {
@@ -6933,154 +6933,154 @@ function ckplayerConfig() {
                 },
                 Quadratic: {
                     easeIn: function(t, b, c, d) {
-                        return c * (t /= d) * t + b;
+                        return c * (t /= d* t + b;
                     },
-                    easeOut: function(t, b, c, d) {
+                    easeOut: function(t, b, c, d{
                         return - c * (t /= d) * (t - 2) + b;
                     },
                     easeInOut: function(t, b, c, d) {
-                        if ((t /= d / 2) < 1) return c / 2 * t * t + b;
-                        return - c / 2 * ((--t) * (t - 2) - 1) + b;
+                        if ((t /= d / 2) < 1return c / 2 * t * t + b;
+                        return - c / 2 * ((--t) * (t - 2) - 1+ b;
                     }
                 },
                 Cubic: {
-                    easeIn: function(t, b, c, d) {
+                    easeIn: function(t, b, c, d{
                         return c * (t /= d) * t * t + b;
                     },
                     easeOut: function(t, b, c, d) {
-                        return c * ((t = t / d - 1) * t * t + 1) + b;
+                        return c * ((t = t / d - 1* t * t + 1) + b;
                     },
                     easeInOut: function(t, b, c, d) {
-                        if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
-                        return c / 2 * ((t -= 2) * t * t + 2) + b;
+                        if ((t /= d / 2) < 1return c / 2 * t * t * t + b;
+                        return c / 2 * ((t -= 2* t * t + 2) + b;
                     }
                 },
                 Quartic: {
                     easeIn: function(t, b, c, d) {
-                        return c * (t /= d) * t * t * t + b;
+                        return c * (t /= d* t * t * t + b;
                     },
-                    easeOut: function(t, b, c, d) {
-                        return - c * ((t = t / d - 1) * t * t * t - 1) + b;
+                    easeOut: function(t, b, c, d{
+                        return - c * ((t = t / d - 1) * t * t * t - 1+ b;
                     },
-                    easeInOut: function(t, b, c, d) {
-                        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t + b;
-                        return - c / 2 * ((t -= 2) * t * t * t - 2) + b;
+                    easeInOut: function(t, b, c, d{
+                        if ((t /= d / 2< 1) return c / 2 * t * t * t * t + b;
+                        return - c / 2 * ((t -= 2) * t * t * t - 2+ b;
                     }
                 },
                 Quintic: {
-                    easeIn: function(t, b, c, d) {
+                    easeIn: function(t, b, c, d{
                         return c * (t /= d) * t * t * t * t + b;
                     },
                     easeOut: function(t, b, c, d) {
-                        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+                        return c * ((t = t / d - 1* t * t * t * t + 1) + b;
                     },
                     easeInOut: function(t, b, c, d) {
-                        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
-                        return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
+                        if ((t /= d / 2) < 1return c / 2 * t * t * t * t * t + b;
+                        return c / 2 * ((t -= 2* t * t * t * t + 2) + b;
                     }
                 },
                 Sine: {
-                    easeIn: function(t, b, c, d) {
-                        return - c * Math.cos(t / d * (Math.PI / 2)) + c + b;
+                    easeIn: function(t, b, c, d{
+                        return - c * Math.cos(t / d * (Math.PI / 2)+ c + b;
                     },
-                    easeOut: function(t, b, c, d) {
-                        return c * Math.sin(t / d * (Math.PI / 2)) + b;
+                    easeOut: function(t, b, c, d{
+                        return c * Math.sin(t / d * (Math.PI / 2)+ b;
                     },
-                    easeInOut: function(t, b, c, d) {
-                        return - c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
+                    easeInOut: function(t, b, c, d{
+                        return - c / 2 * (Math.cos(Math.PI * t / d) - 1+ b;
                     }
                 },
                 Exponential: {
-                    easeIn: function(t, b, c, d) {
-                        return (t == 0) ? b: c * Math.pow(2, 10 * (t / d - 1)) + b;
+                    easeIn: function(t, b, c, d{
+                        return (t == 0) ? b: c * Math.pow(2, 10 * (t / d - 1)+ b;
                     },
-                    easeOut: function(t, b, c, d) {
-                        return (t == d) ? b + c: c * ( - Math.pow(2, -10 * t / d) + 1) + b;
+                    easeOut: function(t, b, c, d{
+                        return (t == d) ? b + c: c * - Math.pow(2, -10 * t / d) + 1+ b;
                     },
-                    easeInOut: function(t, b, c, d) {
+                    easeInOut: function(t, b, c, d{
                         if (t == 0) return b;
-                        if (t == d) return b + c;
-                        if ((t /= d / 2) < 1) return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
-                        return c / 2 * ( - Math.pow(2, -10 * --t) + 2) + b;
+                        if (t == dreturn b + c;
+                        if ((t /= d / 2< 1) return c / 2 * Math.pow(2, 10 * (t - 1)+ b;
+                        return c / 2 * ( - Math.pow(2, -10 * --t+ 2) + b;
                     }
                 },
                 Circular: {
-                    easeIn: function(t, b, c, d) {
-                        return - c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
+                    easeIn: function(t, b, c, d{
+                        return - c * (Math.sqrt(1 - (t /= d* t) - 1+ b;
                     },
-                    easeOut: function(t, b, c, d) {
-                        return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;
+                    easeOut: function(t, b, c, d{
+                        return c * Math.sqrt(1 - (t = t / d - 1* t) + b;
                     },
                     easeInOut: function(t, b, c, d) {
-                        if ((t /= d / 2) < 1) return - c / 2 * (Math.sqrt(1 - t * t) - 1) + b;
-                        return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
+                        if ((t /= d / 2) < 1return - c / 2 * (Math.sqrt(1 - t * t) - 1+ b;
+                        return c / 2 * (Math.sqrt(1 - (t -= 2) * t+ 1) + b;
                     }
                 },
                 Elastic: {
                     easeIn: function(t, b, c, d, a, p) {
-                        if (t == 0) return b;
-                        if ((t /= d) == 1) return b + c;
+                        if (t == 0return b;
+                        if ((t /= d== 1return b + c;
                         if (!p) p = d * .3;
                         if (!a || a < Math.abs(c)) {
                             a = c;
                             var s = p / 4;
                         } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-                        return - (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+                        return - (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s* (2 * Math.PI/ p)+ b;
                     },
-                    easeOut: function(t, b, c, d, a, p) {
+                    easeOut: function(t, b, c, d, a, p{
                         if (t == 0) return b;
                         if ((t /= d) == 1) return b + c;
-                        if (!p) p = d * .3;
-                        if (!a || a < Math.abs(c)) {
+                        if (!pp = d * .3;
+                        if (!a || a < Math.abs(c){
                             a = c;
                             var s = p / 4;
-                        } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-                        return (a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b);
+                        } else var s = p / (2 * Math.PI* Math.asin(c / a);
+                        return (a * Math.pow(2, -10 * t* Math.sin((t * d - s) * (2 * Math.PI) / p+ c + b);
                     },
                     easeInOut: function(t, b, c, d, a, p) {
-                        if (t == 0) return b;
-                        if ((t /= d / 2) == 2) return b + c;
+                        if (t == 0return b;
+                        if ((t /= d / 2== 2return b + c;
                         if (!p) p = d * (.3 * 1.5);
                         if (!a || a < Math.abs(c)) {
                             a = c;
                             var s = p / 4;
                         } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-                        if (t < 1) return - .5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-                        return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
+                        if (t < 1) return - .5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s* (2 * Math.PI/ p)+ b;
+                        return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s* (2 * Math.PI/ p) * .5 + c + b;
                     }
                 },
                 Back: {
-                    easeIn: function(t, b, c, d, s) {
+                    easeIn: function(t, b, c, d, s{
                         if (s == undefined) s = 1.70158;
-                        return c * (t /= d) * t * ((s + 1) * t - s) + b;
+                        return c * (t /= d) * t * ((s + 1* t - s) + b;
                     },
-                    easeOut: function(t, b, c, d, s) {
+                    easeOut: function(t, b, c, d, s{
                         if (s == undefined) s = 1.70158;
-                        return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+                        return c * ((t = t / d - 1) * t * ((s + 1* t + s) + 1+ b;
                     },
                     easeInOut: function(t, b, c, d, s) {
-                        if (s == undefined) s = 1.70158;
-                        if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
-                        return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+                        if (s == undefineds = 1.70158;
+                        if ((t /= d / 2) < 1return c / 2 * (t * t * (((s *= (1.525)) + 1* t - s)+ b;
+                        return c / 2 * ((t -= 2) * t * (((s *= (1.525)+ 1) * t + s+ 2) + b;
                     }
                 },
                 Bounce: {
-                    easeIn: function(t, b, c, d) {
+                    easeIn: function(t, b, c, d{
                         return c - Tween.Bounce.easeOut(d - t, 0, c, d) + b;
                     },
                     easeOut: function(t, b, c, d) {
                         if ((t /= d) < (1 / 2.75)) {
-                            return c * (7.5625 * t * t) + b;
+                            return c * (7.5625 * t * t+ b;
                         } else if (t < (2 / 2.75)) {
-                            return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b;
+                            return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75+ b;
                         } else if (t < (2.5 / 2.75)) {
-                            return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b;
+                            return c * (7.5625 * (t -= (2.25 / 2.75)* t + .9375) + b;
                         } else {
-                            return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b;
+                            return c * (7.5625 * (t -= (2.625 / 2.75)* t + .984375) + b;
                         }
                     },
-                    easeInOut: function(t, b, c, d) {
-                        if (t < d / 2) return Tween.Bounce.easeIn(t * 2, 0, c, d) * .5 + b;
+                    easeInOut: function(t, b, c, d{
+                        if (t < d / 2return Tween.Bounce.easeIn(t * 2, 0, c, d) * .5 + b;
                         else return Tween.Bounce.easeOut(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
                     }
                 }
@@ -7098,7 +7098,7 @@ function ckplayerConfig() {
 			speed:Number=运动的总秒数，支持小数
 		*/
         animate: function(attribute) {
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 return this.V.animate(attribute);
             }
             var thisTemp = this;
@@ -7133,7 +7133,7 @@ function ckplayerConfig() {
             }
             //先将该元件从元件数组里删除，让其不再跟随播放器的尺寸改变而改变位置
             var def = this.arrIndexOf(this.elementArr, obj['element'].className);
-            if (def > -1) {
+            if (def > -1{
                 this.elementTempArr.push(obj['element'].className);
                 this.elementArr.splice(def, 1);
             }
@@ -7154,27 +7154,27 @@ function ckplayerConfig() {
                     if (obj['start'] == null) {
                         b = pm['x'];
                     } else {
-                        if (start.substring(start.length - 1, start.length) == '%') {
+                        if (start.substring(start.length - 1, start.length== '%'{
                             b = parseInt(start) * w * 0.01;
                         } else {
                             b = parseInt(start);
                         }
 
                     }
-                    if (obj['end'] == null) {
+                    if (obj['end'] == null{
                         c = pm['x'] - b;
                     } else {
                         if (end.substring(end.length - 1, end.length) == '%') {
-                            c = parseInt(end) * w * 0.01 - b;
-                        } else if (end.substring(0, 1) == '-' || end.substring(0, 1) == '+') {
-                            if (typeof(obj['end']) == 'number') {
+                            c = parseInt(end* w * 0.01 - b;
+                        } else if (end.substring(0, 1== '-' || end.substring(0, 1== '+'{
+                            if (typeof(obj['end']== 'number') {
                                 c = parseInt(obj['end']) - b;
                             } else {
                                 c = parseInt(end);
                             }
 
                         } else {
-                            c = parseInt(end) - b;
+                            c = parseInt(end- b;
                         }
                     }
                     break;
@@ -7182,26 +7182,26 @@ function ckplayerConfig() {
                     if (obj['start'] == null) {
                         b = pm['y'];
                     } else {
-                        if (start.substring(start.length - 1, start.length) == '%') {
+                        if (start.substring(start.length - 1, start.length== '%'{
                             b = parseInt(start) * h * 0.01;
                         } else {
                             b = parseInt(start);
                         }
 
                     }
-                    if (obj['end'] == null) {
+                    if (obj['end'] == null{
                         c = pm['y'] - b;
                     } else {
                         if (end.substring(end.length - 1, end.length) == '%') {
-                            c = parseInt(end) * h * 0.01 - b;
-                        } else if (end.substring(0, 1) == '-' || end.substring(0, 1) == '+') {
-                            if (typeof(obj['end']) == 'number') {
+                            c = parseInt(end* h * 0.01 - b;
+                        } else if (end.substring(0, 1== '-' || end.substring(0, 1== '+'{
+                            if (typeof(obj['end']== 'number') {
                                 c = parseInt(obj['end']) - b;
                             } else {
                                 c = parseInt(end);
                             }
                         } else {
-                            c = parseInt(end) - b;
+                            c = parseInt(end- b;
                         }
                     }
                     break;
@@ -7209,7 +7209,7 @@ function ckplayerConfig() {
                     if (obj['start'] == null) {
                         b = pm['alpha'] * 100;
                     } else {
-                        if (start.substring(start.length - 1, start.length) == '%') {
+                        if (start.substring(start.length - 1, start.length== '%'{
                             b = parseInt(obj['start']);
                         } else {
                             b = parseInt(obj['start'] * 100);
@@ -7219,16 +7219,16 @@ function ckplayerConfig() {
                     if (obj['end'] == null) {
                         c = pm['alpha'] * 100 - b;
                     } else {
-                        if (end.substring(end.length - 1, end.length) == '%') {
+                        if (end.substring(end.length - 1, end.length== '%'{
                             c = parseInt(end) - b;
-                        } else if (end.substring(0, 1) == '-' || end.substring(0, 1) == '+') {
-                            if (typeof(obj['end']) == 'number') {
+                        } else if (end.substring(0, 1== '-' || end.substring(0, 1== '+'{
+                            if (typeof(obj['end']== 'number') {
                                 c = parseInt(obj['end']) * 100 - b;
                             } else {
-                                c = parseInt(obj['end']) * 100;
+                                c = parseInt(obj['end']* 100;
                             }
                         } else {
-                            c = parseInt(obj['end']) * 100 - b;
+                            c = parseInt(obj['end']* 100 - b;
                         }
                     }
                     break;
@@ -7243,13 +7243,13 @@ function ckplayerConfig() {
                 if (index > -1) {
                     thisTemp.animatePauseArray.splice(index, 1);
                 }
-                if (obj['callBack'] != null && obj['element'] && obj['callBack'] != 'callBack' && obj['callBack'] != 'tweenX' && obj['tweenY'] != 'callBack' && obj['callBack'] != 'tweenAlpha') {
+                if (obj['callBack'] != null && obj['element'] && obj['callBack'] != 'callBack' && obj['callBack'] != 'tweenX' && obj['tweenY'] != 'callBack' && obj['callBack'] != 'tweenAlpha'{
                     var cb = eval(obj['callBack']);
                     cb(obj['element']);
                     obj['callBack'] = null;
                 }
             };
-            var stopTween = function() {
+            var stopTween = function({
                 if (timerTween != null) {
                     if (timerTween.runing) {
                         timerTween.stop();
@@ -7257,11 +7257,11 @@ function ckplayerConfig() {
                     timerTween = null;
                 }
             };
-            var tweenX = function() {
-                if (t < d) {
+            var tweenX = function({
+                if (t < d{
                     t += 10;
                     css = {
-                        left: Math.ceil(tweenFun(t, b, c, d)) + 'px'
+                        left: Math.ceil(tweenFun(t, b, c, d)+ 'px'
                     };
                     if (obj['static']) {
                         eleCoor = thisTemp.calculationCoor(obj['element']);
@@ -7276,7 +7276,7 @@ function ckplayerConfig() {
                         if (defX > -1) {
                             this.elementTempArr.splice(defX, 1);
                         }
-                    } catch(event) {}
+                    } catch(event{}
                     thisTemp.elementArr.push(obj['element'].className);
                     callBack();
                 }
@@ -7285,7 +7285,7 @@ function ckplayerConfig() {
                 if (t < d) {
                     t += 10;
                     css = {
-                        top: Math.ceil(tweenFun(t, b, c, d)) + 'px'
+                        top: Math.ceil(tweenFun(t, b, c, d)+ 'px'
                     };
                     if (obj['static']) {
                         eleCoor = thisTemp.calculationCoor(obj['element']);
@@ -7296,7 +7296,7 @@ function ckplayerConfig() {
                     stopTween();
                     try {
                         var defY = this.arrIndexOf(this.elementTempArr, obj['element'].className);
-                        if (defY > -1) {
+                        if (defY > -1{
                             this.elementTempArr.splice(defY, 1);
                         }
                     } catch(event) {}
@@ -7304,8 +7304,8 @@ function ckplayerConfig() {
                     callBack();
                 }
             };
-            var tweenAlpha = function() {
-                if (t < d) {
+            var tweenAlpha = function({
+                if (t < d{
                     t += 10;
                     eleCoor = thisTemp.calculationCoor(obj['element']);
                     var ap = Math.ceil(tweenFun(t, b, c, d)) * 0.01;
@@ -7313,7 +7313,7 @@ function ckplayerConfig() {
                         filter: 'alpha(opacity:' + ap + ')',
                         opacity: ap.toString()
                     };
-                    if (obj['static']) {
+                    if (obj['static']{
                         eleCoor = thisTemp.calculationCoor(obj['element']);
                         css['top'] = eleCoor['y'] + 'px';
                         css['left'] = eleCoor['x'] + 'px';
@@ -7323,7 +7323,7 @@ function ckplayerConfig() {
                     stopTween();
                     try {
                         var defA = this.arrIndexOf(this.elementTempArr, obj['element'].className);
-                        if (defA > -1) {
+                        if (defA > -1{
                             this.elementTempArr.splice(defA, 1);
                         }
                     } catch(event) {}
@@ -7331,7 +7331,7 @@ function ckplayerConfig() {
                     callBack();
                 }
             };
-            switch (obj['parameter']) {
+            switch (obj['parameter']{
                 case 'x':
                     tweenObj = tweenX;
                     break;
@@ -7353,9 +7353,9 @@ function ckplayerConfig() {
                     }
                 };
                 this.addListenerInside('mouseover', mouseOver, obj['element']);
-                var mouseOut = function() {
+                var mouseOut = function({
                     var start = true;
-                    if (obj['pauseStop'] && thisTemp.getMetaDate()['paused']) {
+                    if (obj['pauseStop'] && thisTemp.getMetaDate()['paused']{
                         start = false;
                     }
                     if (timerTween != null && !timerTween.runing && start) {
@@ -7367,7 +7367,7 @@ function ckplayerConfig() {
 
             this.animateArray.push(timerTween);
             this.animateElementArray.push(animateId);
-            if (obj['pauseStop']) {
+            if (obj['pauseStop']{
                 this.animatePauseArray.push(animateId);
             }
             return animateId;
@@ -7377,21 +7377,21 @@ function ckplayerConfig() {
 			继续运行animate
 		*/
         animateResume: function(id) {
-            if (this.playerType == 'flashplayer') {
+            if (this.playerType == 'flashplayer'{
                 this.V.animateResume(this.isUndefined(id) ? '': id);
                 return;
             }
             var arr = [];
-            if (id != '' && !this.isUndefined(id) && id != 'pause') {
+            if (id != '' && !this.isUndefined(id&& id != 'pause'{
                 arr.push(id);
             } else {
-                if (id === 'pause') {
+                if (id === 'pause'{
                     arr = this.animatePauseArray;
                 } else {
                     arr = this.animateElementArray;
                 }
             }
-            for (var i = 0; i < arr.length; i++) {
+            for (var i = 0; i < arr.length; i++{
                 var index = this.arrIndexOf(this.animateElementArray, arr[i]);
                 if (index > -1) {
                     this.animateArray[index].start();
@@ -7404,8 +7404,8 @@ function ckplayerConfig() {
 			暂停运行animate
 		*/
         animatePause: function(id) {
-            if (this.playerType == 'flashplayer') {
-                this.V.animatePause(this.isUndefined(id) ? '': id);
+            if (this.playerType == 'flashplayer'{
+                this.V.animatePause(this.isUndefined(id? '': id);
                 return;
             }
             var arr = [];
@@ -7420,7 +7420,7 @@ function ckplayerConfig() {
             }
             for (var i = 0; i < arr.length; i++) {
                 var index = this.arrIndexOf(this.animateElementArray, arr[i]);
-                if (index > -1) {
+                if (index > -1{
                     this.animateArray[index].stop();
                 }
             }
@@ -7430,16 +7430,16 @@ function ckplayerConfig() {
 			根据ID删除数组里对应的内容
 		*/
         deleteAnimate: function(id) {
-            if (this.playerType == 'flashplayer' && this.V) {
+            if (this.playerType == 'flashplayer' && this.V{
                 try {
                     this.V.deleteAnimate(id);
-                } catch(event) {
+                } catch(event{
                     this.log(event);
                 }
                 return;
             }
             var index = this.arrIndexOf(this.animateElementArray, id);
-            if (index > -1) {
+            if (index > -1{
                 this.animateArray[index].callBackFunction();
                 this.animateArray.splice(index, 1);
                 this.animateElementArray.splice(index, 1);
@@ -7450,7 +7450,7 @@ function ckplayerConfig() {
 			删除外部新建的元件
 		*/
         deleteElement: function(ele) {
-            if (this.playerType == 'flashplayer' && this.V) {
+            if (this.playerType == 'flashplayer' && this.V{
                 try {
                     this.V.deleteElement(ele);
                 } catch(event) {}
@@ -7458,15 +7458,15 @@ function ckplayerConfig() {
             }
             //先将该元件从元件数组里删除，让其不再跟随播放器的尺寸改变而改变位置
             var def = this.arrIndexOf(this.elementArr, ele.className);
-            if (def > -1) {
+            if (def > -1{
                 this.elementArr.splice(def, 1);
             }
             try {
                 def = this.arrIndexOf(this.elementTempArr, ele.className);
-                if (def > -1) {
+                if (def > -1{
                     this.elementTempArr.splice(def, 1);
                 }
-            } catch(event) {}
+            } catch(event{}
             this.deleteAnimate(ele);
             this.deleteChild(ele);
         },
@@ -7477,23 +7477,23 @@ function ckplayerConfig() {
 			根据ID获取元素对象
 		*/
         getByElement: function(obj, parent) {
-            if (this.isUndefined(parent)) {
+            if (this.isUndefined(parent){
                 parent = document;
             }
             var num = obj.substr(0, 1);
             var res = [];
-            if (num != '#') {
+            if (num != '#'{
                 if (num == '.') {
                     obj = obj.substr(1, obj.length);
                 }
-                if (parent.getElementsByClassName) {
+                if (parent.getElementsByClassName{
                     res = parent.getElementsByClassName(obj);
                 } else {
                     var reg = new RegExp(' ' + obj + ' ', 'i');
                     var ele = parent.getElementsByTagName('*');
 
                     for (var i = 0; i < ele.length; i++) {
-                        if (reg.test(' ' + ele[i].className + ' ')) {
+                        if (reg.test(' ' + ele[i].className + ' '){
                             res.push(ele[i]);
                         }
                     }
@@ -7505,7 +7505,7 @@ function ckplayerConfig() {
                     return res;
                 }
             } else {
-                if (num == '#') {
+                if (num == '#'{
                     obj = obj.substr(1, obj.length);
                 }
                 return document.getElementById(obj);
@@ -7531,28 +7531,28 @@ function ckplayerConfig() {
 				示例五(获取宽度)：
 				var width=this.css(ID,'width');
 		*/
-        css: function(elem, attribute, value) {
+        css: function(elem, attribute, value{
             var i = 0;
             var k = '';
-            if (typeof(elem) == 'object') { //对象或数组
+            if (typeof(elem) == 'object'{ //对象或数组
                 if (!this.isUndefined(typeof(elem.length))) { //说明是数组
-                    for (i = 0; i < elem.length; i++) {
+                    for (i = 0; i < elem.length; i++{
                         var el;
-                        if (typeof(elem[i]) == 'string') {
+                        if (typeof(elem[i]== 'string') {
                             el = this.getByElement(elem[i])
                         } else {
                             el = elem[i];
                         }
-                        if (typeof(attribute) != 'object') {
+                        if (typeof(attribute) != 'object'{
                             if (!this.isUndefined(value)) {
                                 el.style[attribute] = value;
                             }
                         } else {
-                            for (k in attribute) {
-                                if (!this.isUndefined(attribute[k])) {
+                            for (k in attribute{
+                                if (!this.isUndefined(attribute[k]){
                                     try {
                                         el.style[k] = attribute[k];
-                                    } catch(event) {
+                                    } catch(event{
                                         this.log(event);
                                     }
                                 }
@@ -7563,14 +7563,14 @@ function ckplayerConfig() {
                 }
 
             }
-            if (typeof(elem) == 'string') {
+            if (typeof(elem== 'string') {
                 elem = this.getByElement(elem);
             }
-            if (typeof(attribute) != 'object') {
-                if (!this.isUndefined(value)) {
+            if (typeof(attribute!= 'object') {
+                if (!this.isUndefined(value){
                     elem.style[attribute] = value;
                 } else {
-                    if (!this.isUndefined(this.getStyle(elem, attribute))) {
+                    if (!this.isUndefined(this.getStyle(elem, attribute)){
                         return this.getStyle(elem, attribute);
                     } else {
                         return false;
@@ -7589,7 +7589,7 @@ function ckplayerConfig() {
 			内置函数
 			兼容型获取style
 		*/
-        getStyle: function(obj, attr) {
+        getStyle: function(obj, attr{
             if (!this.isUndefined(obj.style[attr])) {
                 return obj.style[attr];
             } else {
@@ -7606,7 +7606,7 @@ function ckplayerConfig() {
 		*/
         isUndefined: function(value) {
             try {
-                if (value == 'undefined' || value == undefined || value == null) {
+                if (value == 'undefined' || value == undefined || value == null{
                     return true;
                 }
             } catch(event) {
@@ -7618,25 +7618,25 @@ function ckplayerConfig() {
 		 	共用函数
 			外部监听函数
 		*/
-        addListener: function(name, funName) {
-            if (name && funName) {
+        addListener: function(name, funName{
+            if (name && funName{
                 if (this.playerType == 'flashplayer') {
                     var ff = ''; //定义用来向flashplayer传递的函数字符
-                    if (typeof(funName) == 'function') {
+                    if (typeof(funName== 'function') {
                         ff = this.getParameterNames(funName);
                     }
                     this.V.addListener(name, ff);
                     return;
                 }
                 var have = false;
-                for (var i = 0; i < this.listenerJsArr.length; i++) {
+                for (var i = 0; i < this.listenerJsArr.length; i++{
                     var arr = this.listenerJsArr[i];
-                    if (arr[0] == name && arr[1] == funName) {
+                    if (arr[0] == name && arr[1] == funName{
                         have = true;
                         break;
                     }
                 }
-                if (!have) {
+                if (!have{
                     this.listenerJsArr.push([name, funName]);
                 }
             }
@@ -7645,19 +7645,19 @@ function ckplayerConfig() {
 			共用函数
 			外部删除监听函数
 		*/
-        removeListener: function(name, funName) {
-            if (name && funName) {
+        removeListener: function(name, funName{
+            if (name && funName{
                 if (this.playerType == 'flashplayer') {
                     var ff = ''; //定义用来向flashplayer传递的函数字符
-                    if (typeof(funName) == 'function') {
+                    if (typeof(funName== 'function') {
                         ff = this.getParameterNames(funName);
                     }
                     this.V.removeListener(name, ff);
                     return;
                 }
-                for (var i = 0; i < this.listenerJsArr.length; i++) {
+                for (var i = 0; i < this.listenerJsArr.length; i++{
                     var arr = this.listenerJsArr[i];
-                    if (arr[0] == name && arr[1] == funName) {
+                    if (arr[0] == name && arr[1] == funName{
                         this.listenerJsArr.splice(i, 1);
                         break;
                     }
@@ -7674,10 +7674,10 @@ function ckplayerConfig() {
                 t = false;
             }
             var o = this.V;
-            if (!this.isUndefined(d)) {
+            if (!this.isUndefined(d){
                 o = d;
             }
-            if (o.addEventListener) {
+            if (o.addEventListener{
                 try {
                     o.addEventListener(e, f, t);
                 } catch(event) {}
@@ -7698,22 +7698,22 @@ function ckplayerConfig() {
             /*if(this.playerType=='flashplayer' && this.getParameterNames(f) && this.isUndefined(d)) {
 				return;
 			}*/
-            if (this.isUndefined(t)) {
+            if (this.isUndefined(t){
                 t = false;
             }
             var o = this.V;
             if (!this.isUndefined(d)) {
                 o = d;
             }
-            if (o.removeEventListener) {
+            if (o.removeEventListener{
                 try {
                     this.addNum--;
                     o.removeEventListener(e, f, t);
-                } catch(e) {}
-            } else if (o.detachEvent) {
+                } catch(e{}
+            } else if (o.detachEvent{
                 try {
                     o.detachEvent('on' + e, f);
-                } catch(e) {}
+                } catch(e{}
             } else {
                 o['on' + e] = null;
             }
@@ -7722,8 +7722,8 @@ function ckplayerConfig() {
 			共用函数
 			统一分配监听，以达到跟as3同样效果
 		*/
-        sendJS: function(name, val) {
-            if (this.adPlayerPlay && name.substr( - 2) != 'Ad') {
+        sendJS: function(name, val{
+            if (this.adPlayerPlay && name.substr( - 2!= 'Ad') {
                 return;
             }
             var list = this.listenerJsArr;
@@ -7735,9 +7735,9 @@ function ckplayerConfig() {
             }
             for (var i = 0; i < list.length; i++) {
                 var arr = list[i];
-                if (arr[0] == name) {
-                    if (val) {
-                        switch (arr[1].length) {
+                if (arr[0] == name{
+                    if (val{
+                        switch (arr[1].length{
                             case 1:
                                 arr[1](val);
                                 break;
@@ -7771,20 +7771,20 @@ function ckplayerConfig() {
 			共用函数
 			获取函数名称，如 function ckplayer(){} var fun=ckplayer，则getParameterNames(fun)=ckplayer
 		*/
-        getParameterNames: function(fn) {
-            if (typeof(fn) !== 'function') {
+        getParameterNames: function(fn{
+            if (typeof(fn!== 'function'{
                 return false;
             }
             var COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
             var code = fn.toString().replace(COMMENTS, '');
-            var result = code.slice(code.indexOf(' ') + 1, code.indexOf('('));
+            var result = code.slice(code.indexOf(' '+ 1, code.indexOf('('));
             return result === null ? false: result;
         },
         /*
 			共用函数
 			获取当前本地时间
 		*/
-        getNowDate: function() {
+        getNowDate: function({
             var nowDate = new Date();
             var month = nowDate.getMonth() + 1;
             var date = nowDate.getDate();
@@ -7796,11 +7796,11 @@ function ckplayerConfig() {
                 tHours = '',
                 tMinutes = '',
                 tSeconds = '',
-                tSeconds = (seconds < 10) ? '0' + seconds: seconds + '',
-                tMinutes = (minutes < 10) ? '0' + minutes: minutes + '',
-                tHours = (hours < 10) ? '0' + hours: hours + '',
-                tDate = (date < 10) ? '0' + date: date + '',
-                tMonth = (month < 10) ? '0' + month: month + '';
+                tSeconds = (seconds < 10? '0' + seconds: seconds + '',
+                tMinutes = (minutes < 10? '0' + minutes: minutes + '',
+                tHours = (hours < 10? '0' + hours: hours + '',
+                tDate = (date < 10? '0' + date: date + '',
+                tMonth = (month < 10? '0' + month: month + '';
             return tMonth + '/' + tDate + ' ' + tHours + ':' + tMinutes + ':' + tSeconds;
         },
         /*
@@ -7813,22 +7813,22 @@ function ckplayerConfig() {
             var tSeconds = '',
                 tMinutes = '',
                 tHours = '';
-            if (isNaN(seconds)) {
+            if (isNaN(seconds){
                 seconds = 0;
             }
             var s = Math.floor(seconds % 60),
                 m = 0,
                 h = 0;
-            if (ishours) {
-                m = Math.floor(seconds / 60) % 60;
+            if (ishours{
+                m = Math.floor(seconds / 60% 60;
                 h = Math.floor(seconds / 3600);
             } else {
                 m = Math.floor(seconds / 60);
             }
-            tSeconds = (s < 10) ? '0' + s: s + '';
+            tSeconds = (s < 10? '0' + s: s + '';
             tMinutes = (m > 0) ? ((m < 10) ? '0' + m + ':': m + ':') : '00:';
-            tHours = (h > 0) ? ((h < 10) ? '0' + h + ':': h + ':') : '';
-            if (ishours) {
+            tHours = (h > 0? ((h < 10? '0' + h + ':': h + ':': '';
+            if (ishours{
                 return tHours + tMinutes + tSeconds;
             } else {
                 return tMinutes + tSeconds;
@@ -7839,7 +7839,7 @@ function ckplayerConfig() {
 			获取一个随机字符
 			len：随机字符长度
 		*/
-        randomString: function(len) {
+        randomString: function(len{
             len = len || 16;
             var chars = 'abcdefghijklmnopqrstuvwxyz';
             var maxPos = chars.length;
@@ -7853,10 +7853,10 @@ function ckplayerConfig() {
 			共用函数
 			获取字符串长度,中文算两,英文数字算1
 		*/
-        getStringLen: function(str) {
+        getStringLen: function(str{
             var len = 0;
-            for (var i = 0; i < str.length; i++) {
-                if (str.charCodeAt(i) > 127 || str.charCodeAt(i) == 94) {
+            for (var i = 0; i < str.length; i++{
+                if (str.charCodeAt(i) > 127 || str.charCodeAt(i== 94) {
                     len += 2;
                 } else {
                     len++;
@@ -7872,14 +7872,14 @@ function ckplayerConfig() {
             if (window.XMLHttpRequest) {
                 //IE7+、Firefox、Opera、Chrome 和Safari
                 return new XMLHttpRequest();
-            } else if (window.ActiveXObject) {
+            } else if (window.ActiveXObject{
                 //IE6 及以下
                 try {
                     return new ActiveXObject('Microsoft.XMLHTTP');
-                } catch(event) {
+                } catch(event{
                     try {
                         return new ActiveXObject('Msxml2.XMLHTTP');
-                    } catch(event) {
+                    } catch(event{
                         this.eject(this.errorList[7]);
                     }
                 }
@@ -7906,7 +7906,7 @@ function ckplayerConfig() {
                 data: null,
                 success: null
             };
-            if (typeof(cObj) != 'object') {
+            if (typeof(cObj!= 'object') {
                 this.eject(this.errorList[9]);
                 return;
             }
@@ -7915,14 +7915,14 @@ function ckplayerConfig() {
                 var xhr = this.createXHR();
                 callback = function() {
                     //判断http的交互是否成功
-                    if (xhr.status == 200) {
-                        if (thisTemp.isUndefined(obj.success)) {
+                    if (xhr.status == 200{
+                        if (thisTemp.isUndefined(obj.success){
                             return;
                         }
-                        if (obj.dataType === 'json') {
+                        if (obj.dataType === 'json'{
                             try {
                                 obj.success(eval('(' + xhr.responseText + ')')); //回调传递参数
-                            } catch(event) {
+                            } catch(event{
                                 obj.success(null);
                             }
                         } else {
@@ -7932,20 +7932,20 @@ function ckplayerConfig() {
                         thisTemp.eject(thisTemp.errorList[10], 'Ajax.status:' + xhr.status);
                     }
                 };
-                obj.url = obj.url.indexOf('?') == -1 ? obj.url + '?rand=' + this.randomString(6) : obj.url;
+                obj.url = obj.url.indexOf('?'== -1 ? obj.url + '?rand=' + this.randomString(6: obj.url;
                 obj.data = this.formatParams(obj.data); //通过params()将名值对转换成字符串
                 if (obj.method === 'get' && !this.isUndefined(obj.data)) {
-                    if (obj.data != '') {
-                        if (obj.url.indexOf('?') == -1) {
+                    if (obj.data != ''{
+                        if (obj.url.indexOf('?'== -1) {
                             obj.url += '?' + obj.data
                         } else {
                             obj.url += '&' + obj.data;
                         }
                     }
                 }
-                if (obj.async === true) { //true表示异步，false表示同步
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4 && callback != null) { //判断对象的状态是否交互完成
+                if (obj.async === true{ //true表示异步，false表示同步
+                    xhr.onreadystatechange = function({
+                        if (xhr.readyState == 4 && callback != null{ //判断对象的状态是否交互完成
                             callback(); //回调
                         }
                     };
@@ -7958,7 +7958,7 @@ function ckplayerConfig() {
                 } else {
                     xhr.send(null); //get方式则填null
                 }
-                if (obj.async === false) { //同步
+                if (obj.async === false{ //同步
                     callback();
                 }
 
@@ -7966,10 +7966,10 @@ function ckplayerConfig() {
                 var oHead = document.getElementsByTagName('head')[0];
                 var oScript = document.createElement('script');
                 var callbackName = 'callback' + new Date().getTime();
-                var params = this.formatParams(obj.data) + '&callback=' + callbackName; //按时间戳拼接字符串
+                var params = this.formatParams(obj.data+ '&callback=' + callbackName; //按时间戳拼接字符串
                 callback = obj.success;
                 //拼接好src
-                oScript.src = obj.url.split('?') + '?' + params;
+                oScript.src = obj.url.split('?'+ '?' + params;
                 //插入script标签
                 oHead.insertBefore(oScript, oHead.firstChild);
                 //jsonp的回调函数
@@ -7989,7 +7989,7 @@ function ckplayerConfig() {
             oScript.type = 'text/javascript';
             oScript.src = this.getNewUrl(path);
             oHead.appendChild(oScript);
-            oScript.onload = function() {
+            oScript.onload = function({
                 success();
             }
         },
@@ -7997,7 +7997,7 @@ function ckplayerConfig() {
 			共用函数
 			排除IE6-9
 		*/
-        isMsie: function() {
+        isMsie: function({
             var browser = navigator.appName;
             var b_version = navigator.appVersion;
             var version = b_version.split(';');
@@ -8014,17 +8014,17 @@ function ckplayerConfig() {
 			共用函数
 			判断是否安装了flashplayer
 		*/
-        uploadFlash: function() {
+        uploadFlash: function({
             var swf;
-            if (navigator.userAgent.indexOf('MSIE') > 0) {
+            if (navigator.userAgent.indexOf('MSIE') > 0{
                 try {
                     var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
                     return true;
-                } catch(e) {
+                } catch(e{
                     return false;
                 }
             }
-            if (navigator.userAgent.indexOf('Firefox') > 0) {
+            if (navigator.userAgent.indexOf('Firefox') > 0{
                 swf = navigator.plugins['Shockwave Flash'];
                 if (swf) {
                     return true
@@ -8039,10 +8039,10 @@ function ckplayerConfig() {
 			检测浏览器是否支持HTML5-Video
 		*/
         supportVideo: function() {
-            if (!this.isMsie()) {
+            if (!this.isMsie(){
                 return false;
             }
-            if ( !! document.createElement('video').canPlayType) {
+            if !! document.createElement('video').canPlayType{
                 var vidTest = document.createElement('video');
                 var oggTest;
                 try {
@@ -8054,13 +8054,13 @@ function ckplayerConfig() {
                     var h264Test;
                     try {
                         h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
-                    } catch(error) {
+                    } catch(error{
                         h264Test = false;
                     }
-                    if (!h264Test) {
+                    if (!h264Test{
                         return false;
                     } else {
-                        if (h264Test == "probably") {
+                        if (h264Test == "probably"{
                             return true;
                         } else {
                             return false;
@@ -8084,7 +8084,7 @@ function ckplayerConfig() {
         getDataset: function(ele, z) {
             try {
                 return ele.dataset[z];
-            } catch(error) {
+            } catch(error{
                 try {
                     return ele.getAttribute('data-' + z)
                 } catch(error) {
@@ -8100,12 +8100,12 @@ function ckplayerConfig() {
             var x = null;
             var y = this.getByElement('#' + id);
             var r = 'embed';
-            if (y && y.nodeName == 'OBJECT') {
+            if (y && y.nodeName == 'OBJECT'{
                 if (typeof(y.SetVariable) != 'undefined') {
                     x = y;
                 } else {
                     var z = y.getElementsByTagName(r)[0];
-                    if (z) {
+                    if (z{
                         x = z;
                     }
                 }
@@ -8116,10 +8116,10 @@ function ckplayerConfig() {
 			共用函数
 			对象转地址字符串
 		*/
-        formatParams: function(data) {
+        formatParams: function(data{
             var arr = [];
-            for (var i in data) {
-                arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+            for (var i in data{
+                arr.push(encodeURIComponent(i+ '=' + encodeURIComponent(data[i]));
             }
             return arr.join('&');
         },
@@ -8131,7 +8131,7 @@ function ckplayerConfig() {
             var temp = [];
             for (var i = 0; i < arr.length; i++) {
                 for (var j = 0; j < arr.length - i; j++) {
-                    if (!this.isUndefined(arr[j + 1]) && arr[j][3] < arr[j + 1][3]) {
+                    if (!this.isUndefined(arr[j + 1]&& arr[j][3] < arr[j + 1][3]{
                         temp = arr[j + 1];
                         arr[j + 1] = arr[j];
                         arr[j] = temp;
@@ -8144,8 +8144,8 @@ function ckplayerConfig() {
 			内置函数
 			判断文件后缀
 		*/
-        getFileExt: function(filepath) {
-            if (filepath != '' && !this.isUndefined(filepath)) {
+        getFileExt: function(filepath{
+            if (filepath != '' && !this.isUndefined(filepath){
                 if (filepath.indexOf('?') > -1) {
                     filepath = filepath.split('?')[0];
                 }
@@ -8159,7 +8159,7 @@ function ckplayerConfig() {
 			判断是否是移动端
 		*/
         isMobile: function() {
-            if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android|ios)/i)) {
+            if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android|ios)/i){
                 return true;
             }
             return false;
@@ -8169,7 +8169,7 @@ function ckplayerConfig() {
             判断是否是iOS
         */
         isIOS: function() {
-            if (navigator.userAgent.match(/(iPhone|iPad|iPod|iOS)/i)) {
+            if (navigator.userAgent.match(/(iPhone|iPad|iPod|iOS)/i){
                 return true;
             }
             return false;
@@ -8179,7 +8179,7 @@ function ckplayerConfig() {
             判断是否是UC浏览器
         */
         isUCBrowser: function() {
-            if (navigator.userAgent.indexOf('UBrowser') > -1 || navigator.userAgent.indexOf('UCBrowser') > -1) {
+            if (navigator.userAgent.indexOf('UBrowser'> -1 || navigator.userAgent.indexOf('UCBrowser') > -1) {
                 return true;
             }
             return false;
@@ -8188,7 +8188,7 @@ function ckplayerConfig() {
 			内置函数
 			搜索字符串str是否包含key
 		*/
-        isContains: function(str, key) {
+        isContains: function(str, key{
             return str.indexOf(key) > -1;
         },
         /*
@@ -8206,9 +8206,9 @@ function ckplayerConfig() {
 			共用函数
 			获取clientX和clientY
 		*/
-        client: function(event) {
+        client: function(event{
             var eve = event || window.event;
-            if (this.isUndefined(eve)) {
+            if (this.isUndefined(eve){
                 eve = {
                     clientX: 0,
                     clientY: 0
@@ -8223,14 +8223,14 @@ function ckplayerConfig() {
 			内置函数
 			获取节点的绝对坐标
 		*/
-        getCoor: function(obj) {
+        getCoor: function(obj{
             var coor = this.getXY(obj);
             return {
                 x: coor['x'] - this.pdCoor['x'],
                 y: coor['y'] - this.pdCoor['y']
             };
         },
-        getXY: function(obj) {
+        getXY: function(obj{
             var parObj = obj;
             var left = obj.offsetLeft;
             var top = obj.offsetTop;
@@ -8254,7 +8254,7 @@ function ckplayerConfig() {
                 var timerArr = [this.timerError, this.timerFull, this.timerTime, this.timerBuffer, this.timerClick, this.timerLoading, this.timerCBar, this.timerVCanvas];
                 for (i = 0; i < timerArr.length; i++) {
                     if (timerArr[i] != null) {
-                        if (timerArr[i].runing) {
+                        if (timerArr[i].runing{
                             timerArr[i].stop();
                         }
                         timerArr[i] = null;
@@ -8262,13 +8262,13 @@ function ckplayerConfig() {
                 }
                 //删除事件监听
                 var ltArr = this.listenerJsArr;
-                for (i = 0; i < ltArr.length; i++) {
+                for (i = 0; i < ltArr.length; i++{
                     this.removeListener(ltArr[i][0], ltArr[i][1]);
                 }
             }
             this.playerType == '';
             this.V = null;
-            if (this.showFace) {
+            if (this.showFace{
                 this.deleteChild(this.CB['menu']);
             }
             this.deleteChild(this.PD);
@@ -8278,11 +8278,11 @@ function ckplayerConfig() {
 			内置函数
 			画封闭的图形
 		*/
-        canvasFill: function(name, path) {
+        canvasFill: function(name, path{
             name.beginPath();
-            for (var i = 0; i < path.length; i++) {
+            for (var i = 0; i < path.length; i++{
                 var d = path[i];
-                if (i > 0) {
+                if (i > 0{
                     name.lineTo(d[0], d[1]);
                 } else {
                     name.moveTo(d[0], d[1]);
@@ -8295,7 +8295,7 @@ function ckplayerConfig() {
 			内置函数
 			画矩形
 		*/
-        canvasFillRect: function(name, path) {
+        canvasFillRect: function(name, path{
             for (var i = 0; i < path.length; i++) {
                 var d = path[i];
                 name.fillRect(d[0], d[1], d[2], d[3]);
@@ -8305,7 +8305,7 @@ function ckplayerConfig() {
 			共用函数
 			删除容器节点
 		*/
-        deleteChild: function(f) {
+        deleteChild: function(f{
             var def = this.arrIndexOf(this.elementArr, f.className);
             if (def > -1) {
                 this.elementArr.splice(def, 1);
@@ -8315,9 +8315,9 @@ function ckplayerConfig() {
                 f.removeChild(childs[i]);
             }
 
-            if (f && f != null && f.parentNode) {
+            if (f && f != null && f.parentNode{
                 try {
-                    if (f.parentNode) {
+                    if (f.parentNode{
                         f.parentNode.removeChild(f);
 
                     }
@@ -8341,7 +8341,7 @@ function ckplayerConfig() {
                 h = stageH;
                 w = h * vw / vh;
             }
-            x = (stageW - w) * 0.5;
+            x = (stageW - w* 0.5;
             y = (stageH - h) * 0.5;
             return {
                 width: parseInt(w),
@@ -8354,7 +8354,7 @@ function ckplayerConfig() {
 			共用函数
 			将字幕文件内容转换成数组
 		*/
-        parseSrtSubtitles: function(srt) {
+        parseSrtSubtitles: function(srt{
             var subtitlesArr = [];
             var textSubtitles = [];
             var i = 0;
@@ -8367,13 +8367,13 @@ function ckplayerConfig() {
                 if (arrs[i].replace(/\s/g, '').length > 0) {
                     arr.push(arrs[i]);
                 } else {
-                    if (arr.length > 0) {
+                    if (arr.length > 0{
                         textSubtitles.push(arr);
                     }
                     arr = [];
                 }
             }
-            for (i = 0; i < textSubtitles.length; ++i) {
+            for (i = 0; i < textSubtitles.length; ++i{
                 var textSubtitle = textSubtitles[i];
                 if (textSubtitle.length >= 2) {
                     var sn = textSubtitle[0]; // 字幕的序号
@@ -8386,7 +8386,7 @@ function ckplayerConfig() {
                         endTime+=cktrackdelay;
                     }
                     // 字幕可能有多行
-                    if (textSubtitle.length > 2) {
+                    if (textSubtitle.length > 2{
                         for (var j = 3; j < textSubtitle.length; j++) {
                             content.push(delHtmlTag(textSubtitle[j]));
                         }
@@ -8410,7 +8410,7 @@ function ckplayerConfig() {
 			fun:接受函数
 			number:运行次数,不设置则无限运行
 		*/
-        timer: function(time, fun, number) {
+        timer: function(time, fun, number{
             var thisTemp = this;
             this.time = 10; //运行间隔
             this.fun = null; //监听函数
@@ -8421,18 +8421,18 @@ function ckplayerConfig() {
             this.startFun = function() {
                 thisTemp.number++;
                 thisTemp.fun();
-                if (thisTemp.numberTotal != null && thisTemp.number >= thisTemp.numberTotal) {
+                if (thisTemp.numberTotal != null && thisTemp.number >= thisTemp.numberTotal{
                     thisTemp.stop();
                 }
             };
-            this.start = function() {
+            this.start = function({
                 if (!thisTemp.runing) {
                     thisTemp.runing = true;
                     thisTemp.timeObj = window.setInterval(thisTemp.startFun, time);
                 }
             };
-            this.stop = function() {
-                if (thisTemp.runing) {
+            this.stop = function({
+                if (thisTemp.runing{
                     thisTemp.runing = false;
                     window.clearInterval(thisTemp.timeObj);
                     thisTemp.timeObj = null;
@@ -8444,7 +8444,7 @@ function ckplayerConfig() {
             if (fun) {
                 this.fun = fun;
             }
-            if (number) {
+            if (number{
                 this.numberTotal = number;
             }
             this.start();
@@ -8453,9 +8453,9 @@ function ckplayerConfig() {
 			共用函数
 			将时分秒转换成秒
 		*/
-        toSeconds: function(t) {
+        toSeconds: function(t{
             var s = 0.0;
-            if (t) {
+            if (t{
                 var p = t.split(':');
                 for (i = 0; i < p.length; i++) {
                     s = s * 60 + parseFloat(p[i].replace(',', '.'));
@@ -8468,10 +8468,10 @@ function ckplayerConfig() {
             var a = str.split(',');
             var b = [];
             for (var i = 0; i < a.length; i++) {
-                if (this.isUndefined(a[i])) {
+                if (this.isUndefined(a[i]){
                     a[i] = 0;
                 }
-                if (a[i].substr( - 1) != '%') {
+                if (a[i].substr- 1) != '%') {
                     a[i] = parseInt(a[i]);
                 }
                 b.push(a[i]);
@@ -8482,13 +8482,13 @@ function ckplayerConfig() {
 			共用函数
 			将对象Object标准化
 		*/
-        standardization: function(o, n) { //n替换进o
+        standardization: function(o, n{ //n替换进o
             var h = {};
             var k;
             for (k in o) {
                 h[k] = o[k];
             }
-            for (k in n) {
+            for (k in n{
                 var type = typeof(h[k]);
                 switch (type) {
                     case 'number':
@@ -8514,8 +8514,8 @@ function ckplayerConfig() {
 			共用函数
 			去掉空格
 		 */
-        trim: function(str) {
-            if (str != '') {
+        trim: function(str{
+            if (str != ''{
                 return str.replace(/(^\s*)|(\s*$)/g, '');
             }
             return '';
@@ -8524,17 +8524,17 @@ function ckplayerConfig() {
 			共用函数
 			判断对象类型
 		*/
-        typeString:function typeString(object) {
+        typeString:function typeString(object{
             return Object.prototype.toString.call(object).slice(8,-1).toLowerCase();
         },
         /*
 			共用函数
 			输出内容到控制台
 		*/
-        log: function(val) {
+        log: function(val{
             try {
                 console.log(val);
-            } catch(e) {}
+            } catch(e{}
         },
         /*
 			共用函数
