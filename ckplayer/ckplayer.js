@@ -2654,7 +2654,6 @@ function ckplayerConfig() {
             switch (timeSA) {
                 case 0:
                     return false;
-                    break;
                 case 2:
                     if (newX < sliderLeft) {
                         return false;
@@ -2688,7 +2687,6 @@ function ckplayerConfig() {
                     break;
                 default:
                     return true;
-                    break;
             }
             return true;
         },
@@ -5972,7 +5970,6 @@ function ckplayerConfig() {
                     break;
                 default:
                     return;
-                    break;
             }
             this.sendJS('configChange', this.ckplayerConfig);
         },
