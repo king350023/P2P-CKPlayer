@@ -1,6 +1,22 @@
 {
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/npm.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+
+        {
+            "command": "npm start",
+            "name": "Run npm start",
+            "request": "launch",
+            "type": "node-terminal"
+        },
     
         {
             "name": "Attach to Edge",
@@ -22,7 +38,7 @@
             ],
             "type": "pwa-node"
         },
-        {},
+        
         {
             "name": "Launch Chrome",
             "request": "launch",
