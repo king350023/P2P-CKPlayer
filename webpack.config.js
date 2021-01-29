@@ -1,10 +1,8 @@
 
-const path = require('path');
+import { resolve } from 'path';
 
-module.exports = {
-    entry:'./ckplayer/ckplayer.js',
-    output: {
-        filename: 'ckplayer.min.js',
-        path: path.resolve(__dirname, 'ckplayer')
-    }
+export const entry = './ckplayer/ckplayer.js';
+export const output = {
+    filename: 'ckplayer.min.js',
+    path: resolve(__dirname, 'ckplayer')
 };
