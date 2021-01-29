@@ -8,14 +8,6 @@
 			"problemMatcher": [],
 			"label": "npm: install",
 			"detail": "install dependencies from package",
-			"group": "build"
-		},
-		{
-			"type": "npm",
-			"script": "publish",
-			"problemMatcher": [],
-			"label": "npm: publish",
-			"detail": "npm publish",
 			"group": {
 				"kind": "build",
 				"isDefault": true
