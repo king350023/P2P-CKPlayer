@@ -477,8 +477,6 @@ function ckplayerConfig() {
 			根据外部传递过来的video开始分析视频地址
 		*/
         analysedVideoUrl: function(video) {
-            var i = 0,
-                y = 0;
             var thisTemp = this;
             this.VA = [];//定义全局变量VA：视频列表（包括视频地址，类型，清晰度说明）
             if (this.typeString(video) == 'string') { //如果是字符形式的则判断后缀进行填充
@@ -647,7 +645,6 @@ function ckplayerConfig() {
                 loop = '',
                 autoplay = '',
                 track = '';
-            var video = v['video'];
             var i = 0;
             this.CD = this.getByElement(v['container']);
             volume = v['volume'];
@@ -1054,7 +1051,7 @@ function ckplayerConfig() {
             //延迟计算加载失败事件
             this.timerErrorFun();
             //监听视频加载到元数据事件
-            var eventJudgeIsLive = function(event) {
+            var eventJudgeIsLive = function() {
                 thisTemp.sendJS('loadedmetadata');
                 if (typeof(thisTemp.V.duration) == 'number' && thisTemp.V.duration > 1) {
                     thisTemp.sendJS('duration', thisTemp.V.duration);
@@ -1068,7 +1065,7 @@ function ckplayerConfig() {
             };
             this.addListenerInside('loadedmetadata', eventJudgeIsLive);
             //监听视频播放事件
-            var eventPlaying = function(event) {
+            var eventPlaying = function() {
                 thisTemp.playingHandler();
                 thisTemp.sendJS('play');
                 thisTemp.sendJS('paused', false);
@@ -1080,19 +1077,19 @@ function ckplayerConfig() {
             };
             this.addListenerInside('playing', eventPlaying);
             //监听视频暂停事件
-            var eventPause = function(event) {
+            var eventPause = function() {
                 thisTemp.pauseHandler();
                 thisTemp.sendJS('pause');
                 thisTemp.sendJS('paused', true);
             };
             this.addListenerInside('pause', eventPause);
             //监听视频播放结束事件
-            var eventEnded = function(event) {
+            var eventEnded = function() {
                 thisTemp.endedHandler();
             };
             this.addListenerInside('ended', eventEnded);
             //监听视频播放时间事件
-            var eventTimeupdate = function(event) {
+            var eventTimeupdate = function() {
                 if (thisTemp.timerLoading != null) {
                     thisTemp.loadingStart(false);
                 }
@@ -1119,23 +1116,23 @@ function ckplayerConfig() {
             };
             this.addListenerInside('timeupdate', eventTimeupdate);
             //监听视频缓冲事件
-            var eventWaiting = function(event) {
+            var eventWaiting = function() {
                 thisTemp.loadingStart(true);
             };
             this.addListenerInside('waiting', eventWaiting);
             //监听视频seek开始事件
-            var eventSeeking = function(event) {
+            var eventSeeking = function() {
                 thisTemp.sendJS('seek', 'start');
             };
             this.addListenerInside('seeking', eventSeeking);
             //监听视频seek结束事件
-            var eventSeeked = function(event) {
+            var eventSeeked = function() {
                 thisTemp.seekedHandler();
                 thisTemp.sendJS('seek', 'ended');
             };
             this.addListenerInside('seeked', eventSeeked);
             //监听视频音量
-            var eventVolumeChange = function(event) {
+            var eventVolumeChange = function() {
                 try {
                     thisTemp.volumechangeHandler();
                     thisTemp.sendJS('volume', thisTemp.volume || thisTemp.V.volume);
@@ -1143,7 +1140,7 @@ function ckplayerConfig() {
             };
             this.addListenerInside('volumechange', eventVolumeChange);
             //监听全屏事件
-            var eventFullChange = function(event) {
+            var eventFullChange = function() {
                 var fullState = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
                 thisTemp.sendJS('full', fullState);
             };
@@ -1183,7 +1180,6 @@ function ckplayerConfig() {
             this.showFace = true;
             var thisTemp = this;
             var html = ''; //控制栏内容
-            var i = 0;
             var bWidth = 38,//按钮的宽
                 bHeight = 38; //按钮的高
             var bBgColor = '#FFFFFF',//按钮元素默认颜色
@@ -1837,12 +1833,12 @@ function ckplayerConfig() {
             };
             cPlay.fillStyle = bBgColor;
             cPlayFillRect();
-            var cPlayOver = function(event) {
+            var cPlayOver = function() {
                 cPlay.clearRect(0, 0, bWidth, bHeight);
                 cPlay.fillStyle = bOverColor;
                 cPlayFillRect();
             };
-            var cPlayOut = function(event) {
+            var cPlayOut = function() {
                 cPlay.clearRect(0, 0, bWidth, bHeight);
                 cPlay.fillStyle = bBgColor;
                 cPlayFillRect();
@@ -1857,12 +1853,12 @@ function ckplayerConfig() {
             };
             cPause.fillStyle = bBgColor;
             cPauseFillRect();
-            var cPauseOver = function(event) {
+            var cPauseOver = function() {
                 cPause.clearRect(0, 0, bWidth, bHeight);
                 cPause.fillStyle = bOverColor;
                 cPauseFillRect();
             };
-            var cPauseOut = function(event) {
+            var cPauseOut = function() {
                 cPause.clearRect(0, 0, bWidth, bHeight);
                 cPause.fillStyle = bBgColor;
                 cPauseFillRect();
@@ -1877,12 +1873,12 @@ function ckplayerConfig() {
             };
             cFront.fillStyle = bBgColor;
             cFrontFillRect();
-            var cFrontOver = function(event) {
+            var cFrontOver = function() {
                 cFront.clearRect(0, 0, bWidth, bHeight);
                 cFront.fillStyle = bOverColor;
                 cFrontFillRect();
             };
-            var cFrontOut = function(event) {
+            var cFrontOut = function() {
                 cFront.clearRect(0, 0, bWidth, bHeight);
                 cFront.fillStyle = bBgColor;
                 cFrontFillRect();
@@ -1898,12 +1894,12 @@ function ckplayerConfig() {
             };
             cNext.fillStyle = bBgColor;
             cNextFillRect();
-            var cNextOver = function(event) {
+            var cNextOver = function() {
                 cNext.clearRect(0, 0, bWidth, bHeight);
                 cNext.fillStyle = bOverColor;
                 cNextFillRect();
             };
-            var cNextOut = function(event) {
+            var cNextOut = function() {
                 cNext.clearRect(0, 0, bWidth, bHeight);
                 cNext.fillStyle = bBgColor;
                 cNextFillRect();
@@ -2178,124 +2174,124 @@ function ckplayerConfig() {
         addButtonEvent: function() {
             var thisTemp = this;
             //定义按钮的单击事件
-            var playClick = function(event) {
+            var playClick = function() {
                 thisTemp.videoPlay();
                 thisTemp.sendJS('clickEvent', 'actionScript->videoPlay');
             };
             this.addListenerInside('click', playClick, this.CB['play']);
             this.addListenerInside('click', playClick, this.CB['pauseCenter']);
-            var pauseClick = function(event) {
+            var pauseClick = function() {
                 thisTemp.videoPause();
                 thisTemp.sendJS('clickEvent', 'actionScript->videoPause');
             };
             this.addListenerInside('click', pauseClick, this.CB['pause']);
-            var frontClick = function(event) {
+            var frontClick = function() {
                 if (thisTemp.vars['front']) {
                     eval(thisTemp.vars['front'] + '()');
                     thisTemp.sendJS('clickEvent', 'actionScript->' + thisTemp.vars['front']);
                 }
             };
             this.addListenerInside('click', frontClick, this.CB['front']);
-            var nextClick = function(event) {
+            var nextClick = function() {
                 if (thisTemp.vars['next']) {
                     eval(thisTemp.vars['next'] + '()');
                     thisTemp.sendJS('clickEvent', 'actionScript->' + thisTemp.vars['next']);
                 }
             };
             this.addListenerInside('click', nextClick, this.CB['next']);
-            var muteClick = function(event) {
+            var muteClick = function() {
                 thisTemp.videoMute();
                 thisTemp.sendJS('clickEvent', 'actionScript->videoMute');
             };
             this.addListenerInside('click', muteClick, this.CB['mute']);
-            var escMuteClick = function(event) {
+            var escMuteClick = function() {
                 thisTemp.videoEscMute();
                 thisTemp.sendJS('clickEvent', 'actionScript->videoEscMute');
             };
             this.addListenerInside('click', escMuteClick, this.CB['escMute']);
-            var fullClick = function(event) {
+            var fullClick = function() {
                 thisTemp.fullScreen();
                 thisTemp.sendJS('clickEvent', 'actionScript->fullScreen');
             };
             this.addListenerInside('click', fullClick, this.CB['full']);
-            var escFullClick = function(event) {
+            var escFullClick = function() {
                 thisTemp.quitFullScreen();
                 thisTemp.sendJS('clickEvent', 'actionScript->quitFullScreen');
             };
             this.addListenerInside('click', escFullClick, this.CB['escFull']);
-            var adSkipClick = function(event) {
+            var adSkipClick = function() {
                 if (thisTemp.CB['adSkip'].innerHTML == thisTemp.language['skipAd']) {
                     thisTemp.runFunction(thisTemp.config['adSkipClick']);
                 }
             };
             this.addListenerInside('click', adSkipClick, this.CB['adSkip']);
-            var adMuteClick = function(event) {
+            var adMuteClick = function() {
                 thisTemp.adMuteFunction();
             };
             this.addListenerInside('click', adMuteClick, this.CB['adMute']);
-            var adEscMuteClick = function(event) {
+            var adEscMuteClick = function() {
                 thisTemp.adEscMuteFunction();
             };
             this.addListenerInside('click', adEscMuteClick, this.CB['adEscMute']);
-            var adPauseCloseClick = function(event) {
+            var adPauseCloseClick = function() {
                 thisTemp.adPauseCloseFunction();
             };
             this.addListenerInside('click', adPauseCloseClick, this.CB['adPauseClose']);
             //定义各个按钮的鼠标经过/离开事件
-            var promptHide = function(event) {
+            var promptHide = function() {
                 thisTemp.promptShow(false);
             };
-            var playOver = function(event) {
+            var playOver = function() {
                 thisTemp.promptShow(thisTemp.CB['play']);
             };
             this.addListenerInside('mouseover', playOver, this.CB['play']);
             this.addListenerInside('mouseout', promptHide, this.CB['play']);
-            var pauseOver = function(event) {
+            var pauseOver = function() {
                 thisTemp.promptShow(thisTemp.CB['pause']);
             };
             this.addListenerInside('mouseover', pauseOver, this.CB['pause']);
             this.addListenerInside('mouseout', promptHide, this.CB['pause']);
-            var frontOver = function(event) {
+            var frontOver = function() {
                 thisTemp.promptShow(thisTemp.CB['front']);
             };
             this.addListenerInside('mouseover', frontOver, this.CB['front']);
             this.addListenerInside('mouseout', promptHide, this.CB['front']);
-            var nextOver = function(event) {
+            var nextOver = function() {
                 thisTemp.promptShow(thisTemp.CB['next']);
             };
             this.addListenerInside('mouseover', nextOver, this.CB['next']);
             this.addListenerInside('mouseout', promptHide, this.CB['next']);
-            var muteOver = function(event) {
+            var muteOver = function() {
                 thisTemp.promptShow(thisTemp.CB['mute']);
             };
             this.addListenerInside('mouseover', muteOver, this.CB['mute']);
             this.addListenerInside('mouseout', promptHide, this.CB['mute']);
-            var escMuteOver = function(event) {
+            var escMuteOver = function() {
                 thisTemp.promptShow(thisTemp.CB['escMute']);
             };
             this.addListenerInside('mouseover', escMuteOver, this.CB['escMute']);
             this.addListenerInside('mouseout', promptHide, this.CB['escMute']);
-            var fullOver = function(event) {
+            var fullOver = function() {
                 thisTemp.promptShow(thisTemp.CB['full']);
             };
             this.addListenerInside('mouseover', fullOver, this.CB['full']);
             this.addListenerInside('mouseout', promptHide, this.CB['full']);
-            var escFullOver = function(event) {
+            var escFullOver = function() {
                 thisTemp.promptShow(thisTemp.CB['escFull']);
             };
             this.addListenerInside('mouseover', escFullOver, this.CB['escFull']);
             this.addListenerInside('mouseout', promptHide, this.CB['escFull']);
-            var definitionOver = function(event) {
+            var definitionOver = function() {
                 thisTemp.promptShow(thisTemp.CB['definition']);
             };
             this.addListenerInside('mouseover', definitionOver, this.CB['definition']);
             this.addListenerInside('mouseout', promptHide, this.CB['definition']);
-            var playbackrateOver = function(event) {
+            var playbackrateOver = function() {
                 thisTemp.promptShow(thisTemp.CB['playbackrate']);
             };
             this.addListenerInside('mouseover', playbackrateOver, this.CB['playbackrate']);
             this.addListenerInside('mouseout', promptHide, this.CB['playbackrate']);
-            var subtitlesOver = function(event) {
+            var subtitlesOver = function() {
                 thisTemp.promptShow(thisTemp.CB['subtitles']);
             };
             this.addListenerInside('mouseover', subtitlesOver, this.CB['subtitles']);
@@ -2316,12 +2312,12 @@ function ckplayerConfig() {
                 refer: this.CB['volumeBg'],
                 grossValue: 'volume',
                 pd: true,
-                startFun: function(vol) {},
+                startFun: function() {},
                 monitorFun: function(vol) {
                     thisTemp.changeVolume(vol * 0.01, false, false);
                     volumePrompt(vol);
                 },
-                endFun: function(vol) {},
+                endFun: function() {},
                 overFun: function(vol) {
                     volumePrompt(vol);
                 }
@@ -2434,10 +2430,10 @@ function ckplayerConfig() {
                 refer: this.CB['timeBoBg'],
                 grossValue: 'time',
                 pd: false,
-                startFun: function(time) {
+                startFun: function() {
                     thisTemp.isTimeButtonMove = false;
                 },
-                monitorFun: function(time) {},
+                monitorFun: function() {},
                 endFun: function(time) {
                     if (thisTemp.V) {
                         if (thisTemp.V.duration > 0) {
@@ -2483,7 +2479,7 @@ function ckplayerConfig() {
                     thisTemp.preview(buttonPromptObj);
                 }
             };
-            var promptHide = function(event) {
+            var promptHide = function() {
                 thisTemp.promptShow(false);
                 if (thisTemp.previewDiv != null) {
                     thisTemp.css([thisTemp.previewDiv, thisTemp.previewTop], 'display', 'none');
@@ -2573,7 +2569,6 @@ function ckplayerConfig() {
                 criterionWidth = 0,
                 sliderLeft = 0,
                 referLeft = 0;
-            var value = 0;
             var calculation = function() { //根据滑块的left计算百分比
                 var sLeft = parseInt(thisTemp.css(obj['slider'], 'left'));
                 var rWidth = obj['refer'].offsetWidth - obj['slider'].offsetWidth;
@@ -2624,14 +2619,14 @@ function ckplayerConfig() {
                     obj['monitorFun'](nowZ);
                 }
             };
-            var mUp = function(event) {
+            var mUp = function() {
                 thisTemp.removeListenerInside('mousemove', mMove, document);
                 thisTemp.removeListenerInside('mouseup', mUp, document);
                 if (obj['endFun']) {
                     obj['endFun'](calculation());
                 }
             };
-            var mOver = function(event) {
+            var mOver = function() {
                 if (obj['overFun']) {
                     obj['overFun'](calculation());
                 }
@@ -2654,7 +2649,6 @@ function ckplayerConfig() {
             switch (timeSA) {
                 case 0:
                     return false;
-                    break;
                 case 2:
                     if (newX < sliderLeft) {
                         return false;
@@ -2688,7 +2682,6 @@ function ckplayerConfig() {
                     break;
                 default:
                     return true;
-                    break;
             }
             return true;
         },
@@ -2817,7 +2810,7 @@ function ckplayerConfig() {
         timerErrorFun: function() {
             var thisTemp = this;
             this.errorSend = false;
-            var clearIntervalError = function(event) {
+            var clearIntervalError = function() {
                 if (thisTemp.timerError != null) {
                     if (thisTemp.timerError.runing) {
                         thisTemp.timerError.stop();
@@ -2825,7 +2818,7 @@ function ckplayerConfig() {
                     thisTemp.timerError = null;
                 }
             };
-            var errorFun = function(event) {
+            var errorFun = function() {
                 clearIntervalError();
                 thisTemp.error = true;
                 //提取错误播放地址
@@ -3052,15 +3045,15 @@ function ckplayerConfig() {
                 }
             };
             var setTimeOutP = null;
-            var mouseOut = function(event) {
+            var mouseOut = function() {
                 setTimeOutPClose();
-                setTimeOutP = setTimeout(function(event) {
+                setTimeOutP = setTimeout(function() {
                         thisTemp.css(thisTemp.CB['menu'], 'display', 'none');
                     },
                     500);
             };
             this.addListenerInside('mouseout', mouseOut, thisTemp.CB['menu']);
-            var mouseOver = function(event) {
+            var mouseOver = function() {
                 setTimeOutPClose();
             };
             this.addListenerInside('mouseover', mouseOver, thisTemp.CB['menu']);
@@ -3082,7 +3075,6 @@ function ckplayerConfig() {
                 };
             var cShow = true,
                 force = false;
-            var oldCoor = [0, 0];
             var controlBarShow = function(show) {
                 if (show && !cShow && thisTemp.controlBarIsShow) {
                     cShow = true;
@@ -3115,7 +3107,7 @@ function ckplayerConfig() {
                     }
                 }
             };
-            var cbarFun = function(event) {
+            var cbarFun = function() {
                 if (client['x'] == oldClient['x'] && client['y'] == oldClient['y']) {
                     var cdH = parseInt(thisTemp.CD.offsetHeight);
                     if ((client['y'] < cdH - 50 || client['y'] > cdH - 2) && cShow && !thisTemp.getMetaDate()['paused']) {
@@ -3236,7 +3228,7 @@ function ckplayerConfig() {
                     if (i < pArr.length - 1) {
                         this.css(pArr[i], 'borderBottom', '1px solid #282828')
                     }
-                    var defClick = function(event) {
+                    var defClick = function() {
                         if (nowD != this.innerHTML) {
                             thisTemp.css(thisTemp.CB['playbackrateP'], 'display', 'none');
                             thisTemp.newPlaybackrate(this.innerHTML);
@@ -3267,25 +3259,25 @@ function ckplayerConfig() {
         addPlaybackrate: function() {
             var thisTemp = this;
             var setTimeOutP = null;
-            var defClick = function(event) {
+            var defClick = function() {
                 thisTemp.css(thisTemp.CB['playbackrateP'], {
                     left: thisTemp.getCoor(thisTemp.CB['playbackrate'])['x'] + 'px',
                     display: 'block'
                 });
             };
             this.addListenerInside('click', defClick, this.CB['playbackrate']);
-            var defMouseOut = function(event) {
+            var defMouseOut = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
-                setTimeOutP = setTimeout(function(event) {
+                setTimeOutP = setTimeout(function() {
                         thisTemp.css(thisTemp.CB['playbackrateP'], 'display', 'none');
                     },
                     500);
             };
             this.addListenerInside('mouseout', defMouseOut, thisTemp.CB['playbackrateP']);
-            var defMouseOver = function(event) {
+            var defMouseOver = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
@@ -3299,7 +3291,6 @@ function ckplayerConfig() {
 		*/
         newPlaybackrate: function(title) {
             var vArr = this.playbackRateArr;
-            var nVArr = [];
             var i = 0;
             for (i = 0; i < vArr.length; i++) {
                 var v = vArr[i];
@@ -3378,7 +3369,7 @@ function ckplayerConfig() {
                     if (i < pArr.length - 1) {
                         this.css(pArr[i], 'borderBottom', '1px solid #282828')
                     }
-                    var defClick = function(event) {
+                    var defClick = function() {
                         if (nowD != this.innerHTML) {
                             thisTemp.css(thisTemp.CB['subtitlesP'], 'display', 'none');
                             thisTemp.newSubtitles(this.innerHTML);
@@ -3409,25 +3400,25 @@ function ckplayerConfig() {
         addSubtitles:function(){
             var thisTemp = this;
             var setTimeOutP = null;
-            var defClick = function(event) {
+            var defClick = function() {
                 thisTemp.css(thisTemp.CB['subtitlesP'], {
                     left: thisTemp.getCoor(thisTemp.CB['subtitles'])['x'] + 'px',
                     display: 'block'
                 });
             };
             this.addListenerInside('click', defClick, this.CB['subtitles']);
-            var defMouseOut = function(event) {
+            var defMouseOut = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
-                setTimeOutP = setTimeout(function(event) {
+                setTimeOutP = setTimeout(function() {
                         thisTemp.css(thisTemp.CB['subtitlesP'], 'display', 'none');
                     },
                     500);
             };
             this.addListenerInside('mouseout', defMouseOut, thisTemp.CB['subtitlesP']);
-            var defMouseOver = function(event) {
+            var defMouseOver = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
@@ -3583,25 +3574,25 @@ function ckplayerConfig() {
         addDefListener: function() {
             var thisTemp = this;
             var setTimeOutP = null;
-            var defClick = function(event) {
+            var defClick = function() {
                 thisTemp.css(thisTemp.CB['definitionP'], {
                     left: thisTemp.getCoor(thisTemp.CB['definition'])['x'] + 'px',
                     display: 'block'
                 });
             };
             this.addListenerInside('click', defClick, this.CB['definition']);
-            var defMouseOut = function(event) {
+            var defMouseOut = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
                 }
-                setTimeOutP = setTimeout(function(event) {
+                setTimeOutP = setTimeout(function() {
                         thisTemp.css(thisTemp.CB['definitionP'], 'display', 'none');
                     },
                     500);
             };
             this.addListenerInside('mouseout', defMouseOut, thisTemp.CB['definitionP']);
-            var defMouseOver = function(event) {
+            var defMouseOver = function() {
                 if (setTimeOutP) {
                     window.clearTimeout(setTimeOutP);
                     setTimeOutP = null;
@@ -3720,7 +3711,7 @@ function ckplayerConfig() {
             if (prompt == null || this.promptArr.length > 0) {
                 return;
             }
-            var showPrompt = function(event) {
+            var showPrompt = function() {
                 if (thisTemp.promptElement == null) {
                     var random2 = 'prompte' + thisTemp.randomString(5);
                     var ele2 = document.createElement('div');
@@ -3758,7 +3749,7 @@ function ckplayerConfig() {
                     top: (pT - thisTemp.promptElement.offsetHeight - 10) + 'px'
                 });
             };
-            var hidePrompt = function(event) {
+            var hidePrompt = function() {
                 if (thisTemp.promptElement != null) {
                     thisTemp.css(thisTemp.promptElement, {
                         display: 'none'
@@ -3892,7 +3883,7 @@ function ckplayerConfig() {
                         var img = new Image();
                         img.src = srcArr[i];
                         img.className = random + i;
-                        img.onload = function(event) {
+                        img.onload = function() {
                             loadNum++;
                             if (thisTemp.previewDiv == null) { //如果没有建立DIV，则建
                                 imgW = img.width;
@@ -4008,7 +3999,6 @@ function ckplayerConfig() {
                     this.previewTween = null
                 }
                 var nowLeft = parseInt(thisTemp.css(thisTemp.previewDiv, 'left'));
-                var leftC = nowLeft + left;
                 if (nowLeft == -(left + timepieces)) {
                     return;
                 }
@@ -4306,8 +4296,6 @@ function ckplayerConfig() {
             var ad = this.getNowAdvertisements();
             var type = ad['type'];
             var thisTemp = this;
-            var width = this.PD.offsetWidth,
-                height = this.PD.offsetHeight;
             if (this.isStrImage(type) && this.adPauseShow) {
                 this.css(this.CB['adElement'], 'display', 'block');
                 var imgClass = 'adimg' + this.randomString(10);
@@ -4461,7 +4449,6 @@ function ckplayerConfig() {
         },
         /*广告播放结束*/
         adEnded: function() {
-            var thisTemp = this;
             this.adPlayStart = false;
             this.adPlayerPlay = false;
             if (this.adVideoPlay) {
@@ -4877,7 +4864,7 @@ function ckplayerConfig() {
             if (!this.isUndefined(url)) {
                 var ajaxObj = {
                     url: url,
-                    success: function(data) {}
+                    success: function() {}
                 };
                 this.ajax(ajaxObj);
             }
@@ -5201,7 +5188,7 @@ function ckplayerConfig() {
             if (this.showFace) {
                 this.css(this.CB['errorText'], 'display', 'none');
             }
-            var timeupdate = function(event) {
+            var timeupdate = function() {
                 thisTemp.timeUpdateHandler();
             };
             if (!this.vars['live']) {
@@ -5972,7 +5959,6 @@ function ckplayerConfig() {
                     break;
                 default:
                     return;
-                    break;
             }
             this.sendJS('configChange', this.ckplayerConfig);
         },
@@ -6552,7 +6538,7 @@ function ckplayerConfig() {
             var idArr = [];
             var clickArr = [];
             if (!this.isUndefined(list) && list.length > 0) {
-                var textObj, returnObj, clickEvent;
+                var textObj, clickEvent;
                 for (i = 0; i < list.length; i++) {
                     var newEleid = 'elementnew' + this.randomString(10);
                     switch (list[i]['type']) {
