@@ -1,7 +1,7 @@
 {
   "name": "p2p-ckplayer",
   "version": "0.3.0",
-  "description": "",
+  "description": "<p align=\"center\">\r <img src=\"figs/logo.png\" alt=\"CKPlayer\" width=\"300\">\r <img src=\"figs/cdnbye.png\" alt=\"CDNBye\" width=\"152.23\">\r </p>\r <h1 align=\"center\">P2P-CKPlayer</h1>",
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
